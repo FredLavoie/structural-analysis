@@ -2,9 +2,9 @@
   "name": "structural_analysis_program",
   "version": "1.0.0",
   "description": "2D Structural analysis software",
-  "main": "index.js",
+  "main": "express_server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server/express_server.js"
   },
   "repository": {
     "type": "git",

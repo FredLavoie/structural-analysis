@@ -3,6 +3,7 @@
 var express = require('express');
 var app = express();
 app.set("view engine", "ejs");
+app.set('views','./public/views');
 
 
 const PORT = process.env.PORT || 8080; // default port 8080
@@ -16,7 +17,8 @@ app.listen(PORT, () => {
 /*****************************************************************************************************/
 
 app.get("/", (req, res) => {
-  res.render('/views/index');
+  console.log('rendering index.ejs');
+  res.render('index');
 });
 
 

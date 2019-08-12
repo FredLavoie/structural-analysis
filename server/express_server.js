@@ -1,18 +1,22 @@
 /********************************** REQUIRED PACKAGES / PORT *****************************************/
 /*****************************************************************************************************/
-var express = require('express');
-var app = express();
+const express     = require('express');
+const bodyParser  = require('body-parser');
+const app         = express();
+const PORT        = process.env.PORT || 8080; // default port 8080
+
+/************************************* SET / USE / LISTEN *********************************************/
+/*****************************************************************************************************/
+
 app.set('view engine', 'ejs');
 app.set('views','./public/views');
-
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-const PORT = process.env.PORT || 8080; // default port 8080
 
 app.listen(PORT, () => {
 	console.log(`structural_analysis_program app listening on port ${PORT}!`);
 });
-
 
 /**************************************** GET REQUEST ************************************************/
 /*****************************************************************************************************/

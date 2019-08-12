@@ -3,6 +3,11 @@ body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
+main {
+	display: flex;
+	justify-content: center;
+}
+
 a { font-size: 1em; }
 p { font-size: 1em; }
 h1 { font-size: 2em; }

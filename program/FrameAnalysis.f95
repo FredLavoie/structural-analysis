@@ -43,11 +43,13 @@ real,dimension(:),allocatable::x,y,em,xsp,q,im
 integer,dimension(:),allocatable::idf
 integer,dimension(:,:),allocatable:: mcp
 
+!To compile f95 to executable: gfortran -o <executable> <source_code.f95>
+
 !OPEN INPUT FILE AS UNIT 5
 !OPEN OUTPUT FILE AS UNIT 8
 
-open(5,file="/Users/fredericlavoie/Documents/Structural_analysis_program/program/data_in.txt")
-open(8,file="/Users/fredericlavoie/Documents/Structural_analysis_program/program/data_out.txt")
+open(5,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_in.txt")
+open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_out.txt")
 
 !*********************************************************************
 ! READ INPUT DATA

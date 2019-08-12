@@ -29,6 +29,7 @@ app.get('/', (req, res) => {
 /*****************************************************************************************************/
 
 app.post('/submit', (req, res) => {
+  console.log('this is req.body: ', req.body);
   res.send('This is a test!');
 });
 

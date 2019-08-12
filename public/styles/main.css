@@ -1,9 +1,16 @@
 
-p, h1, h2, h3, h4 {
+body {
 	font-family: 'Ubuntu', sans-serif;
 }
 
-h1 { font-size: 3em; }
+a { font-size: 1em; }
+p { font-size: 1em; }
+h1 { font-size: 2em; }
 h2 { font-size: 1.3em; }
 h3 { font-size: 1.3em; }
 h4 { font-size: 1.2em; }
+
+#top-bar {
+	display: flex;
+	justify-content: center;
+}

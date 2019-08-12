@@ -2,9 +2,10 @@
 /*****************************************************************************************************/
 var express = require('express');
 var app = express();
-app.set("view engine", "ejs");
+app.set('view engine', 'ejs');
 app.set('views','./public/views');
 
+app.use(express.static('public'));
 
 const PORT = process.env.PORT || 8080; // default port 8080
 
@@ -16,16 +17,18 @@ app.listen(PORT, () => {
 /**************************************** GET REQUEST ************************************************/
 /*****************************************************************************************************/
 
-app.get("/", (req, res) => {
+app.get('/', (req, res) => {
   console.log('rendering index.ejs');
   res.render('index');
 });
 
 
-app.get("/test", (req, res) => {
-  res.send("This is a test!");
-});
 
 
 /*************************************** POST REQUEST ************************************************/
 /*****************************************************************************************************/
+
+app.post('/submit', (req, res) => {
+  res.send('This is a test!');
+});
+

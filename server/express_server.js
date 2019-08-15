@@ -29,7 +29,10 @@ app.get('/', (req, res) => {
   res.render('index');
 });
 
-
+app.get('/documentation', (req, res) => {
+  console.log('rendering documentation.ejs');
+  res.render('documentation');
+});
 
 
 /*************************************** POST REQUEST ************************************************/

@@ -15,13 +15,15 @@
 </head>
 
 <body>
-	<nav id="top-bar" class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<nav id="top-bar" class="navbar navbar-dark bg-primary">
 		<a class="navbar-brand" href="/">2D Structural Analysis</a>
+		<div class="navbar-nav">
+			<a class="nav-item nav-link active" href="/documentation">Documentation</a>
+		</div>
 	</nav>
 
 	<main>
 		<form class="form flex-container" action="/submit" method="POST">
-			
 			<div class="form-group input-group-sm mb-3">
 				<br>
 				<h3 id="input-header">General Information</h3>
@@ -61,44 +63,9 @@
 				<input id="input-style" class="form-control" type="number" name="Loads"></input>
 				<label>Load Input: <br> (Joint No., X value, Y value, Moment) <br> (Member No., X-dist, PL, UDL)</label>
 				<textarea id="input-area" class="form-control" type="number" name="LoadData"></textarea>
-				<button id="analize" type="submit" class="btn btn-success">Analyze structure</button>
+				<button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>
 			</div>
-
-
 		</form>
-
-		<div class="notes">
-			<div>
-				<h4>Notes:</h4>
-				<p>
-					This is where I'll explain how the input information works.<br>
-					Structural Analysis
-				</p>
-				<br>
-				<h4>Sample input file:</h4>
-				<p>
-					5 4 1 1 1 1<br>
-					1 0 288 1 1 1<br>
-					2 150 288 0 0 0<br>
-					3 300 288 0 0 0<br>
-					4 342 144 0 0 0<br>
-					5 384 0 1 1 1<br>
-					1 29000<br>
-					1 14.7<br>
-					1 800<br>
-					1 1 2 1 1 1<br>
-					2 2 3 1 1 1<br>
-					3 3 4 1 1 1<br>
-					4 4 5 1 1 1<br>
-					1 2<br>
-					3 0 0 960<br>
-					1 0 0 -01667<br>
-					2 0 0 -01667<br>
-				</p>
-				<br>
-			</div>
-		</div>
-
 	</main>
 
 </body>

@@ -48,8 +48,10 @@ integer,dimension(:,:),allocatable:: mcp
 !OPEN INPUT FILE AS UNIT 5
 !OPEN OUTPUT FILE AS UNIT 8
 
-open(5,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_in.txt")
-open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_out.txt")
+! open(5,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_in.txt")
+open(5,file="data_in.txt")
+! open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_out.txt")
+open(8,file="data_out.txt")
 
 !*********************************************************************
 ! READ INPUT DATA

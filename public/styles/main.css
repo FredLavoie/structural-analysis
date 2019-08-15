@@ -5,16 +5,50 @@ body {
 }
 
 a { font-size: 1em; }
-p { font-size: 1em; }
+p {
+	font-size: 1em;
+	margin-bottom: 0.5em;
+}
 h1 { font-size: 2em; }
 h2 { font-size: 1.3em; }
 h3 { font-size: 1.3em; }
-h4 { font-size: 1.2em; }
+h4 {
+	font-size: 1.2em;
+	margin-bottom: 0.5em;
+}
+
+label {
+	font-size: 1em;
+	margin: 0em 0em 0em 1em; 
+}
+
+#input-area {
+	width: 22em;
+	margin: 1em;
+}
 
 .flex-container {
 	display: flex;
 	flex-wrap: wrap;
+	justify-content: space-evenly;
+}
+
+.notes {
+	display: flex;
 	justify-content: center;
+}
+
+#input-style {
+	width: 16em;
+	margin: 1em;
+}
+
+#analize {
+	margin: 1em;
+}
+
+#input-header {
+	margin: 1em;
 }
 
 #result-frame {

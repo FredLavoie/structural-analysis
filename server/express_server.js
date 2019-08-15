@@ -41,13 +41,13 @@ app.post('/submit', (req, res) => {
   
 
   // code will write to the input file
-  fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
-    if (error) {
-      throw error;
-    }
+  // fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
+  //   if (error) {
+  //     throw error;
+  //   }
 
-    res.render('results');
-  });
+  //   res.render('results');
+  // });
 
   /*
   // code to run executable, then render 'results' page
@@ -59,6 +59,8 @@ app.post('/submit', (req, res) => {
     res.render('results');
   });
   */
+
+ res.render('results');
 
 });
 

@@ -37,12 +37,34 @@ app.get('/', (req, res) => {
 app.post('/submit', (req, res) => {
   console.log('this is req.body: ', req.body);
   
-  fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
-    if (error) {
-      console.log(error);
-    }
-  });
+  // fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
+  //   if (error) {
+  //     console.log(error);
+  //   }
+
+  //   let results = fs.readFileSync('./database/_urlDatabase.json', 'utf-8');
+
+  //   res.render('results', results);
+  // });
       
+  // let results = fs.readFileSync('program/data_out.html', 'utf-8');
+  // res.render('results', results);
+
   res.render('results');
-  
+
 });
+
+
+
+
+
+{/* <main id="results-content">
+<%= results %>
+</main> */}
+
+{/* <main>
+<div id="results-content result-frame">
+  <iframe src="data_out.txt"></iframe>
+</div>
+</main> */}
+

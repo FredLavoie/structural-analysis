@@ -1,10 +1,11 @@
 /********************************** REQUIRED PACKAGES / PORT *****************************************/
 /*****************************************************************************************************/
-const express     = require('express');
-const bodyParser  = require('body-parser');
-const app         = express();
-const PORT        = process.env.PORT || 8080; // default port 8080
-const fs          = require('fs');
+const express       = require('express');
+const bodyParser    = require('body-parser');
+const app           = express();
+const PORT          = process.env.PORT || 8080; // default port 8080
+const fs            = require('fs');
+const { execFile }  = require('child_process');
 
 /************************************* SET / USE / LISTEN *********************************************/
 /*****************************************************************************************************/
@@ -35,36 +36,30 @@ app.get('/', (req, res) => {
 /*****************************************************************************************************/
 
 app.post('/submit', (req, res) => {
-  console.log('this is req.body: ', req.body);
   
-  // fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
-  //   if (error) {
-  //     console.log(error);
-  //   }
+  // console.log('this is req.body: ', req.body);
+  
 
-  //   let results = fs.readFileSync('./database/_urlDatabase.json', 'utf-8');
+  // code will write to the input file
+  /*fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
+    if (error) {
+      console.log(error);
+    } 
 
-  //   res.render('results', results);
-  // });
-      
-  // let results = fs.readFileSync('program/data_out.html', 'utf-8');
-  // res.render('results', results);
+    res.render('results');
+  });*/
 
-  res.render('results');
+  // code to run executable, then render 'results' page
+  execFile("program/FrameAnalysisExec", function(error) {
+    if (error) {
+      console.log('There was an error running the executable');
+      throw error;
+    }
+    res.render('results');
+  });
+
 
 });
 
 
-
-
-
-{/* <main id="results-content">
-<%= results %>
-</main> */}
-
-{/* <main>
-<div id="results-content result-frame">
-  <iframe src="data_out.txt"></iframe>
-</div>
-</main> */}
 

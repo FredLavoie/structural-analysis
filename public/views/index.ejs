@@ -23,7 +23,7 @@
 	</nav>
 
 	<main>
-		<form class="form flex-container" action="/submit" method="POST">
+		<form class="form flex-container" action="/results" method="POST">
 			<div class="form-group input-group-sm mb-3">
 				<br>
 				<h3 id="input-header">General Information</h3>
@@ -60,7 +60,7 @@
 				<label>Member Data: <br> (Member No., Joint start, Joint end, <br> ElasticMod No., Area No., MoI No.)</label>
 				<textarea id="input-area" class="form-control" type="number" name="Members"></textarea>
 				<label>Loads: <br> (No. Joint Loads, No. Member Loads):</label>
-				<input id="input-style" class="form-control" type="number" name="Loads"></input>
+				<textarea id="input-area" class="form-control" type="number" name="Loads"></textarea>
 				<label>Load Input: <br> (Joint No., X value, Y value, Moment) <br> (Member No., X-dist, PL, UDL)</label>
 				<textarea id="input-area" class="form-control" type="number" name="LoadData"></textarea>
 				<button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>

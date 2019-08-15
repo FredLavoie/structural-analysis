@@ -38,32 +38,38 @@ app.get('/documentation', (req, res) => {
 /*************************************** POST REQUEST ************************************************/
 /*****************************************************************************************************/
 
-app.post('/submit', (req, res) => {
-  
-  console.log('this is req.body: ', req.body);
-  
+app.post('/results', (req, res) => {
+  console.log('rendering results.ejs');
 
+  let dataString = '';
+  let dataArr = [];
+  for(let key in req.body) {
+    dataArr.push(req.body[key]);
+  }
+
+  for(let i = 0; i < dataArr.length; i++){
+    if(i < 6) {
+      dataString += dataArr[i] + ' ';
+    } else {
+      dataString += '\r\n' + dataArr[i];
+    }
+  }
+  
   // code will write to the input file
-  // fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
-  //   if (error) {
-  //     throw error;
-  //   }
-
-  //   res.render('results');
-  // });
-
-  /*
-  // code to run executable, then render 'results' page
-  execFile("program/FrameAnalysisExec", function(error) {
+  fs.writeFile('program/data_in.txt', dataString, function(error) {
     if (error) {
-      console.log('There was an error running the executable');
       throw error;
     }
-    res.render('results');
+    // code to run executable, then render 'results' page
+    execFile("program/FrameAnalysisExec", function(error) {
+      if (error) {
+        console.log('There was an error running the executable');
+        throw error;
+      }
+      res.render('results');
+    });
+    
   });
-  */
-
- res.render('results');
 
 });
 

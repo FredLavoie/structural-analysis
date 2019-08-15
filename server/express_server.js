@@ -37,18 +37,19 @@ app.get('/', (req, res) => {
 
 app.post('/submit', (req, res) => {
   
-  // console.log('this is req.body: ', req.body);
+  console.log('this is req.body: ', req.body);
   
 
   // code will write to the input file
-  /*fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
+  fs.writeFile('program/data_in.txt', 'utf-8', function(error, data) {
     if (error) {
-      console.log(error);
-    } 
+      throw error;
+    }
 
     res.render('results');
-  });*/
+  });
 
+  /*
   // code to run executable, then render 'results' page
   execFile("program/FrameAnalysisExec", function(error) {
     if (error) {
@@ -57,7 +58,7 @@ app.post('/submit', (req, res) => {
     }
     res.render('results');
   });
-
+  */
 
 });
 

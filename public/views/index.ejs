@@ -45,7 +45,7 @@
 				<br>
 				<h3 id="input-header">Joint & Properties Input</h3>
 				<label>Joint Data: <br> (Joint No, X-coord, Y-coord,<br> X-rest, Y-rest, Rot-rest)</label>
-				<textarea id="input-area" class="form-control" type="number" name="Joints"></textarea>
+				<textarea id="input-area" class="form-control" type="number" name="Joints" style="height: 15em;"></textarea>
 				<label>Elastic Modulus (No., value):</label>
 				<textarea id="input-area" class="form-control" type="number" name="ElasticMods"></textarea>
 				<label>Area (No., value):</label>
@@ -58,11 +58,9 @@
 				<br>
 				<h3 id="input-header">Member Input & Load Input</h3>
 				<label>Member Data: <br> (Member No., Joint start, Joint end, <br> ElasticMod No., Area No., MoI No.)</label>
-				<textarea id="input-area" class="form-control" type="number" name="Members"></textarea>
-				<label>Loads: <br> (No. Joint Loads, No. Member Loads):</label>
-				<textarea id="input-area" class="form-control" type="number" name="Loads"></textarea>
-				<label>Load Input: <br> (Joint No., X value, Y value, Moment) <br> (Member No., X-dist, PL, UDL)</label>
-				<textarea id="input-area" class="form-control" type="number" name="LoadData"></textarea>
+				<textarea id="input-area" class="form-control" type="number" name="Members" style="height: 15em;"></textarea>
+				<label>Loads: <br> (No. Joint Loads, No. Member Loads) <br> (Joint No., X value, Y value, Moment) or <br> (Member No., X-dist, PL, UDL) </label>
+				<textarea id="input-area" class="form-control" type="number" name="Loads" style="height: 12em;"></textarea>
 				<button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>
 			</div>
 		</form>

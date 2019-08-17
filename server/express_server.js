@@ -3,11 +3,11 @@
 const express       = require('express');
 const bodyParser    = require('body-parser');
 const app           = express();
-const PORT          = process.env.PORT || 8080; // default port 8080
 const fs            = require('fs');
 const { execFile }  = require('child_process');
+const PORT          = process.env.PORT || 8080; // default port 8080
 
-/************************************* SET / USE / LISTEN *********************************************/
+/************************************* SET / USE / LISTEN ********************************************/
 /*****************************************************************************************************/
 
 app.set('view engine', 'ejs');
@@ -64,11 +64,11 @@ app.post('/results', (req, res) => {
     execFile("program/FrameAnalysisExec", function(error) {
       if (error) {
         console.log('There was an error running the executable');
-        throw error;
+        res.render('error');
       }
       res.render('results');
     });
-    
+
   });
 
 });

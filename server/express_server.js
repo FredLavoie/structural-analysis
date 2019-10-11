@@ -25,13 +25,13 @@ app.listen(PORT, () => {
 /*****************************************************************************************************/
 
 app.get('/', (req, res) => {
-  console.log('rendering index.ejs');
-  res.render('index');
+	console.log('rendering index.ejs');
+	res.render('index');
 });
 
 app.get('/documentation', (req, res) => {
-  console.log('rendering documentation.ejs');
-  res.render('documentation');
+	console.log('rendering documentation.ejs');
+	res.render('documentation');
 });
 
 
@@ -41,35 +41,35 @@ app.get('/documentation', (req, res) => {
 app.post('/results', (req, res) => {
   console.log('rendering results.ejs');
 
-  let dataString = '';
-  let dataArr = [];
-  for(let key in req.body) {
-    dataArr.push(req.body[key]);
-  }
+	let dataString = '';
+	let dataArr = [];
+	for(let key in req.body) {
+		dataArr.push(req.body[key]);
+	}
 
-  for(let i = 0; i < dataArr.length; i++){
-    if(i < 6) {
-      dataString += dataArr[i] + ' ';
-    } else {
-      dataString += '\r\n' + dataArr[i];
-    }
-  }
-  
-  // code will write to the input file
-  fs.writeFile('program/data_in.txt', dataString, function(error) {
-    if (error) {
-      throw error;
-    }
-    // code to run executable, then render 'results' page
-    execFile("program/FrameAnalysisExec", function(error) {
-      if (error) {
-        console.log('There was an error running the executable');
-        res.render('error');
-      }
-      res.render('results');
-    });
+	for(let i = 0; i < dataArr.length; i++){
+		if(i < 6) {
+			dataString += dataArr[i] + ' ';
+		} else {
+			dataString += '\r\n' + dataArr[i];
+		}
+	}
 
-  });
+	// code will write to the input file
+	fs.writeFile('src/program/data_in.txt', dataString, function(error) {
+		if (error) {
+			throw error;
+		}
+		// code to run executable, then render 'results' page
+		execFile('src/program/FrameAnalysisExec', function(error) {
+			if (error) {
+				console.log('There was an error running the executable');
+				res.render('error');
+			}
+			res.render('results');
+		});
+
+	});
 
 });
 

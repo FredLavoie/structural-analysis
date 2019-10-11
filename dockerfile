@@ -1,11 +1,11 @@
 FROM node:10
-RUN mkdir -p /src/app
+RUN mkdir -p /src
 WORKDIR /src/app
 
-COPY package.json /src/app/package.json
+COPY package*.json /src/
 RUN npm install
 
-COPY . src/app
-EXPOSE 3000
+COPY . /src
+EXPOSE 8080
 
 CMD [ "npm", "start" ]

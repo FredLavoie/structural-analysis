@@ -4,7 +4,7 @@ A 2-dimensional structural analysis program (frames and trusses) written in Fort
 ### The story
 The Fortran program was built when I was in university. It required the user to write out the information in an input txt file, execute the program which would create an output file for the user with all the result information.
 
-My intention was to create a web-based user interface. The MVP  was to have the client input the information into the form, have the server create the input file (txt) with the information, then execute the program and server the resutls back to the client.
+My intention was to create a web-based user interface. The MVP  was to have the client input the information into the form, have the server create the input file (txt) with the information, then execute the program and server the results back to the client.
 
 Over time, I'd like add visual diagrams of the results and potentially host it on Heroku.
 

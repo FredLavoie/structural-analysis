@@ -11,7 +11,7 @@ const PORT          = process.env.PORT || 8080; // default port 8080
 /*****************************************************************************************************/
 
 app.set('view engine', 'ejs');
-app.set('views','./public/views');
+app.set('views','/src/public/views');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -56,12 +56,12 @@ app.post('/results', (req, res) => {
 	}
 
 	// code will write to the input file
-	fs.writeFile('src/program/data_in.txt', dataString, function(error) {
+	fs.writeFile('/program/data_in.txt', dataString, function(error) {
 		if (error) {
 			throw error;
 		}
 		// code to run executable, then render 'results' page
-		execFile('src/program/FrameAnalysisExec', function(error) {
+		execFile('/program/FrameAnalysisExec', function(error) {
 			if (error) {
 				console.log('There was an error running the executable');
 				res.render('error');

@@ -59,13 +59,17 @@ app.post('/results', (req, res) => {
 	fs.writeFile('program/data_in.txt', dataString, function(error) {
 		if (error) {
 			console.log('There was an error writing the input file');
+			console.log(error);
 			res.render('error-write');
+			return;
 		}
 		// code to run executable, then render 'results' page
 		execFile('program/FrameAnalysisExec', function(error) {
 			if (error) {
 				console.log('There was an error running the executable');
+				console.log(error);
 				res.render('error-exec');
+				return;
 			}
 			res.render('results');
 		});

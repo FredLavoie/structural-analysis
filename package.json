@@ -18,10 +18,10 @@
   "homepage": "https://github.com/FredLavoie/structural-analysis#readme",
   "dependencies": {
     "body-parser": "^1.19.0",
-    "ejs": "^2.6.2",
+    "ejs": "^2.7.1",
     "express": "^4.17.1"
   },
   "devDependencies": {
-    "eslint": "^6.1.0"
+    "eslint": "^6.5.1"
   }
 }

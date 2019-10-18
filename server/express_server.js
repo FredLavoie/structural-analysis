@@ -1,17 +1,19 @@
 /********************************** REQUIRED PACKAGES / PORT *****************************************/
 /*****************************************************************************************************/
-const express       = require('express');
-const bodyParser    = require('body-parser');
-const app           = express();
-const fs            = require('fs');
-const { execFile }  = require('child_process');
-const PORT          = process.env.PORT || 8080; // default port 8080
+const express				= require('express');
+const bodyParser			= require('body-parser');
+const app					= express();
+const fs					= require('fs');
+const { execFile }			= require('child_process');
+const PORT					= process.env.PORT || 8080; // default port 8080
+const createInputObject		= require('./create-input-object');
+const createInputString		= require('./create-input-string');
 
 /************************************* SET / USE / LISTEN ********************************************/
 /*****************************************************************************************************/
 
 app.set('view engine', 'ejs');
-app.set('views','/src/public/views');
+app.set('views','public/views');
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('public'));
@@ -39,8 +41,16 @@ app.get('/documentation', (req, res) => {
 /*****************************************************************************************************/
 
 app.post('/results', (req, res) => {
-  console.log('rendering results.ejs');
+	console.log('rendering results.ejs');
 
+	console.log('req.body: ', req.body);
+	let inputObject = createInputObject(req.body);
+	console.log('inputObject: ', inputObject);
+
+	// this will be the new method of creating the input file
+	// let dataString = createInputString(inputObject);
+
+	// move this logic to 'create-input-string
 	let dataString = '';
 	let dataArr = [];
 	for(let key in req.body) {

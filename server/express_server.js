@@ -7,6 +7,7 @@ const fs					= require('fs');
 const { execFile }			= require('child_process');
 const PORT					= process.env.PORT || 8080; // default port 8080
 const createInputObject		= require('./create-input-object');
+const createInputString		= require('./create-input-string');
 
 /************************************* SET / USE / LISTEN ********************************************/
 /*****************************************************************************************************/
@@ -46,6 +47,10 @@ app.post('/results', (req, res) => {
 	let inputObject = createInputObject(req.body);
 	console.log('inputObject: ', inputObject);
 
+	// this will be the new method of creating the input file
+	// let dataString = createInputString(inputObject);
+
+	// move this logic to 'create-input-string
 	let dataString = '';
 	let dataArr = [];
 	for(let key in req.body) {

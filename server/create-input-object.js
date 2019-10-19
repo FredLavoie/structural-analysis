@@ -1,4 +1,4 @@
-function createInputObject(obj) {
+module.exports = function (obj) {
 
 	let inputObject = {};
 	inputObject.numJoints = Number(obj.numJoints);
@@ -14,7 +14,7 @@ function createInputObject(obj) {
 	inputObject.loads = extractLoads(obj.Loads);
 
 	return inputObject;
-}
+};
 
 function extractJoints(data) {
 	let resultArr = [];
@@ -51,19 +51,3 @@ function extractLoads(data) {
 	}
 	return tempArr;
 }
-
-
-module.exports = createInputObject;
-
-// Loads: '1 2\r\n3 0 0 960\r\n1 0 0 -0.1667\r\n2 0 0 -0.1667\r\n2 1\r\n2 0 -45 0\r\n3 0 0 550\r\n2 0 0 -0.505'
-
-// [ 
-//	[ '1', '2' ],
-//	[ '3', '0', '0', '960' ],
-//	[ '1', '0', '0', '-0.1667' ],
-//	[ '2', '0', '0', '-0.1667' ],
-//	[ '2', '1' ],
-//	[ '2', '0', '-45', '0' ],
-//	[ '3', '0', '0', '550' ],
-//	[ '2', '0', '0', '-0.505' ]
-// ]

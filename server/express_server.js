@@ -43,12 +43,13 @@ app.get('/documentation', (req, res) => {
 app.post('/results', (req, res) => {
 	console.log('rendering results.ejs');
 
-	console.log('req.body: ', req.body);
 	let inputObject = createInputObject(req.body);
 	console.log('inputObject: ', inputObject);
 
 	// this will be the new method of creating the input file
-	// let dataString = createInputString(inputObject);
+	let dataString2 = createInputString(inputObject);
+	// console.log('dataString2: ', dataString2);
+	fs.writeFileSync('program/data2.txt', dataString2);
 
 	// move this logic to 'create-input-string
 	let dataString = '';
@@ -65,7 +66,7 @@ app.post('/results', (req, res) => {
 		}
 	}
 
-	// code will write to the input file
+	// code to write to the input file
 	fs.writeFile('program/data_in.txt', dataString, function(error) {
 		if (error) {
 			console.log('There was an error writing the input file');

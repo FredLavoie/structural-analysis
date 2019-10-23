@@ -14,7 +14,7 @@ module.exports = function (obj) {
 	
 	// write joint data block of input file
 	let count = 1;
-	for (const joint of obj.joints) {
+	for (let joint of obj.joints) {
 		let num = count.toString();
 		dataString += num + ' ';
 		dataString += joint[0] + ' ';
@@ -26,11 +26,33 @@ module.exports = function (obj) {
 	}
 
 	// write properties block of input file
+	count = 1;
+	for (let em of obj.elasticMods) {
+		let num = count.toString();
+		dataString += num + ' ';
+		dataString += em + '\n';
+		count += 1;
+	}
 
+	count = 1;
+	for (let area of obj.areas) {
+		let num = count.toString();
+		dataString += num + ' ';
+		dataString += area + '\n';
+		count += 1;
+	}
+
+	count = 1;
+	for (let Mo of obj.MoI) {
+		let num = count.toString();
+		dataString += num + ' ';
+		dataString += Mo + '\n';
+		count += 1;
+	}
 
 	// write member data block of input file
 
-	
+
 	// write loads block of input file
 
 

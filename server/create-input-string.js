@@ -1,6 +1,8 @@
 module.exports = function (obj) {
 
 	let dataString = '';
+
+	// write first line of input file
 	dataString += (
 		obj.numJoints.toString() + ' ' +
 		obj.numMembers.toString() + ' ' +
@@ -10,8 +12,8 @@ module.exports = function (obj) {
 		obj.numLoadCases.toString() + '\n'
 	);
 	
+	// write joint data block of input file
 	let count = 1;
-
 	for (const joint of obj.joints) {
 		let num = count.toString();
 		dataString += num + ' ';
@@ -22,19 +24,16 @@ module.exports = function (obj) {
 		dataString += joint[4] + '\n';
 		count += 1;
 	}
-	
-	console.log('dataString inside module:');
-	console.log(dataString);
-	
-	
-	// for(let i = 0; i < dataArr.length; i++){
-	// 	if(i < 6) {
-	// 		dataString += dataArr[i] + ' ';
-	// 	} else {
-	// 		dataString += '\r\n' + dataArr[i];
-	// 	}
-	// }
 
-	// return dataString;
+	// write properties block of input file
+
+
+	// write member data block of input file
+
+	
+	// write loads block of input file
+
+
+	return dataString;
 
 };

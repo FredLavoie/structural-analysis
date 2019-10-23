@@ -44,14 +44,16 @@ app.post('/results', (req, res) => {
 	console.log('rendering results.ejs');
 
 	let inputObject = createInputObject(req.body);
-	console.log('inputObject: ', inputObject);
+	console.log('inputObject: ');
+	console.log(inputObject);
 
 	// this will be the new method of creating the input file
 	let dataString2 = createInputString(inputObject);
-	// console.log('dataString2: ', dataString2);
-	fs.writeFileSync('program/data2.txt', dataString2);
+	console.log('dataString2 in server: ');
+	console.log(dataString2);
 
-	// move this logic to 'create-input-string
+	/****************** DEPRICATED CODE BLOCK ******************/
+	/***********************************************************/
 	let dataString = '';
 	let dataArr = [];
 	for(let key in req.body) {
@@ -65,6 +67,9 @@ app.post('/results', (req, res) => {
 			dataString += '\r\n' + dataArr[i];
 		}
 	}
+	/***********************************************************/
+
+
 
 	// code to write to the input file
 	fs.writeFile('program/data_in.txt', dataString, function(error) {

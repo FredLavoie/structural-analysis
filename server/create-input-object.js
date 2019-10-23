@@ -16,6 +16,9 @@ module.exports = function (obj) {
 	return inputObject;
 };
 
+/************************************* HELPER FUNCTIONS **********************************************/
+/*****************************************************************************************************/
+
 function extractJoints(data) {
 	let resultArr = [];
 	let tempArr = data.split('\r\n').map(e => e.split(' '));

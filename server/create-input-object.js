@@ -11,6 +11,7 @@ module.exports = function (obj) {
 	inputObject.elasticMods = extractProperties(obj.ElasticMods);
 	inputObject.areas = extractProperties(obj.Areas);
 	inputObject.MoI = extractProperties(obj.MoI);
+	// missing extraction of member information!!
 	inputObject.loads = extractLoads(obj.Loads);
 
 	return inputObject;

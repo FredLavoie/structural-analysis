@@ -54,34 +54,12 @@ module.exports = function (obj) {
 
 
 	// write loads block of input file
-	count = 1;
 	for (let ea of obj.loads) {
-		if(ea.length === 2) {
-			let cases = Math.sum(...ea);
-		}
-		
-		let 
-
-
-		let num = count.toString();
-		dataString += num + ' ';
-
-		count += 1;
+		let removeComma = ea.reduce((acc, e) => {
+			return acc += ' ' + e.toString();
+		});
+		dataString += removeComma + '\n';
 	}
 
 	return dataString;
 };
-
-/*
-loads:
-	[
-		[ 1, 2 ],
-		[ 3, 0, 0, 960 ],
-		[ 1, 0, 0, -0.1667 ],
-		[ 2, 0, 0, -0.1667 ],
-		[ 2, 1 ],
-		[ 2, 0, -45, 0 ],
-		[ 3, 0, 0, 550 ],
-		[ 2, 0, 0, -0.505 ] 
-]
-*/

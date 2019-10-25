@@ -48,28 +48,9 @@ app.post('/results', (req, res) => {
 	console.log(inputObject);
 
 	// this will be the new method of creating the input file
-	let dataString2 = createInputString(inputObject);
-	console.log('dataString2 in server: ');
-	console.log(dataString2);
-
-	/****************** DEPRICATED CODE BLOCK ******************/
-	/***********************************************************/
-	let dataString = '';
-	let dataArr = [];
-	for(let key in req.body) {
-		dataArr.push(req.body[key]);
-	}
-
-	for(let i = 0; i < dataArr.length; i++){
-		if(i < 6) {
-			dataString += dataArr[i] + ' ';
-		} else {
-			dataString += '\r\n' + dataArr[i];
-		}
-	}
-	/***********************************************************/
-
-
+	// let dataString2 = createInputString(inputObject);
+	// console.log('dataString2 in server: ');
+	// console.log(dataString2);
 
 	// code to write to the input file
 	fs.writeFile('program/data_in.txt', dataString, function(error) {

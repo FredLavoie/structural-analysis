@@ -11,7 +11,7 @@ module.exports = function (obj) {
 	inputObject.elasticMods = extractProperties(obj.ElasticMods);
 	inputObject.areas = extractProperties(obj.Areas);
 	inputObject.MoI = extractProperties(obj.MoI);
-	// missing extraction of member information!!
+	inputObject.members = extractMembers(obj.Members);
 	inputObject.loads = extractLoads(obj.Loads);
 
 	return inputObject;
@@ -44,6 +44,10 @@ function extractProperties(data) {
 		resultArr.push(Number(item[1]));
 	}
 	return resultArr;
+}
+
+function extractMembers(data) {
+	
 }
 
 function extractLoads(data) {

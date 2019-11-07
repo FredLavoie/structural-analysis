@@ -1,6 +1,7 @@
 .DS_store
 node_modules
 .env
+.eslintrc.js
 NOTES.md
 data_in.txt
 data_out.txt

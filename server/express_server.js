@@ -20,7 +20,7 @@ app.use(express.static('public'));
 app.use(express.static('program'));
 
 app.listen(PORT, () => {
-	console.log(`structural_analysis app listening on port ${PORT}!`);
+	console.log(`structural_analysis app listening on port ${PORT}`);
 });
 
 /**************************************** GET REQUEST ************************************************/
@@ -42,15 +42,9 @@ app.get('/documentation', (req, res) => {
 
 app.post('/results', (req, res) => {
 	console.log('rendering results.ejs');
-
+	
 	let inputObject = createInputObject(req.body);
-	console.log('inputObject: ');
-	console.log(inputObject);
-
-	// this will be the new method of creating the input file
-	// let dataString2 = createInputString(inputObject);
-	// console.log('dataString2 in server: ');
-	// console.log(dataString2);
+	let dataString = createInputString(inputObject);
 
 	// code to write to the input file
 	fs.writeFile('program/data_in.txt', dataString, function(error) {

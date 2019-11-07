@@ -1,3 +1,6 @@
+// Takes object and provided by the server and create the string that
+// the Fortran program expect
+
 module.exports = function (obj) {
 
 	let dataString = '';
@@ -51,7 +54,17 @@ module.exports = function (obj) {
 	}
 
 	// write member data block of input file
-
+	count = 1;
+	for (let member of obj.members) {
+		let num = count.toString();
+		dataString += num + ' ';
+		dataString += member[0] + ' ';
+		dataString += member[1] + ' ';
+		dataString += member[2] + ' ';
+		dataString += member[3] + ' ';
+		dataString += member[4] + '\n';
+		count += 1;
+	}
 
 	// write loads block of input file
 	for (let ea of obj.loads) {

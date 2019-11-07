@@ -7,20 +7,20 @@ module.exports = function (obj) {
 	inputObject.numAreas = Number(obj.numAreas);
 	inputObject.numMomentOfInertia = Number(obj.numMomentOfInertia);
 	inputObject.numLoadCases = Number(obj.numLoadCases);
-	inputObject.joints = extractJoints(obj.Joints);
+	inputObject.joints = extractJointsAndMembers(obj.Joints);
 	inputObject.elasticMods = extractProperties(obj.ElasticMods);
 	inputObject.areas = extractProperties(obj.Areas);
 	inputObject.MoI = extractProperties(obj.MoI);
-	inputObject.members = extractMembers(obj.Members);
+	inputObject.members = extractJointsAndMembers(obj.Members);
 	inputObject.loads = extractLoads(obj.Loads);
 
 	return inputObject;
 };
 
-/************************************* HELPER FUNCTIONS **********************************************/
-/*****************************************************************************************************/
+/********************** HELPER FUNCTIONS **********************/
+/**************************************************************/
 
-function extractJoints(data) {
+function extractJointsAndMembers(data) {
 	let resultArr = [];
 	let tempArr = data.split('\r\n').map(e => e.split(' '));
 	for (let joint of tempArr) {
@@ -44,10 +44,6 @@ function extractProperties(data) {
 		resultArr.push(Number(item[1]));
 	}
 	return resultArr;
-}
-
-function extractMembers(data) {
-	
 }
 
 function extractLoads(data) {

@@ -43,8 +43,8 @@ app.get('/documentation', (req, res) => {
 app.post('/results', (req, res) => {
 	console.log('rendering results.ejs');
 	
-	let inputObject = createInputObject(req.body);
-	let dataString = createInputString(inputObject);
+	// let inputObject = createInputObject(req.body);
+	// let dataString = createInputString(inputObject);
 
 	// code to write to the input file
 	fs.writeFile('program/data_in.txt', dataString, function(error) {

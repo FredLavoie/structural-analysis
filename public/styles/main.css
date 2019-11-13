@@ -45,8 +45,14 @@ label {
 }
 
 .input-style {
-	width: 16em;
-	margin: 1em;
+	width: 8em;
+	margin: 1em 0em;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.small-text {
+	font-size: 0.8em;
 }
 
 #input-header-1 {

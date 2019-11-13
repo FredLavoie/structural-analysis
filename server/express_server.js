@@ -42,6 +42,9 @@ app.get('/documentation', (req, res) => {
 
 app.post('/results', (req, res) => {
 	console.log('rendering results.ejs');
+	console.log('req.body:');
+	console.log(req.body);
+	
 	
 	// let inputObject = createInputObject(req.body);
 	// let dataString = createInputString(inputObject);

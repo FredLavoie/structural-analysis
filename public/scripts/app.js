@@ -50,16 +50,39 @@ $(document).ready(function() {
 // Generate number of input boxes based on numJoints
 function generateJointInput(i) {
 	$('#joint-container').append($('<label>').text(`Joint # ${i}`));
-	$('#joint-container').append($('<div>').addClass('flex-container')
-			.append($('<input>')
-			.addClass('input-style form-control')
-			.attr('name', 'Joints'))
-			.append($('<input>')
-			.attr('type', 'checkbox'))
-			.append($('<input>')
-			.attr('type', 'checkbox'))
-			.append($('<input>')
-			.attr('type', 'checkbox')));
+	
+	// create all tags to be appended and assign the values where needed
+	let $jointDiv = $('<div>').addClass('flex-container');
+	let $coordInput = $('<input>').addClass('input-style form-control').attr('name', 'Joints');
+	let $xRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
+	let $yRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
+	let $rotRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
+
+	// append all tags in reverse order (starting with furthest nested tags)
+	$jointDiv
+		.append($coordInput)
+		.append($xRest)
+		.append($yRest)
+		.append($rotRest);
+
+	$('#joint-container')
+		.append($jointDiv);
+
+	// $('#joint-container')
+	// 	.append($('<div>')
+	// 		.addClass('flex-container')
+	// 		.append($('<input>')
+	// 			.addClass('input-style form-control')
+	// 			.attr('name', 'Joints'))
+	// 		.append($('<input>')
+	// 			.attr('type', 'checkbox')
+	// 			.attr('name', 'X-rest'))
+	// 		.append($('<input>')
+	// 			.attr('type', 'checkbox')
+	// 			.attr('name', 'Y-rest'))
+	// 		.append($('<input>')
+	// 			.attr('type', 'checkbox')
+	// 			.attr('name', 'Rot-rest')));
 }
 
 // Generate number of input boxes based on numMembers

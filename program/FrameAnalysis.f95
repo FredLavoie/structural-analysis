@@ -1,16 +1,5 @@
-!*********************************************************************!
-!                                                                     !
-!                                                                     !
-!                      FRAME ANALYSIS PROGRAM                         !
-!                                                                     !
-!                         FREDERIC LAVOIE                             !
-!                            #0415381                                 !
-!                                                                     !
-!                                                                     !
-!*********************************************************************!
-
 ! NOMENCLATURE
-!---------------------------------------------------------------------
+!------------------------------------------
 !nj = NUMBER OF NODES
 !nm = NUMBER OF MEMBERS
 !npj = NUMBER OF LOADED JOINTS
@@ -33,7 +22,7 @@
 !xdst = POINT LOAD DISTANCE FROM LEFT
 !PL = POINT LOAD MAGNITUDE
 !UDL = UDL MAGNITUDE
-!*********************************************************************
+!**************************************************************************************************
 
 program FrameAnalysis
 
@@ -46,16 +35,16 @@ integer,dimension(:,:),allocatable:: mcp
 !To compile f95 to executable: gfortran -o <executable> <source_code.f95>
 
 !OPEN INPUT FILE AS UNIT 5
+open(5,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_in.txt")
+! open(5,file="program/data_in.txt")
+
 !OPEN OUTPUT FILE AS UNIT 8
+open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_out.txt")
+! open(8,file="program/data_out.txt")
 
-! open(5,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_in.txt")
-open(5,file="program/data_in.txt")
-! open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_out.txt")
-open(8,file="program/data_out.txt")
-
-!*********************************************************************
+!**************************************************************************************************
 ! READ INPUT DATA
-!*********************************************************************
+!**************************************************************************************************
 
 !(1)INITIALIZE DATA
 read(5,*)nj,nm,nmp,nxsp,nip,npc
@@ -96,83 +85,10 @@ do i=1,nm
     nbw=nbt
   end if
 end do
-!*********************************************************************
-! PROGRAM INFORMATION
-!*********************************************************************
-write(8,*)
-write(8,500)
-write(8,505)'PLANE FRAME ANALYSIS PROGRAM'
-write(8,505)'DEVELOPED BY: FREDERIC LAVOIE'
-write(8,500)
-write(8,*)
-write(8,*)
-!*********************************************************************
-! PRINTOUT INPUT DATA
-!*********************************************************************
-write(8,500)
-write(8,507)'INPUT DATA'
-write(8,500)
-write(8,*)
-write(8,501)'NUMBER OF JOINTS =',nj
-write(8,501)'NUMBER OF MEMBERS =',nm
-write(8,501)'NUMBER OF LOAD CASES =',npc
-write(8,*)
-write(8,*)
-write(8,*)'JOINT DATA'
-write(8,500)
-write(8,503)
-write(8,504)
-do j=1,nj 
-  write(8,502)j,x(j),y(j),idf(3*j-2),idf(3*j-1),idf(3*j)
-end do
-write(8,*)
-write(8,*)
-write(8,*)'MEMBER PROPERTY DATA'
-write(8,500)
-write(8,*)
-write(8,509)
-write(8,510)
-do j=1,nmp
-  write(8,506)j,em(j)
-end do
-write(8,*)
-write(8,*)
-write(8,*)'CROSS-SECTIONAL PROPERTY DATA'
-write(8,500)
-write(8,*)
-write(8,511)
-do j=1,nxsp
-  write(8,512)j,xsp(j)
-end do
-write(8,*)
-write(8,*)
-write(8,*)'MOMENT OF INERTIAS'
-write(8,500)
-write(8,*)
-write(8,525)
-write(8,524)
-do j=1,nip
-  write(8,526)j,im(j)
-end do
-write(8,*)
-write(8,*)
-write(8,*)'MEMBER DATA'
-write(8,500)
-write(8,*)
-write(8,513)
-write(8,514)
-do j=1,nm
-  write(8,508)j,mcp(j,1:5)
-end do
-write(8,*)
-write(8,*)
-write(8,*)'JOINT LOADS'
-write(8,500)
-write(8,*)
 
-!*********************************************************************
+!**************************************************************************************************
 ! CALL SUBROUTINES
-!*********************************************************************
+!**************************************************************************************************
 
 call fstiff(x,y,em,im,xsp,mcp,idf,nj,nm,neq,nbw,a,nxsp,nmp,nip)
 
@@ -188,53 +104,19 @@ do i=1,npc
   do k=1,npm
     read(5,*)j,xdst(j,i),PL(j,i),UDL(j,i)
   end do
-  if (npc>1) then
-    write(8,518)'LOAD CASE',i
-    write(8,515)
-    write(8,516)
-    do j=1,nj
-      write(8,517)j,fj(j*3-2,i),fj(j*3-1,i),fj(j*3,i)
-    end do
-    write(8,528)
-    write(8,529)
-    do j=1,nm
-      write(8,527)j,xdst(j,i),PL(j,i),UDL(j,i)
-    end do
-    write(8,*)
-    else
-    write(8,515)
-    write(8,516)
-    do j=1,nj
-      write(8,517)j,fj(j*3-2,1),fj(j*3-1,1),fj(j*3,1)
-    end do
-    write(8,528)
-    write(8,529)
-    do j=1,nm
-      write(8,527)j,xdst(j,1),PL(j,1),UDL(j,1)
-    end do
-    write(8,*)
-  end if
 end do
 
-call loads(x,y,nm,em,xsp,im,nmp,nip,nxsp,npc,UDL&
-&,xdst,PL,neq,fj,idf,mcp,acs,Aml)
+call loads(x,y,nm,em,xsp,im,nmp,nip,nxsp,npc,UDL,xdst,PL,neq,fj,idf,mcp,acs,Aml)
 
 call eqn(a,acs,nbw,neq,npc)
 
-!*********************************************************************
+!**************************************************************************************************
 ! PRINTOUT PRIMARY UNKNOWNS
-!*********************************************************************
-write(8,*)
-write(8,500)
-write(8,519)'PRIMARY UNKNOWNS'
-write(8,500)
-write(8,*)
-write(8,521)
-write(8,522)
-write(8,523)
+!**************************************************************************************************
+
 do i=1,npc
   if (npc>1) then
-    write(8,*)
+
     write(8,518)'LOAD CASE',i
     do j=1,nj
       write(8,520)j,acs(j*3-2,i),acs(j*3-1,i),acs(j*3,i)
@@ -246,64 +128,24 @@ do i=1,npc
   end if
 end do
 
-!*********************************************************************
+!**************************************************************************************************
 ! PRINTOUT SECONDARY UNKNOWNS
-!*********************************************************************
-write(8,*)
-write(8,500)
-write(8,519)'SECONDARY UNKNOWNS'
-write(8,500)
-write(8,*)
-write(8,*)
+!**************************************************************************************************
 
-call mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,nxsp,im&
-&,nip,Aml)
+call mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,nxsp,im,nip,Aml)
 
-!*********************************************************************
+!**************************************************************************************************
 ! FORMAT STATEMENTS
-!*********************************************************************
-500 format(71('-'))
-501 format(a25,i3)
-502 format(i3,4x,f8.1,2x,f8.1,4x,b2,2x,b2,2x,b2)
-503 format('JOINT',7x,'COORDINATES',9x,'D.O.F')
-504 format('NUMBER',7x,'X',7x,'Y',8x,'X',3x,'Y',3x,'R')
-505 format(17x,a35)
-506 format(i3,2x,es10.1)
-507 format(17x,a25)
-508 format(4x,i3,7x,i3,5x,i3,8x,i3,11x,i3,11x,i3)
-509 format(8x,'ELASTIC')
-510 format(2x,'#',5x,'MODULUS')
-511 format(2x,'#',6x,'AREA')
-512 format(i3,2x,es10.1)
-513 format(3x,'MEMBER',5x,'MEMBER  NODES',4x,' MATERIAL ',4x,&
-'X-SECTIONAL',4x,' INERTIA')
-514 format(3x,'NUMBER',5x,'j-END   k-END',4x,'PROPERTY #',4x,&
-'PROPERTY # ',4x,'PROPERTY #')
-515 format(2x,'JOINT',23x,'JOINT LOADS')
-516 format(2x,'NUMBER',13x,'X',13x,'Y',10x,'MOMENT')
-517 format(2x,i3,8x,f10.2,4x,f10.2,4x,f10.2)
+!**************************************************************************************************
 518 format(a10,i3)
-519 format(14x,a35)
 520 format(4x,i3,5x,es14.3,4x,es14.3,4x,es14.3)
-521 format(3x,'  NODE  ',21x,'JOINT')
-522 format(3x,' NUMBER ',20x,'DISPLACEMENT')
-523 format(20x,'X',17x,'Y',14x,'ROTATION')
-524 format(2x,'#',5x,'INERTIA')
-525 format(8x,'MOMENT OF')
-526 format(i3,5x,es10.1)
-527 format(2x,i3,8x,f10.2,4x,es10.2,5x,es10.2)
-528 format(2x,'MEMBER',21x,'MEMBER LOADS')
-529 format(2x,'NUMBER',10x,'X-DIST.',10x,'PL',10x,'UDL')
-!*********************************************************************
-!*********************************************************************
-!*********************************************************************
+
+!**************************************************************************************************
 !                            SUBROUTINES
-!*********************************************************************
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
+
 contains
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
 subroutine fstiff(x,y,em,im,xsp,mcp,idf,nj,nm,neq,nbw,a,nxsp,nmp,nip)
 real,dimension(nmp)::em
 real,dimension(nip)::im
@@ -377,8 +219,8 @@ do j=1,neq
 end do
 
 end subroutine fstiff
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
+!**************************************************************************************************
 subroutine fmstiff(xa,ya,xb,yb,em,xsa,im,sm)
 real,dimension(6,6)::sm
 real::im
@@ -412,8 +254,8 @@ sm(6,3)=2*em*im/d
 sm(3,6)=2*em*im/d
 
 end subroutine fmstiff
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
+!**************************************************************************************************
 subroutine frotmat(xa,ya,xb,yb,r,rt)               
 real,dimension(6,6)::r,rt
 r(:,:)=0.0
@@ -440,8 +282,8 @@ do jj=1,6
   end do
 end do
 end subroutine frotmat
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
+!**************************************************************************************************
 subroutine multmat(m,n,np,a,b,c)
 real,dimension(m,n)::a
 real,dimension(n,np)::b
@@ -455,10 +297,9 @@ do mm=1,m
   end do
 end do
 end subroutine multmat
-!*********************************************************************
-!*********************************************************************
-subroutine loads(x,y,nm,em,xsp,im,nmp,nip,nxsp,npc,UDL&
-&,xdst,PL,neq,fj,idf,mcp,acs,Aml)
+!**************************************************************************************************
+!**************************************************************************************************
+subroutine loads(x,y,nm,em,xsp,im,nmp,nip,nxsp,npc,UDL,xdst,PL,neq,fj,idf,mcp,acs,Aml)
 
 real::a,b,px,py,iim
 real,dimension(neq,npc)::fj,acs,aams
@@ -555,8 +396,8 @@ do k=1,npc
   end do
 end do
 end subroutine loads
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
+!**************************************************************************************************
 subroutine eqn(a,b,m,n,x)
 !   call eqn(a,acs,nbw,neq,npc)
 
@@ -613,10 +454,9 @@ do z=1,x
   end do
 end do
 end subroutine eqn
-!*********************************************************************
-!*********************************************************************
-subroutine mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,&
-nxsp,im,nip,Aml)
+!**************************************************************************************************
+!**************************************************************************************************
+subroutine mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,nxsp,im,nip,Aml)
 real,dimension(nj)::x,y
 integer,dimension(6)::id
 real,dimension(neq,npc)::fj,acs,dms,am,ams
@@ -630,8 +470,6 @@ real,dimension(6,6)::sm,r,rt,smr
 real::iim
 real,dimension(neq)::ar
 
-write(8,105)
-write(8,*)
 do k=1,npc
   ar(:)=0
   do i=1,nm
@@ -690,36 +528,25 @@ do k=1,npc
     end if
   end do
 ! PRINT OUT REACTIONS
-  write(8,*)
-  write(8,101)
-  write(8,*)
-  write(8,102)
-  write(8,103)
+
   do j=1,nj
     if((idf(j*3-2)+idf(j*3-1)+idf(j*3))>0) then
       write(8,100)j,ar(j*3-2),ar(j*3-1),ar(j*3)
     end if
   end do
-  write(8,*)
-  write(8,106)
-  write(8,*)
+
   if (npc>1)then
     if (k<npc)then
       write(8,107)
-      write(8,*)
+    
     end if
   end if
 end do
 100 format(4x,i3,5x,es12.3,4x,es12.3,4x,es12.3)
-101 format(3x,'SUPPORT  REACTIONS')
-102 format(3x,'JOINT')
-103 format(3x,'NUMBER',9X,'X',15x,'Y',13x,'MOMENT')
 104 format(3x,'MEMBER',1x,i3,4x,es12.3,4x,es12.3,4x,es12.3)
-105 format(3x,'MEMBER END FORCES')
-106 format(71('-'))
 107 format(3x,'MEMBER END FORCES')
 108 format(17x,es12.3,4x,es12.3,4x,es12.3)
 end subroutine mforce
-!*********************************************************************
-!*********************************************************************
+!**************************************************************************************************
+!**************************************************************************************************
 end program

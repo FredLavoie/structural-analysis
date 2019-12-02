@@ -230,7 +230,7 @@ do i=1,npc
   if (npc>1) then
     write(8,*)
     write(8,518)'LOAD CASE',i
-    write(9,*)'['
+    
     do j=1,nj
       write(8,520)j,acs(j*3-2,i),acs(j*3-1,i),acs(j*3,i)
       if (j==nj) then
@@ -239,7 +239,7 @@ do i=1,npc
         write(9,600)'[',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),'],'
       end if
     end do
-    write(9,*)']'
+    
     else
     do j=1,nj
       write(8,520)j,acs(j*3-2,1),acs(j*3-1,1),acs(j*3,1)

@@ -62,11 +62,12 @@ app.post('/results', (req, res) => {
 				res.render('error-exec');
 				return;
 			}
+			fs.readFile('program/data_string.json', 'utf-8', function(error, data) {
+				if(error) console.log(error);
+			});
 			res.render('results');
 		});
-
 	});
-
 });
 
 

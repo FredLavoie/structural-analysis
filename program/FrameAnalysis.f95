@@ -43,7 +43,8 @@ open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_ou
 ! open(8,file="program/data_out.txt")
 
 !OPEN OUTPUT FILE AS UNIT 9 (JSON string)
-open(9,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_string.txt")
+open(9,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_string.json")
+write(9,*)'{'
 
 !**************************************************************************************************
 ! READ INPUT DATA
@@ -223,19 +224,39 @@ write(8,*)
 write(8,521)
 write(8,522)
 write(8,523)
+write(9,*)'"jointDisplacements": ['
 do i=1,npc
+  write(9,*)'['
   if (npc>1) then
     write(8,*)
     write(8,518)'LOAD CASE',i
+    write(9,*)'['
     do j=1,nj
       write(8,520)j,acs(j*3-2,i),acs(j*3-1,i),acs(j*3,i)
+      if (j==nj) then
+        write(9,600)'[',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),']'
+      else
+        write(9,600)'[',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),'],'
+      end if
     end do
+    write(9,*)']'
     else
     do j=1,nj
       write(8,520)j,acs(j*3-2,1),acs(j*3-1,1),acs(j*3,1)
+      if (j==nj) then
+        write(9,600)'[',acs(j*3-2,1),',',acs(j*3-1,1),',',acs(j*3,1),']'
+      else
+        write(9,600)'[',acs(j*3-2,1),',',acs(j*3-1,1),',',acs(j*3,1),'],'
+      end if
     end do
   end if
+  if (i==npc) then
+    write(9,*)']'
+  else
+    write(9,*)'],'
+  end if
 end do
+write(9,*)'],'
 
 !**************************************************************************************************
 ! PRINTOUT SECONDARY UNKNOWNS
@@ -282,6 +303,9 @@ call mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,nxsp,im,nip,Aml)
 527 format(2x,i3,8x,f10.2,4x,es10.2,5x,es10.2)
 528 format(2x,'MEMBER',21x,'MEMBER LOADS')
 529 format(2x,'NUMBER',10x,'X-DIST.',10x,'PL',10x,'UDL')
+600 format(A,F8.5,A,F8.5,A,F8.5,A)
+
+write(9,*)'}'
 !**************************************************************************************************
 !**************************************************************************************************
 !**************************************************************************************************
@@ -619,6 +643,7 @@ real,dimension(neq)::ar
 write(8,105)
 write(8,*)
 do k=1,npc
+  write(9,111)'"loadCase', k, '": ['
   ar(:)=0
   do i=1,nm
 
@@ -657,6 +682,8 @@ do k=1,npc
     end do
     write(8,104)i,am(1,1),am(2,1),am(3,1)
     write(8,108)am(4,1),am(5,1),am(6,1)
+    write(9,110)'[',am(1,1),',',am(2,1),',',am(3,1),',',am(4,1),',',am(5,1),',',am(6,1),'],'
+
 !   SUM THE MEMBER FORCES INTO REACTIONS
     call multmat(6,6,1,rt,am,ams)
 !   STORE FIXED END FORCES FOR SUPPORTED JOINTS
@@ -683,7 +710,12 @@ do k=1,npc
   write(8,103)
   do j=1,nj
     if((idf(j*3-2)+idf(j*3-1)+idf(j*3))>0) then
+      if(j==nj) then
+      write(9,112)'[',j,',',ar(j*3-2),',',ar(j*3-1),',',ar(j*3),']'
       write(8,100)j,ar(j*3-2),ar(j*3-1),ar(j*3)
+    else
+      write(9,112)'[',j,',',ar(j*3-2),',',ar(j*3-1),',',ar(j*3),'],'
+    end if
     end if
   end do
   write(8,*)
@@ -695,7 +727,13 @@ do k=1,npc
       write(8,*)
     end if
   end if
+  if(k==npc) then
+    write(9,*)']'
+  else
+    write(9,*)'],'
+  end if
 end do
+
 100 format(4x,i3,5x,es12.3,4x,es12.3,4x,es12.3)
 101 format(3x,'SUPPORT  REACTIONS')
 102 format(3x,'JOINT')
@@ -705,6 +743,9 @@ end do
 106 format(71('-'))
 107 format(3x,'MEMBER END FORCES')
 108 format(17x,es12.3,4x,es12.3,4x,es12.3)
+110 format(A,F9.4,A,F9.4,A,F9.4,A,F9.4,A,F9.4,A,F9.4,A)
+111 format(A,i3,A)
+112 format(A,i4,A,F9.4,A,F9.4,A,F9.4,A)
 end subroutine mforce
 !**************************************************************************************************
 !**************************************************************************************************

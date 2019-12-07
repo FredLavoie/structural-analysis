@@ -224,9 +224,10 @@ write(8,*)
 write(8,521)
 write(8,522)
 write(8,523)
-write(9,*)'"jointDisplacements": ['
+write(9,*)' "primaryUnknowns":'
+write(9,*)'  ['
 do i=1,npc
-  write(9,*)'['
+  write(9,*)'     ['
   if (npc>1) then
     write(8,*)
     write(8,518)'LOAD CASE',i
@@ -234,9 +235,9 @@ do i=1,npc
     do j=1,nj
       write(8,520)j,acs(j*3-2,i),acs(j*3-1,i),acs(j*3,i)
       if (j==nj) then
-        write(9,600)'[',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),']'
+        write(9,600)'        [',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),']'
       else
-        write(9,600)'[',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),'],'
+        write(9,600)'        [',acs(j*3-2,i),',',acs(j*3-1,i),',',acs(j*3,i),'],'
       end if
     end do
     
@@ -244,19 +245,19 @@ do i=1,npc
     do j=1,nj
       write(8,520)j,acs(j*3-2,1),acs(j*3-1,1),acs(j*3,1)
       if (j==nj) then
-        write(9,600)'[',acs(j*3-2,1),',',acs(j*3-1,1),',',acs(j*3,1),']'
+        write(9,600)'        [',acs(j*3-2,1),',',acs(j*3-1,1),',',acs(j*3,1),']'
       else
-        write(9,600)'[',acs(j*3-2,1),',',acs(j*3-1,1),',',acs(j*3,1),'],'
+        write(9,600)'        [',acs(j*3-2,1),',',acs(j*3-1,1),',',acs(j*3,1),'],'
       end if
     end do
   end if
   if (i==npc) then
-    write(9,*)']'
+    write(9,*)'     ]'
   else
-    write(9,*)'],'
+    write(9,*)'     ],'
   end if
 end do
-write(9,*)'],'
+write(9,*)'  ],'
 
 !**************************************************************************************************
 ! PRINTOUT SECONDARY UNKNOWNS
@@ -642,8 +643,10 @@ real,dimension(neq)::ar
 
 write(8,105)
 write(8,*)
+write(9,*)' "secondaryUnknowns":'
+write(9,*)'  ['
 do k=1,npc
-  write(9,111)'"loadCase', k, '": ['
+  write(9,111)'      ['
   ar(:)=0
   do i=1,nm
 
@@ -682,7 +685,7 @@ do k=1,npc
     end do
     write(8,104)i,am(1,1),am(2,1),am(3,1)
     write(8,108)am(4,1),am(5,1),am(6,1)
-    write(9,110)'[',am(1,1),',',am(2,1),',',am(3,1),',',am(4,1),',',am(5,1),',',am(6,1),'],'
+    write(9,110)'        [',am(1,1),',',am(2,1),',',am(3,1),',',am(4,1),',',am(5,1),',',am(6,1),'],'
 
 !   SUM THE MEMBER FORCES INTO REACTIONS
     call multmat(6,6,1,rt,am,ams)
@@ -711,10 +714,10 @@ do k=1,npc
   do j=1,nj
     if((idf(j*3-2)+idf(j*3-1)+idf(j*3))>0) then
       if(j==nj) then
-      write(9,112)'[',j,',',ar(j*3-2),',',ar(j*3-1),',',ar(j*3),']'
+      write(9,112)'        [',j,',',ar(j*3-2),',',ar(j*3-1),',',ar(j*3),']'
       write(8,100)j,ar(j*3-2),ar(j*3-1),ar(j*3)
     else
-      write(9,112)'[',j,',',ar(j*3-2),',',ar(j*3-1),',',ar(j*3),'],'
+      write(9,112)'        [',j,',',ar(j*3-2),',',ar(j*3-1),',',ar(j*3),'],'
     end if
     end if
   end do
@@ -728,11 +731,12 @@ do k=1,npc
     end if
   end if
   if(k==npc) then
-    write(9,*)']'
+    write(9,*)'     ]'
   else
-    write(9,*)'],'
+    write(9,*)'     ],'
   end if
 end do
+write(9,*)'  ]'
 
 100 format(4x,i3,5x,es12.3,4x,es12.3,4x,es12.3)
 101 format(3x,'SUPPORT  REACTIONS')

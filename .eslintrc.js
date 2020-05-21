@@ -16,6 +16,8 @@ module.exports = {
   },
   "rules": {
     "no-console": "off",
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "indent": ["error", "space"],
+    "indent": ["error", 2]
   }
 };

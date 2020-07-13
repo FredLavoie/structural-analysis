@@ -21,3 +21,13 @@ Remove image:			`docker rmi <image_id>`
 
 ### notes:
 - Currently, the app can be run either local or in a container.
+
+
+### Workflow
+1. user submits structure data
+2. data is sent as JSON object to server
+3. server converts JSON data into input.txt file
+4. server runs FORTRAN program
+5. FORTRAN program outputs JSON object
+5. server returns JSON object to front end
+6. front end displays results to DOM

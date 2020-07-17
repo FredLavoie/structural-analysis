@@ -61,8 +61,8 @@ function generateJointInput(i) {
   // append all tags in reverse order (starting with furthest nested tags)
   $jointDiv
     .append($jointNum)
-    .append($coordInputX)
-    .append($coordInputY)
+    .append($coordInputX.attr('placeholder', 'X-coord.'))
+    .append($coordInputY.attr('placeholder', 'Y-coord.'))
     .append($xRest)
     .append($yRest)
     .append($rotRest);

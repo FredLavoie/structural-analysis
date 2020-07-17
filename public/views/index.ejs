@@ -54,29 +54,9 @@
           <input class="input-style form-control" type="number" name="numLoadCases">
         </div>
       </div>
-      
-      <h3 id="input-header-2" class="row">Joint & Properties Input</h3>
+
+      <h3 id="input-header-2" class="row">Properties Input</h3>
       <div class="container-2">
-        <div id="joint-container">
-          <div class="joints-container1">
-            <label>Joint # 1  (X-coord, Y-coord, X-fixed, Y-fixed, Rot-fixed)</label>
-            <div class="joints-container2">
-              <input class="input-style form-control" name="Joints">
-              <input type="checkbox" name="Joints">
-              <input type="checkbox" name="Joints">
-              <input type="checkbox" name="Joints">
-            </div>
-          </div>
-          <div class="joints-container1">
-            <label>Joint # 2  (X-coord, Y-coord, X-fixed, Y-fixed, Rot-fixed)</label>
-            <div class="joints-container2">
-              <input class="input-style form-control" name="Joints">
-              <input type="checkbox" name="Joints">
-              <input type="checkbox" name="Joints">
-              <input type="checkbox" name="Joints">
-            </div>
-          </div>
-        </div>
         <div id="em-container">
           <label>Elastic Modulus #1</label>
           <input class="input-style form-control" name="ElasticMods">
@@ -90,12 +70,58 @@
           <input class="input-style form-control" name="MoI">
         </div>
       </div>
+      <h3 id="input-header-2" class="row">Joint Input</h3>
+      <p id="joint-headers">(X-coord, Y-coord, X-fixed, Y-fixed, Rot-fixed)</p>
+      <div class="container-2">
+        <div id="joints-container-1">
+          <div class="joints-container-2">
+            <label>Joint # 1</label>
+            <input class="input-style form-control" name="Joints">
+            <input class="input-style form-control" name="Joints">
+            <input type="checkbox" name="Joints">
+            <input type="checkbox" name="Joints">
+            <input type="checkbox" name="Joints">
+          </div>
+          <div class="joints-container-2">
+            <label>Joint # 2</label>
+            <input class="input-style form-control" name="Joints">
+            <input class="input-style form-control" name="Joints">
+            <input type="checkbox" name="Joints">
+            <input type="checkbox" name="Joints">
+            <input type="checkbox" name="Joints">
+            </div>
+          </div>
+        </div>
+      </div>
 
       <h3 id="input-header-3">Member Input</h3>
-      <div class="form-group input-group-sm mb-3">
-        <label>Member Data: <br> (Member No., Joint start, Joint end, <br> ElasticMod No., Area No., MoI No.)</label>
-        <textarea id="input-area" class="form-control" type="number" name="Members" style="height: 15em;"></textarea>
+      <div class="container-3">
+
+        <div class="member-container-1">
+          <label>Member #1</label>
+          <div class="member-container-2">
+            <label>Joint Start</label>
+            <input name="members">
+          </div>
+          <div class="member-container-2">
+            <label>Joint End</label>
+            <input name="members">
+          </div>
+          <div class="member-container-2">
+            <label>EM No.</label>
+            <input name="members">
+          </div>
+          <div class="member-container-2">
+            <label>Area No.</label>
+            <input name="members">
+          </div>
+          <div class="member-container-2">
+            <label>MoI No.</label>
+            <input name="members">
+          </div>
+        </div>
       </div>
+
       <h3 id="input-header-3">Load Input</h3>
       <div>
         <label>Loads: <br> (No. Joint Loads, No. Member Loads) <br> (Joint No., X value, Y value, Moment) or <br> (Member No., X-dist, PL, UDL) </label>

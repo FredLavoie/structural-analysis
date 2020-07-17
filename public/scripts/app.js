@@ -3,7 +3,7 @@
 
 $(document).ready(function() {
   $('#input-numJoints').change(function() {
-    $('#joint-container').empty();
+    $('#joints-container-1').empty();
     let num = $('#input-numJoints').val();
     for (let i = 1; i <= num; i++) {
       generateJointInput(i);
@@ -49,44 +49,27 @@ $(document).ready(function() {
 
 // Generate number of input boxes based on numJoints
 function generateJointInput(i) {
-  $('#joint-container').append($('<label>').text(`Joint # ${i} (X-coord, Y-coord, X-fixed, Y-fixed, Rot-fixed)`));
-  
   // create all tags to be appended and assign the values where needed
-  let $jointDiv = $('<div>').addClass('joints-container1');
-  let $jointDiv2 = $('<div>').addClass('joints-container2');
-  let $coordInput = $('<input>').addClass('input-style form-control').attr('name', 'Joints');
+  let $jointDiv = $('<div>').addClass('joints-container-2');
+  let $jointNum = $('<label>').text(`Joint # ${i}`);
+  let $coordInputX = $('<input>').addClass('input-style form-control').attr('name', 'Joints');
+  let $coordInputY = $('<input>').addClass('input-style form-control').attr('name', 'Joints');
   let $xRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
   let $yRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
   let $rotRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
 
   // append all tags in reverse order (starting with furthest nested tags)
-  $jointDiv2
-    .append($coordInput)
+  $jointDiv
+    .append($jointNum)
+    .append($coordInputX)
+    .append($coordInputY)
     .append($xRest)
     .append($yRest)
     .append($rotRest);
-  
-  $jointDiv
-    .append($jointDiv2);
 
-  $('#joint-container')
+  $('#joints-container-1')
     .append($jointDiv);
 
-  // $('#joint-container')
-  // 	.append($('<div>')
-  // 		.addClass('flex-container')
-  // 		.append($('<input>')
-  // 			.addClass('input-style form-control')
-  // 			.attr('name', 'Joints'))
-  // 		.append($('<input>')
-  // 			.attr('type', 'checkbox')
-  // 			.attr('name', 'X-rest'))
-  // 		.append($('<input>')
-  // 			.attr('type', 'checkbox')
-  // 			.attr('name', 'Y-rest'))
-  // 		.append($('<input>')
-  // 			.attr('type', 'checkbox')
-  // 			.attr('name', 'Rot-rest')));
 }
 
 // Generate number of input boxes based on numMembers

@@ -11,7 +11,10 @@ p {
 }
 h1 { font-size: 2em; }
 h2 { font-size: 1.3em; }
-h3 { font-size: 1.3em; }
+h3 {
+  font-size: 1.3em;
+  padding-left: 2em;
+}
 h4 {
   font-size: 1.2em;
   margin-bottom: 0.5em;
@@ -47,14 +50,19 @@ label {
   margin: 0em 0.5em;
 }
 
-.joints-container1 {
+.joints-container-2 {
   display: flex;
-  flex-direction: column;
   align-items: center;
 }
-.joints-container2 {
+
+.member-container-1 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+}
+
+.member-container-2 {
+  display: flex;
+  flex-direction: column;
 }
 
 .input-area {
@@ -83,8 +91,11 @@ label {
   flex-direction: column;
   margin: 2.0em 1.5em;
 }
+#joint-headers {
+  text-align: center;
+}
 
-#joint-container, #em-container, #area-container, #moi-container {
+#joints-container-1, #em-container, #area-container, #moi-container {
   display: flex;
   flex-direction: column;
   align-items: center;

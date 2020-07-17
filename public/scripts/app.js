@@ -11,12 +11,11 @@ $(document).ready(function() {
   });
 
   $('#input-numMembers').change(function() {
-    // $('#joint-container').empty();
-    // let num = $('#input-numJoints').val();
-    // for (let i = 0; i < num; i++) {
-    // 	let j = i + 1;
-    // 	generateMemberInput(j);
-    // }
+    $('#members-container-1').empty();
+    let num = $('#input-numMembers').val();
+    for (let i = 1; i <= num; i++) {
+      generateMemberInput(i);
+    }
   });
 
   $('#input-numEMs').change(function() {
@@ -51,9 +50,11 @@ $(document).ready(function() {
 function generateJointInput(i) {
   // create all tags to be appended and assign the values where needed
   let $jointDiv = $('<div>').addClass('joints-container-2');
-  let $jointNum = $('<label>').text(`Joint # ${i}`);
-  let $coordInputX = $('<input>').addClass('input-style form-control').attr('name', 'Joints');
-  let $coordInputY = $('<input>').addClass('input-style form-control').attr('name', 'Joints');
+  let $jointNum = $('<label>').text(`Joint #${i}`);
+  let $coordInputX = $('<input>').addClass('input-style form-control').attr('name', 'Joints')
+    .attr('placeholder', 'X-coord.');
+  let $coordInputY = $('<input>').addClass('input-style form-control').attr('name', 'Joints')
+    .attr('placeholder', 'Y-coord.');
   let $xRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
   let $yRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
   let $rotRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
@@ -61,8 +62,8 @@ function generateJointInput(i) {
   // append all tags in reverse order (starting with furthest nested tags)
   $jointDiv
     .append($jointNum)
-    .append($coordInputX.attr('placeholder', 'X-coord.'))
-    .append($coordInputY.attr('placeholder', 'Y-coord.'))
+    .append($coordInputX)
+    .append($coordInputY)
     .append($xRest)
     .append($yRest)
     .append($rotRest);
@@ -73,13 +74,34 @@ function generateJointInput(i) {
 }
 
 // Generate number of input boxes based on numMembers
-// function generateMemberInput(i) {
-// 	$('#joint-container').append($('<label>').text(`Joint # ${i}`));
-// 	$('#joint-container').append($('<input>')
-// 			.addClass('input-style form-control')
-// 			.attr('name', 'Joints')
-// 			.attr('placeholder', 'Joint ' + i));
-// }
+function generateMemberInput(i) {
+  // create all tags to be appended and assign the values where needed
+  let $memberDiv = $('<div>').addClass("container-2 members-container-2");
+  let $memberNum = $('<label>').text(`Member #${i}`);
+  let $jointStart = $('<input>').addClass('input-style form-control').attr('name', 'members')
+    .attr('placeholder', 'Joint start');
+  let $jointEnd = $('<input>').addClass('input-style form-control').attr('name', 'members')
+    .attr('placeholder', 'Joint end');
+  let $emNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
+    .attr('placeholder', 'EM No.');
+  let $areaNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
+    .attr('placeholder', 'Area No.');
+  let $moiNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
+    .attr('placeholder', 'MoI No.');
+  
+  // append all tags in reverse order
+  $memberDiv
+    .append($memberNum)
+    .append($jointStart)
+    .append($jointEnd)
+    .append($emNo)
+    .append($areaNo)
+    .append($moiNo);
+
+  $('#members-container-1')
+    .append($memberDiv);
+
+}
 
 // Generate number of input boxes based on numEMs
 function generateEMInput(i) {

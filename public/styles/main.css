@@ -43,16 +43,6 @@ label {
   margin: 0em 1em;
 }
 
-#joint-headers {
-  margin: 0em 0em 0em 15em;
-  display: flex;
-  justify-content: center;
-}
-
-#joint-headers p {
-  margin-right: 5em;
-}
-
 .container-2 input{
   margin: 0.3em 0.8em;
 }
@@ -69,10 +59,17 @@ label {
   align-items: center;
 }
 
-.member-container-1 {
+#members-container-1 {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+}
+
+.members-container-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .error {
@@ -81,7 +78,7 @@ label {
 }
 
 .input-style {
-  width: 6em;
+  width: 7em;
   margin: 0.5em 0em;
   display: flex;
   justify-content: space-evenly;
@@ -95,10 +92,6 @@ label {
   display: flex;
   flex-direction: column;
   margin: 2.0em 1.5em;
-}
-
-.headers {
-  padding-left: 2em;
 }
 
 #joints-container-1, #em-container, #area-container, #moi-container {

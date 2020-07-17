@@ -44,6 +44,8 @@ open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_ou
 
 !OPEN OUTPUT FILE AS UNIT 9 (JSON string)
 open(9,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_string.json")
+! open(8,file="program/data_out.json")
+
 write(9,*)'{'
 
 !**************************************************************************************************

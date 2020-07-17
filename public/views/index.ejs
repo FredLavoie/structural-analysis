@@ -1,70 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<!-- URL TITLE -->
-	<title>2D Structural Analysis</title>
-	<!-- Stylesheets -->
-	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	<link rel="stylesheet" href="/styles/reset.css">
-	<link rel="stylesheet" href="/styles/main.css">
-	<!-- Script JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script type="text/javascript" src="/scripts/app.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- URL TITLE -->
+  <title>2D Structural Analysis</title>
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="../styles/reset.css">
+  <link rel="stylesheet" href="../styles/main.css">
+  <!-- Script JS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script type="text/javascript" src="../scripts/app.js"></script>
 </head>
 
 <body>
-	<nav id="top-bar" class="navbar navbar-dark bg-primary">
-		<a class="navbar-brand" href="/">2D Structural Analysis</a>
-		<div class="navbar-nav">
-			<a class="nav-item nav-link active" href="/documentation">Documentation</a>
-		</div>
-	</nav>
+  <nav id="top-bar" class="navbar navbar-dark bg-primary">
+    <a class="navbar-brand" href="/">2D Structural Analysis</a>
+    <div class="navbar-nav">
+      <a class="nav-item nav-link active" href="/documentation">Documentation</a>
+    </div>
+  </nav>
 
-	<main>
-		<form class="form flex-container" action="/results" method="POST">
-			<div class="form-group input-group-sm mb-3">
-				<br>
-				<h3 id="input-header">General Information</h3>
-				<label>No. of joints:</label>
-				<input id="input-style" class="form-control" type="number" name="numJoints">
-				<label>No. of members:</label>
-				<input id="input-style" class="form-control" type="number" name="numMembers">
-				<label>No. of Eleastic modulus:</label>
-				<input id="input-style" class="form-control" type="number" name="numElasticModulus">
-				<label>No. of X-Sectional Areas:</label>				
-				<input id="input-style" class="form-control" type="number" name="numAreas">
-				<label>No. of Moment of Inertia:</label>				
-				<input id="input-style" class="form-control" type="number" name="numMomentOfInertia">
-				<label>No. of Load Cases:</label>				
-				<input id="input-style" class="form-control" type="number" name="numLoadCases">
-			</div>
+  <main class="main-container">
 
-			<div class="form-group input-group-sm mb-3">
-				<br>
-				<h3 id="input-header">Joint & Properties Input</h3>
-				<label>Joint Data: <br> (Joint No, X-coord, Y-coord,<br> X-rest, Y-rest, Rot-rest)</label>
-				<textarea id="input-area" class="form-control" type="number" name="Joints" style="height: 15em;"></textarea>
-				<label>Elastic Modulus (No., value):</label>
-				<textarea id="input-area" class="form-control" type="number" name="ElasticMods"></textarea>
-				<label>Area (No., value):</label>
-				<textarea id="input-area" class="form-control" type="number" name="Areas"></textarea>
-				<label>Moment of Inertia (No., value):</label>
-				<textarea id="input-area" class="form-control" type="number" name="MoI"></textarea>
-			</div>
+    <div id="structure-window"></div>
 
-			<div class="form-group input-group-sm mb-3">
-				<br>
-				<h3 id="input-header">Member Input & Load Input</h3>
-				<label>Member Data: <br> (Member No., Joint start, Joint end, <br> ElasticMod No., Area No., MoI No.)</label>
-				<textarea id="input-area" class="form-control" type="number" name="Members" style="height: 15em;"></textarea>
-				<label>Loads: <br> (No. Joint Loads, No. Member Loads) <br> (Joint No., X value, Y value, Moment) or <br> (Member No., X-dist, PL, UDL) </label>
-				<textarea id="input-area" class="form-control" type="number" name="Loads" style="height: 12em;"></textarea>
-				<button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>
-			</div>
-		</form>
-	</main>
+    <form class="form" action="/results" method="POST">
+      <h3 class="section-header">General Information</h3>
+      <div class="container-1">
+        <div class="gen-info-container">
+          <label>No. of joints</label>
+          <input id="input-numJoints" class="input-style form-control" type="number" name="numJoints" value="2">
+        </div>
+        <div class="gen-info-container">
+          <label>No. of members</label>
+          <input id="input-numMembers" class="input-style form-control" type="number" name="numMembers" value="1">
+        </div>
+        <div class="gen-info-container">
+          <label>No. of Eleastic modulus</label>
+          <input id="input-numEMs" class="input-style form-control" type="number" name="numElasticModulus" value="1">
+        </div>
+        <div class="gen-info-container">
+          <label>No. of X-Sectional Areas</label>
+          <input id="input-numAreas" class="input-style form-control" type="number" name="numAreas" value="1">
+        </div>
+        <div class="gen-info-container">
+          <label>No. of Moment of Inertia</label>
+          <input id="input-numMOIs" class="input-style form-control" type="number" name="numMomentOfInertia" value="1">
+        </div>
+      </div>
+
+      <h3 class="section-header">Properties Input</h3>
+      <div class="container-2">
+        <div id="em-container">
+          <label>Elastic Modulus #1</label>
+          <input class="input-style form-control" name="ElasticMods">
+        </div>
+        <div id="area-container">
+          <label>Area # 1</label>
+          <input class="input-style form-control" name="Areas">
+        </div>
+        <div id="moi-container">
+          <label>Moment of Inertia # 1</label>
+          <input class="input-style form-control" name="MoI">
+        </div>
+      </div>
+      <h3 class="section-header">Joint Input</h3>
+      <div class="container-2">
+        <div id="joints-container-1">
+          <div class="joints-container-2">
+            <label>Joint #1</label>
+            <input class="input-style form-control" name="Joints" placeholder="X-coord.">
+            <input class="input-style form-control" name="Joints" placeholder="Y-coord.">
+            <label>x-rest.</label>
+            <input type="checkbox" name="Joints">
+            <label>y-rest.</label>
+            <input type="checkbox" name="Joints">
+            <label>rot. rest.</label>
+            <input type="checkbox" name="Joints">
+          </div>
+          <div class="joints-container-2">
+            <label>Joint #2</label>
+            <input class="input-style form-control" name="Joints" placeholder="X-coord.">
+            <input class="input-style form-control" name="Joints" placeholder="Y-coord.">
+            <label>x-rest.</label>
+            <input type="checkbox" name="Joints">
+            <label>y-rest.</label>
+            <input type="checkbox" name="Joints">
+            <label>rot. rest.</label>
+            <input type="checkbox" name="Joints">
+            </div>
+          </div>
+        </div>
+      </div>
+      <h3 class="section-header">Member Input</h3>
+      <div id="members-container-1">
+        <div class="container-2 members-container-2">
+          <label>Member #1</label>
+          <input class="input-style form-control" name="members" placeholder="Joint start">
+          <input class="input-style form-control" name="members" placeholder="Joint end">
+          <input class="input-style form-control" name="members" placeholder="EM No.">
+          <input class="input-style form-control" name="members" placeholder="Area No.">
+          <input class="input-style form-control" name="members" placeholder="MoI No.">
+          </div>
+        </div>
+      </div>
+      <h3 class="section-header">Load Input</h3>
+      <div class="container-1">
+        <div class="gen-info-container">
+          <label>No. Joint Loads</label>
+          <input id="input-numJointLoads" class="input-style form-control" type="number" name="numJointLoads" value="0">
+        </div>
+        <div class="gen-info-container">
+          <label>No. Member Loads</label>
+          <input id="input-numMemLoads" class="input-style form-control" type="number" name="numMemLoads" value="0">
+        </div>
+      </div>
+      <div id="pl-container"></div>
+      <div id="ml-container"></div>
+
+      <button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>
+    </form>
+  </main>
 
 </body>
 </html>

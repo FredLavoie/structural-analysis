@@ -1,75 +1,172 @@
-
+/************************* GENERAL STYLING *************************/
+/*******************************************************************/
 body {
-	font-family: 'Ubuntu', sans-serif;
-	max-height: 100vh;
+  font-family: 'Ubuntu', sans-serif;
+  max-height: 100vh;
 }
 
-a { font-size: 1em; }
+main {
+  padding-bottom: 20em;
+}
+
+a { font-size: 1.0em; }
 p {
-	font-size: 1em;
-	margin-bottom: 0.5em;
+  font-size: 0.8em;
+  margin-bottom: 0.5em;
 }
 h1 { font-size: 2em; }
-h2 { font-size: 1.3em; }
-h3 { font-size: 1.3em; }
+h2 { font-size: 1.5em; }
+h3 {
+  font-size: 1.2em;
+  padding-left: 32px;
+}
 h4 {
-	font-size: 1.2em;
-	margin-bottom: 0.5em;
+  font-size: 1.0em;
+  margin-bottom: 0.5em;
 }
 
 label {
-	font-size: 1em;
-	margin: 0em 0em 0em 1em; 
+  font-size: 0.8em;
 }
 
-#input-area {
-	width: 22em;
-	margin: 1em;
+/************************** CLASS STYLING **************************/
+/*******************************************************************/
+.form {
+  margin: 0em 10%;
 }
 
-.flex-container {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-evenly;
+.container-1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
-.notes {
-	display: flex;
-	justify-content: center;
-	margin-top: 4em;
+.container-2 {
+  display: flex;
+  justify-content: center;
+}
+
+.container-2 div {
+  margin: 0em 1em;
+}
+
+.container-2 input{
+  margin: 0.3em 0.8em;
+}
+
+.gen-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0em 0.5em;
+}
+
+.joints-container-2 {
+  display: flex;
+  align-items: center;
+}
+
+.members-container-2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.joint-load-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1.0em;
+}
+
+.member-load-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-2 div {
+  margin: 0em 1em;
 }
 
 .error {
-	text-align: center;
-	margin-top: 4em;
+  text-align: center;
+  margin-top: 4em;
 }
 
-#input-style {
-	width: 16em;
-	margin: 1em;
+.input-style {
+  width: 7em;
+  margin: 0.5em 0em;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.small-text {
+  font-size: 0.8em;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2.0em 1.5em;
+}
+
+.section-header {
+  margin: 2em 0em 0.2em 0em;
+}
+
+/*************************** ID STYLING ****************************/
+/*******************************************************************/
+
+#members-container-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#joints-container-1, #em-container, #area-container, #moi-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#structure-window {
+  display: inline-block;
+  border: 2px solid #808080;
+  margin: 1em auto;
+  width: 85%;
+  height: 30%;
+  min-width: 75em;
+  min-height: 50em;
 }
 
 #analize {
-	margin: 1em;
-}
-
-#input-header {
-	margin: 1em;
+  margin: 1em;
 }
 
 #result-frame {
-	height: 100vh;
-	width: 600px;
+  height: 100vh;
+  width: 600px;
 }
 
 #top-bar {
-	display: flex;
-	justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 #results-content {
-	display: flex;
-	justify-content: left;
-	height: 100vh;
-	width: 600px;
+  display: flex;
+  justify-content: left;
+  height: 100vh;
+  width: 600px;
+}
+
+input[type=checkbox] {
+  -ms-transform: scale(1);		/* IE */
+  -moz-transform: scale(1);		/* FF */
+  -webkit-transform: scale(1);	/* Safari and Chrome */
+  -o-transform: scale(1);		/* Opera */
+  transform: scale(1);
+  padding: 8px;
 }

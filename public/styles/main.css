@@ -19,24 +19,47 @@ h4 {
 
 label {
   font-size: 1em;
-  margin: 0em 0em 0em 1em; 
+}
+
+.container-1 {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.container-2 {
+  display: flex;
+  justify-content: center;
+}
+
+.container-2 div {
+  margin: 0em 1em;
+}
+
+.container-2 input{
+  margin: 1em 1em;
+}
+
+.gen-info-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0em 0.5em;
+}
+
+.joints-container1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.joints-container2 {
+  display: flex;
+  flex-direction: row;
 }
 
 .input-area {
   width: 22em;
   margin: 1em;
-}
-
-.flex-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-}
-
-.notes {
-  display: flex;
-  justify-content: center;
-  margin-top: 4em;
 }
 
 .error {
@@ -53,6 +76,28 @@ label {
 
 .small-text {
   font-size: 0.8em;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2.0em 1.5em;
+}
+
+#joint-container, #em-container, #area-container, #moi-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#structure-window {
+  display: inline-block;
+  border: 2px solid #808080;
+  margin: 1em auto;
+  width: 85%;
+  height: 30%;
+  min-width: 75em;
+  min-height: 50em;
 }
 
 #input-header-1 {
@@ -89,10 +134,10 @@ label {
 }
 
 input[type=checkbox] {
-  -ms-transform: scale(1.5);		/* IE */
-  -moz-transform: scale(1.5);		/* FF */
-  -webkit-transform: scale(1.5);	/* Safari and Chrome */
-  -o-transform: scale(1.5);		/* Opera */
-  transform: scale(1.5);
+  -ms-transform: scale(1);		/* IE */
+  -moz-transform: scale(1);		/* FF */
+  -webkit-transform: scale(1);	/* Safari and Chrome */
+  -o-transform: scale(1);		/* Opera */
+  transform: scale(1);
   padding: 8px;
 }

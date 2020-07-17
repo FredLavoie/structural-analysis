@@ -1,7 +1,12 @@
-
+/************************* GENERAL STYLING *************************/
+/*******************************************************************/
 body {
   font-family: 'Ubuntu', sans-serif;
   max-height: 100vh;
+}
+
+main {
+  padding-bottom: 20em;
 }
 
 a { font-size: 1.0em; }
@@ -24,6 +29,8 @@ label {
   font-size: 0.8em;
 }
 
+/************************** CLASS STYLING **************************/
+/*******************************************************************/
 .form {
   margin: 0em 10%;
 }
@@ -57,13 +64,6 @@ label {
 .joints-container-2 {
   display: flex;
   align-items: center;
-}
-
-#members-container-1 {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
 .members-container-2 {
@@ -111,6 +111,20 @@ label {
   margin: 2.0em 1.5em;
 }
 
+.section-header {
+  margin: 2em 0em 0.2em 0em;
+}
+
+/*************************** ID STYLING ****************************/
+/*******************************************************************/
+
+#members-container-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
 #joints-container-1, #em-container, #area-container, #moi-container {
   display: flex;
   flex-direction: column;
@@ -125,10 +139,6 @@ label {
   height: 30%;
   min-width: 75em;
   min-height: 50em;
-}
-
-.section-header {
-  margin: 2em 0em 0.2em 0em;
 }
 
 #analize {

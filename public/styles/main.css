@@ -4,7 +4,7 @@ body {
   max-height: 100vh;
 }
 
-a { font-size: 0.8em; }
+a { font-size: 1.0em; }
 p {
   font-size: 0.8em;
   margin-bottom: 0.5em;
@@ -70,6 +70,23 @@ label {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.joint-load-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 1.0em;
+}
+
+.member-load-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.container-2 div {
+  margin: 0em 1em;
 }
 
 .error {

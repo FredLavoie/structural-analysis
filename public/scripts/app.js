@@ -41,6 +41,22 @@ $(document).ready(function() {
       generateMOIInput(i);
     }
   });
+
+  $('#input-numJointLoads').change(function() {
+    $('#pl-container').empty();
+    let num = $('#input-numJointLoads').val();
+    for (let i = 1; i <= num; i++) {
+      generateJointLoads(i);
+    }
+  });
+
+  $('#input-numMemLoads').change(function() {
+    $('#ml-container').empty();
+    let num = $('#input-numMemLoads').val();
+    for (let i = 1; i <= num; i++) {
+      generateMemberLoads(i);
+    }
+  });
 });
   
 //**************************************** FUNCTIONS *********************************************/
@@ -48,7 +64,6 @@ $(document).ready(function() {
 
 // Generate number of input boxes based on numJoints
 function generateJointInput(i) {
-  // create all tags to be appended and assign the values where needed
   let $jointDiv = $('<div>').addClass('joints-container-2');
   let $jointNum = $('<label>').text(`Joint #${i}`);
   let $coordInputX = $('<input>').addClass('input-style form-control').attr('name', 'Joints')
@@ -62,7 +77,6 @@ function generateJointInput(i) {
   let $yRestLabel = $('<label>').text('y-rest.');
   let $rotRestLabel = $('<label>').text('rot. rest.');
 
-  // append all tags in reverse order (starting with furthest nested tags)
   $jointDiv
     .append($jointNum)
     .append($coordInputX)
@@ -81,8 +95,7 @@ function generateJointInput(i) {
 
 // Generate number of input boxes based on numMembers
 function generateMemberInput(i) {
-  // create all tags to be appended and assign the values where needed
-  let $memberDiv = $('<div>').addClass("container-2 members-container-2");
+  let $memberDiv = $('<div>').addClass('container-2 members-container-2');
   let $memberNum = $('<label>').text(`Member #${i}`);
   let $jointStart = $('<input>').addClass('input-style form-control').attr('name', 'members')
     .attr('placeholder', 'Joint start');
@@ -94,8 +107,7 @@ function generateMemberInput(i) {
     .attr('placeholder', 'Area No.');
   let $moiNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
     .attr('placeholder', 'MoI No.');
-  
-  // append all tags in reverse order
+
   $memberDiv
     .append($memberNum)
     .append($jointStart)
@@ -131,4 +143,52 @@ function generateMOIInput(i) {
   $('#moi-container').append($('<input>')
     .addClass('input-style form-control')
     .attr('name', 'MoI'));
+}
+
+// Generate joint load input boxes
+function generateJointLoads(i) {
+  let $jointLoadDiv = $('<div>').addClass('container-2 joint-load-container');
+  let $jointLoadNum = $('<label>').text(`Joint Load #${i}`);
+  let $jointNum = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'Joint No.');
+  let $xValue = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'X value');
+  let $yValue = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'Y value');
+  let $moment = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'Moment');
+  
+  $jointLoadDiv
+    .append($jointLoadNum)
+    .append($jointNum)
+    .append($xValue)
+    .append($yValue)
+    .append($moment);
+  
+  $('#pl-container')
+    .append($jointLoadDiv);
+}
+// Generate member load input boxes
+function generateMemberLoads(i) {
+  let $memberLoadDiv = $('<div>').addClass('container-2 member-load-container');
+  let $memberLoadNum = $('<label>').text(`Member Load #${i}`);
+  let $memberNum = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'Member No.');
+  let $xDist = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'X-distance');
+  let $pl = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'Point Load');
+  let $udl = $('<input>').addClass('input-style form-control').attr('name', 'loads')
+    .attr('placeholder', 'UDL');
+  
+  $memberLoadDiv
+    .append($memberLoadNum)
+    .append($memberNum)
+    .append($xDist)
+    .append($pl)
+    .append($udl);
+  
+  $('#ml-container')
+    .append($memberLoadDiv);
+  
 }

@@ -58,14 +58,20 @@ function generateJointInput(i) {
   let $xRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
   let $yRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
   let $rotRest = $('<input>').attr('type', 'checkbox').attr('name', 'Joints');
+  let $xRestLabel = $('<label>').text('x-rest.');
+  let $yRestLabel = $('<label>').text('y-rest.');
+  let $rotRestLabel = $('<label>').text('rot. rest.');
 
   // append all tags in reverse order (starting with furthest nested tags)
   $jointDiv
     .append($jointNum)
     .append($coordInputX)
     .append($coordInputY)
+    .append($xRestLabel)
     .append($xRest)
+    .append($yRestLabel)
     .append($yRest)
+    .append($rotRestLabel)
     .append($rotRest);
 
   $('#joints-container-1')

@@ -6,7 +6,7 @@
 
 ### To Do
 1. [done] Save input information to an object first. This intermediary step will remove the need to have the front end layout match the order that the file needs to be written in.
-2. Make the front end dynamic based on the number of nodes and members chosen (i.e. if the user wants 5 members, there should be 5 input boxes generated to enter information in).
+2. [done] Make the front end dynamic based on the number of nodes and members chosen (i.e. if the user wants 5 members, there should be 5 input boxes generated to enter information in).
 3. [done] Make Fortran program output a JSON file that the server can use to render the results page.
 4. Write thorough documentation for the user on how to input information properly, and how to interpret the results.
 5. Incorporate user accounts: login/registration and authentication with cookie-session.

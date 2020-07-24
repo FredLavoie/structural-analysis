@@ -1,4 +1,4 @@
-// Takes object and provided by the server and create the string that
+// Takes the object provided by the server and creates the string that
 // the Fortran program expect
 
 module.exports = function (obj) {

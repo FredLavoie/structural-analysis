@@ -9,9 +9,9 @@
 - [done] Make the front end dynamic based on the number of nodes and members chosen (i.e. if the user wants 5 members, there should be 5 input boxes generated to enter information in).
 - [done] Make Fortran program output a JSON file that the server can use to render the results page.
 - Write thorough documentation for the user on how to input information properly, and how to interpret the results.
-- Incorporate user accounts: login/registration and authentication with cookie-session.
-- Incorporate database into the app where users can save their models.
-- Make fields repopulate input data when removing/adding members/joints/etc
+- Make user input display visual structure dynamically
+- Make results display visually
+
 
 ### Docker
 Build images:			`docker build -t structural-app .`
@@ -20,7 +20,6 @@ Restart container:		`docker restart <container_name>`
 Remove container:		`docker rm <container_name>`
 Remove image:			`docker rmi <image_id>`
 
-### notes:
 - Currently, the app can be run either local or in a container.
 
 
@@ -32,3 +31,9 @@ Remove image:			`docker rmi <image_id>`
 5. FORTRAN program outputs JSON object
 5. server returns JSON object to front end
 6. front end displays results to DOM
+
+
+### Features to add in the future
+- Incorporate user accounts: login/registration and authentication with cookie-session.
+- Incorporate database into the app where users can save their models.
+- Make fields repopulate input data when removing/adding members/joints/etc

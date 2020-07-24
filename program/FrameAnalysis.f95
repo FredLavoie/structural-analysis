@@ -35,15 +35,15 @@ integer,dimension(:,:),allocatable:: mcp
 !To compile f95 to executable: gfortran -o <executable> <source_code.f95>
 
 !OPEN INPUT FILE AS UNIT 5
-open(5,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_in.txt")
+open(5,file="/home/flavoie/Documents/structural_analysis/program/data_in.txt")
 ! open(5,file="program/data_in.txt")
 
 !OPEN OUTPUT FILE AS UNIT 8
-open(8,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_out.txt")
+open(8,file="/home/flavoie/Documents/structural_analysis/program/data_out.txt")
 ! open(8,file="program/data_out.txt")
 
 !OPEN OUTPUT FILE AS UNIT 9 (JSON string)
-open(9,file="/Users/fredericlavoie/Documents/structural_analysis/program/data_string.json")
+open(9,file="/home/flavoie/Documents/structural_analysis/program/data_string.json")
 ! open(8,file="program/data_out.json")
 
 write(9,*)'{'

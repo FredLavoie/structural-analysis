@@ -147,13 +147,13 @@ function generateMOIInput(i) {
 function generateJointLoads(i) {
   let $jointLoadDiv = $('<div>').addClass('container-2 joint-load-container');
   let $jointLoadNum = $('<label>').text(`Joint Load #${i}`);
-  let $jointNum = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $jointNum = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'Joint No.');
-  let $xValue = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $xValue = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'X value');
-  let $yValue = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $yValue = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'Y value');
-  let $moment = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $moment = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'Moment');
   
   $jointLoadDiv
@@ -170,13 +170,13 @@ function generateJointLoads(i) {
 function generateMemberLoads(i) {
   let $memberLoadDiv = $('<div>').addClass('container-2 member-load-container');
   let $memberLoadNum = $('<label>').text(`Member Load #${i}`);
-  let $memberNum = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $memberNum = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'Member No.');
-  let $xDist = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $xDist = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'X-distance');
-  let $pl = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $pl = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'Point Load');
-  let $udl = $('<input>').addClass('input-style form-control').attr('name', `loads-${i}`)
+  let $udl = $('<input>').addClass('input-style form-control').attr('name', 'loads')
     .attr('placeholder', 'UDL');
   
   $memberLoadDiv

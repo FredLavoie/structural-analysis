@@ -6,31 +6,28 @@ module.exports = function (obj) {
   inputObject.numElasticModulus = Number(obj.numElasticModulus);
   inputObject.numAreas = Number(obj.numAreas);
   inputObject.numMomentOfInertia = Number(obj.numMomentOfInertia);
-  inputObject.numLoadCases = Number(obj.numLoadCases);
-  inputObject.joints = extractJointsAndMembers(obj.Joints);
+  inputObject.numLoadCases = 1;
+  inputObject.joints = extractJointsAndMembers(obj.joints);
   inputObject.elasticMods = extractProperties(obj.ElasticMods);
   inputObject.areas = extractProperties(obj.Areas);
   inputObject.MoI = extractProperties(obj.MoI);
-  inputObject.members = extractJointsAndMembers(obj.Members);
-  inputObject.loads = extractLoads(obj.Loads);
+  inputObject.members = extractJointsAndMembers(obj.members);
+  inputObject.loads = extractLoads(obj.loads, obj.numJointLoads, obj.numMemLoads);
 
   return inputObject;
 };
 
-/********************** HELPER FUNCTIONS **********************/
-/**************************************************************/
+/******************************** HELPER FUNCTIONS ********************************/
+/**********************************************************************************/
 
 function extractJointsAndMembers(data) {
   let resultArr = [];
-  let tempArr = data.split('\r\n').map(e => e.split(' '));
-  for (let joint of tempArr) {
+  let num = data.length / 5;
+  for (let i = 0; i < num; i++) {
     let arr = [];
-    for (let i = 1; i < joint.length; i++) {
-      if (joint[i] === '') {
-        continue;
-      } else {
-        arr.push(Number(joint[i]));
-      }
+    let section = i * 5;
+    for (let i = 0; i < 5; i++) {
+      arr.push(Number(data[section + i]));
     }
     resultArr.push(arr);
   }
@@ -38,20 +35,21 @@ function extractJointsAndMembers(data) {
 }
 
 function extractProperties(data) {
-  let resultArr = [];
-  let tempArr = data.split('\r\n').map(e => e.split(' '));
-  for (let item of tempArr) {
-    resultArr.push(Number(item[1]));
-  }
+  if(typeof data == 'string') data = [ data ];
+  let resultArr = data.map(e => Number(e));
   return resultArr;
 }
 
-function extractLoads(data) {
-  let tempArr = data.split('\r\n').map(e => e.split(' '));
-  for (let item of tempArr) {
-    for (let i = 0; i < item.length; i++) {
-      item[i] = Number(item[i]);
+function extractLoads(data, njl, nml) {
+  let resultArr = [[Number(njl), Number(nml)]];
+  let num = data.length / 4;
+  for (let i = 0; i < num; i++) {
+    let arr = [];
+    let section = i * 4;
+    for (let i = 0; i < 4; i++) {
+      arr.push(Number(data[section + i]));
     }
+    resultArr.push(arr);
   }
-  return tempArr;
+  return resultArr;
 }

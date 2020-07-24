@@ -47,8 +47,9 @@ app.post('/results', (req, res) => {
   
   
   let inputObject = createInputObject(req.body);
+  console.log('inputObject:');
   console.log(inputObject);
-  // let dataString = createInputString(inputObject);
+  let dataString = createInputString(inputObject);
 
   // code to write to the input file
   fs.writeFile('program/data_in.txt', dataString, function(error) {
@@ -67,6 +68,7 @@ app.post('/results', (req, res) => {
         return;
       }
       fs.readFile('program/data_string.json', 'utf-8', function(error, data) {
+        console.log('JSON data results object: ', data);
         if(error) console.log(error);
       });
       res.render('results');

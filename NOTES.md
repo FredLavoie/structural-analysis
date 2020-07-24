@@ -34,6 +34,7 @@ Remove image:			`docker rmi <image_id>`
 
 
 ### Features to add in the future
-- Incorporate user accounts: login/registration and authentication with cookie-session.
-- Incorporate database into the app where users can save their models.
+- Incorporate user accounts: login/registration and authentication with cookie-session
+- Incorporate database into the app where users can save their models
 - Make fields repopulate input data when removing/adding members/joints/etc
+- Add csv file upload

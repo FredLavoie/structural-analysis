@@ -110,7 +110,7 @@ write(8,500)
 write(8,*)
 write(8,501)'NUMBER OF JOINTS =',nj
 write(8,501)'NUMBER OF MEMBERS =',nm
-write(8,501)'NUMBER OF LOAD CASES =',npc
+! write(8,501)'NUMBER OF LOAD CASES =',npc
 write(8,*)
 write(8,*)
 write(8,*)'JOINT DATA'
@@ -227,7 +227,7 @@ write(8,521)
 write(8,522)
 write(8,523)
 write(9,*)' "primaryUnknowns":'
-write(9,*)'  ['
+write(9,*)'   ['
 do i=1,npc
   write(9,*)'     ['
   if (npc>1) then
@@ -259,7 +259,7 @@ do i=1,npc
     write(9,*)'     ],'
   end if
 end do
-write(9,*)'  ],'
+write(9,*)'   ],'
 
 !**************************************************************************************************
 ! PRINTOUT SECONDARY UNKNOWNS
@@ -302,7 +302,7 @@ call mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,nxsp,im,nip,Aml)
 523 format(20x,'X',17x,'Y',14x,'ROTATION')
 524 format(2x,'#',5x,'INERTIA')
 525 format(8x,'MOMENT OF')
-526 format(i3,5x,es10.1)
+526 format(i3,3x,es10.1)
 527 format(2x,i3,8x,f10.2,4x,es10.2,5x,es10.2)
 528 format(2x,'MEMBER',21x,'MEMBER LOADS')
 529 format(2x,'NUMBER',10x,'X-DIST.',10x,'PL',10x,'UDL')
@@ -646,7 +646,7 @@ real,dimension(neq)::ar
 write(8,105)
 write(8,*)
 write(9,*)' "secondaryUnknowns":'
-write(9,*)'  ['
+write(9,*)'   ['
 do k=1,npc
   write(9,111)'      ['
   ar(:)=0
@@ -738,7 +738,7 @@ do k=1,npc
     write(9,*)'     ],'
   end if
 end do
-write(9,*)'  ]'
+write(9,*)'   ]'
 
 100 format(4x,i3,5x,es12.3,4x,es12.3,4x,es12.3)
 101 format(3x,'SUPPORT  REACTIONS')
@@ -749,9 +749,9 @@ write(9,*)'  ]'
 106 format(71('-'))
 107 format(3x,'MEMBER END FORCES')
 108 format(17x,es12.3,4x,es12.3,4x,es12.3)
-110 format(A,F9.4,A,F9.4,A,F9.4,A,F9.4,A,F9.4,A,F9.4,A)
+110 format(A,F12.4,A,F12.4,A,F12.4,A,F12.4,A,F12.4,A,F12.4,A)
 111 format(A,i3,A)
-112 format(A,i4,A,F9.4,A,F9.4,A,F9.4,A)
+112 format(A,i4,A,F12.4,A,F12.4,A,F12.4,A)
 end subroutine mforce
 !**************************************************************************************************
 !**************************************************************************************************

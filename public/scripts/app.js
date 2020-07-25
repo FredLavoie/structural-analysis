@@ -66,16 +66,16 @@ $(document).ready(function() {
 function generateJointInput(i) {
   let $jointDiv = $('<div>').addClass('joints-container-2');
   let $jointNum = $('<label>').text(`Joint #${i}`);
-  let $coordInputX = $('<input>').addClass('input-style form-control').attr('name', 'joints')
-    .attr('placeholder', 'X-coord.');
-  let $coordInputY = $('<input>').addClass('input-style form-control').attr('name', 'joints')
-    .attr('placeholder', 'Y-coord.');
-  let $xRest = $('<input>').addClass('input-style form-control').attr('name', 'joints')
-    .attr('placeholder', 'x-rest.');
-  let $yRest = $('<input>').addClass('input-style form-control').attr('name', 'joints')
-    .attr('placeholder', 'y-rest.');
-  let $rotRest = $('<input>').addClass('input-style form-control').attr('name', 'joints')
-    .attr('placeholder', 'rot. rest.');
+  let $coordInputX = $('<input>').addClass('input-style form-control joint')
+    .attr('name', 'joints').attr('placeholder', 'X-coord.');
+  let $coordInputY = $('<input>').addClass('input-style form-control joint')
+    .attr('name', 'joints').attr('placeholder', 'Y-coord.');
+  let $xRest = $('<input>').addClass('input-style form-control')
+    .attr('name', 'joints').attr('placeholder', 'x-rest.');
+  let $yRest = $('<input>').addClass('input-style form-control')
+    .attr('name', 'joints').attr('placeholder', 'y-rest.');
+  let $rotRest = $('<input>').addClass('input-style form-control')
+    .attr('name', 'joints').attr('placeholder', 'rot. rest.');
 
 
   $jointDiv
@@ -95,16 +95,16 @@ function generateJointInput(i) {
 function generateMemberInput(i) {
   let $memberDiv = $('<div>').addClass('container-2 members-container-2');
   let $memberNum = $('<label>').text(`Member #${i}`);
-  let $jointStart = $('<input>').addClass('input-style form-control').attr('name', 'members')
-    .attr('placeholder', 'Joint start');
-  let $jointEnd = $('<input>').addClass('input-style form-control').attr('name', 'members')
-    .attr('placeholder', 'Joint end');
-  let $emNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
-    .attr('placeholder', 'EM No.');
-  let $areaNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
-    .attr('placeholder', 'Area No.');
-  let $moiNo = $('<input>').addClass('input-style form-control').attr('name', 'members')
-    .attr('placeholder', 'MoI No.');
+  let $jointStart = $('<input>').addClass('input-style form-control member')
+    .attr('name', 'members').attr('placeholder', 'Joint start');
+  let $jointEnd = $('<input>').addClass('input-style form-control member')
+    .attr('name', 'members').attr('placeholder', 'Joint end');
+  let $emNo = $('<input>').addClass('input-style form-control')
+    .attr('name', 'members').attr('placeholder', 'EM No.');
+  let $areaNo = $('<input>').addClass('input-style form-control')
+    .attr('name', 'members').attr('placeholder', 'Area No.');
+  let $moiNo = $('<input>').addClass('input-style form-control')
+    .attr('name', 'members').attr('placeholder', 'MoI No.');
 
   $memberDiv
     .append($memberNum)
@@ -123,6 +123,7 @@ function generateMemberInput(i) {
 function generateEMInput(i) {
   $('#em-container').append($('<label>').text(`Elastic Modulus # ${i}`));
   $('#em-container').append($('<input>')
+    
     .addClass('input-style form-control')
     .attr('name', 'ElasticMods'));
 }
@@ -131,6 +132,7 @@ function generateEMInput(i) {
 function generateAreaInput(i) {
   $('#area-container').append($('<label>').text(`Area # ${i}`));
   $('#area-container').append($('<input>')
+    
     .addClass('input-style form-control')
     .attr('name', 'Areas'));
 }
@@ -139,6 +141,7 @@ function generateAreaInput(i) {
 function generateMOIInput(i) {
   $('#moi-container').append($('<label>').text(`Moment of Inertia # ${i}`));
   $('#moi-container').append($('<input>')
+    
     .addClass('input-style form-control')
     .attr('name', 'MoI'));
 }
@@ -147,14 +150,14 @@ function generateMOIInput(i) {
 function generateJointLoads(i) {
   let $jointLoadDiv = $('<div>').addClass('container-2 joint-load-container');
   let $jointLoadNum = $('<label>').text(`Joint Load #${i}`);
-  let $jointNum = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'Joint No.');
-  let $xValue = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'X value');
-  let $yValue = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'Y value');
-  let $moment = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'Moment');
+  let $jointNum = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'Joint No.');
+  let $xValue = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'X value');
+  let $yValue = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'Y value');
+  let $moment = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'Moment');
   
   $jointLoadDiv
     .append($jointLoadNum)
@@ -170,14 +173,14 @@ function generateJointLoads(i) {
 function generateMemberLoads(i) {
   let $memberLoadDiv = $('<div>').addClass('container-2 member-load-container');
   let $memberLoadNum = $('<label>').text(`Member Load #${i}`);
-  let $memberNum = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'Member No.');
-  let $xDist = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'X-distance');
-  let $pl = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'Point Load');
-  let $udl = $('<input>').addClass('input-style form-control').attr('name', 'loads')
-    .attr('placeholder', 'UDL');
+  let $memberNum = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'Member No.');
+  let $xDist = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'X-distance');
+  let $pl = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'Point Load');
+  let $udl = $('<input>').addClass('input-style form-control')
+    .attr('name', 'loads').attr('placeholder', 'UDL');
   
   $memberLoadDiv
     .append($memberLoadNum)

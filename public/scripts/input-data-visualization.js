@@ -11,6 +11,7 @@ $(document).change(function() {
   $('.joint').change(function() {
     // clear joints before drawing updated joints
     $('svg').children('circle').remove();
+    $('svg').children('text').remove();
 
     let jointArray = $('.joint').map(function() {
       return Number(this.value);
@@ -26,11 +27,11 @@ $(document).change(function() {
   });
 
   $('.member').change(function() {
+  // clear members before drawing updated members
+    $('svg').children('line').remove();
     let memberArray = $('.member').map(function() {
       return Number(this.value);
     }).get();
-
-    console.log('memberArray: ', memberArray);
 
     let memberNumber = 0;
     for(let i = 0; i < memberArray.length; i += 2) {
@@ -44,6 +45,14 @@ $(document).change(function() {
       console.log('globalMemberObject: ', globalMemberObject);
     }
   });
+
+  // $('.supports').change(function() {
+  //   letSupportsArray = $('.supports').map(function() {
+  //     return Number(this.value);
+  //   }).get();
+
+
+  // });
 });
 
 
@@ -100,6 +109,15 @@ function drawNode(jointNum, point) {
     node.setAttributeNS(null, "cx", `${point[0]}`);
     node.setAttributeNS(null, "cy",`${point[1]}`);
     box.append(node);
+
+    const text = document.createElementNS(ns, 'text');
+    text.setAttribute('x', `${point[0] - 10}`);
+    text.setAttribute('y', `${point[1] - 10}`);
+    text.setAttribute('height', '5');
+    text.setAttribute('width', '5');
+    text.setAttribute('fill', '#000');
+    text.textContent = `${jointNum}`;
+    box.append(text);
   }
 }
 
@@ -123,5 +141,17 @@ function drawMembers(num, start, end) {
     member.setAttribute("stroke", "black");
     member.setAttribute("stroke-width", 3);
     box.append(member);
+
+    let midX = (globalNodeObject[start][0] + globalNodeObject[end][0]) / 2;
+    let midY = (globalNodeObject[start][1] + globalNodeObject[end][1]) / 2;
+
+    const text = document.createElementNS(ns, 'text');
+    text.setAttribute('x', `${midX - 10}`);
+    text.setAttribute('y', `${midY - 10}`);
+    text.setAttribute('height', '5');
+    text.setAttribute('width', '5');
+    text.setAttribute('fill', '#000');
+    text.textContent = `${num}`;
+    box.append(text);
   }
 }

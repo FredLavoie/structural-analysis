@@ -1,31 +1,24 @@
 //************************************** DOCUMENT READY ******************************************/
 //************************************************************************************************/
 
-$(document).ready(function() {
-
-  const ns = 'http://www.w3.org/2000/svg';
-  const node = document.createElementNS(ns, 'circle');
-  node.setAttributeNS(null, "id","joint");
-  node.setAttributeNS(null, "r", "5");
-
-  let box = $('#structure-window');
-  node.setAttributeNS(null, "cx", "300");
-  node.setAttributeNS(null, "cy","300");
-  box.append(node);
-
-});
-
 $(document).change(function() {
+  const windowWidth = $('#structure-window').width();
+  const windowHeight = $('#structure-window').height();
 
   $('.joint').change(function() {
-    let windowWidth = $('#structure-window').width();
-    let windowHeight = $('#structure-window').height();
+    // clear joints before drawing updated joints
+    $('svg').children('circle').remove();
+
     let jointArray = $('.joint').map(function() {
       return Number(this.value);
     }).get();
-
     console.log('jointArray: ', jointArray);
-    displayJoints(jointArray, windowWidth, windowHeight);
+    const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
+    let jointNum = 0;
+    for (const point of jointCoordinates) {
+      jointNum += 1;
+      createNode(jointNum, point);
+    }
   });
 
   // $('.member').change(function() {
@@ -39,33 +32,63 @@ $(document).change(function() {
 //**************************************** FUNCTIONS *********************************************/
 //************************************************************************************************/
 
-function displayJoints(arr, windowWidth, windowHeight) {
-  const verticalPadding = 0.1 * windowHeight;
-  const horizontalPadding = 0.1 * windowWidth;
-  console.log('windowWidth: ', windowWidth);
-  console.log('windowHeight: ', windowHeight);
-  let max = Math.max(...arr);
-  let min = Math.min(...arr);
-  console.log('max: ', max);
-  console.log('min: ', min);
-  for(let i = 1; i <= arr.length; i += 2){
-    console.log(arr[i]);
-  }
+function calculateJointCoordinates(arr, windowWidth, windowHeight) {
+  const jointCoordinates = [];
+  let xCoords = [];
+  let yCoords = [];
 
+  for(let i = 0; i < arr.length; i++){
+    if (i % 2 === 0) {
+      xCoords.push(arr[i]);
+    } else {
+      yCoords.push(arr[i]);
+    }
+  }
+  let xMax = Math.max(...xCoords); 
+  let xMin = Math.min(...xCoords);
+  let yMax = Math.max(...yCoords);
+  let yMin = Math.min(...yCoords);
+  let xRange = xMax - xMin;
+  let yRange = yMax - yMin;
+  let xMidRange = xRange / 2;
+  let yMidRange = yRange / 2;
+
+  if(xRange > yRange){
+    let multiplier = (windowWidth * 0.8) / xRange;
+    for(let i = 0; i < arr.length; i += 2) {
+      let x = (arr[i] * multiplier) + (windowWidth * 0.1);
+      let y = -((arr[i + 1] - yMidRange) * multiplier) + (windowHeight / 2);
+      jointCoordinates.push([Math.floor(x), Math.floor(y)]);
+    }
+  } else {
+    let multiplier = (windowHeight * 0.8) / yRange;
+    for(let i = 0; i < arr.length; i += 2) {
+      let x = ((arr[i] - xMidRange) * multiplier) + (windowWidth / 2);
+      let y = (windowHeight * 0.9) - (arr[i+1] * multiplier);
+      jointCoordinates.push([Math.floor(x), Math.floor(y)]);
+    }
+  }
+  return jointCoordinates;
 }
 
+function createNode(jointNum, point) {
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const node = document.createElementNS(ns, 'circle');
+  node.setAttributeNS(null, "id",`joint${jointNum}`);
+  node.setAttributeNS(null, "r", "5");
+  node.setAttributeNS(null, "cx", `${point[0]}`);
+  node.setAttributeNS(null, "cy",`${point[1]}`);
+  box.append(node);
+}
 
-
-
-// var ns = 'http://www.w3.org/2000/svg';
-// var div = document.getElementById('drawing');
-// var svg = document.createElementNS(ns, 'svg');
-// svg.setAttributeNS(null, 'width', '100%');
-// svg.setAttributeNS(null, 'height', '100%');
-// div.appendChild(svg);
-// var rect = document.createElementNS(ns, 'rect');
-// rect.setAttributeNS(null, 'width', 100);
-// rect.setAttributeNS(null, 'height', 100);
-// rect.setAttributeNS(null, 'fill', '#f06');
-// svg.appendChild(rect);
-
+// function createMembers(jointNum, point) {
+//   const ns = 'http://www.w3.org/2000/svg';
+//   const box = $('#structure-window');
+//   const node = document.createElementNS(ns, 'circle');
+//   node.setAttributeNS(null, "id",`joint${jointNum}`);
+//   node.setAttributeNS(null, "r", "5");
+//   node.setAttributeNS(null, "cx", `${point[0]}`);
+//   node.setAttributeNS(null, "cy",`${point[1]}`);
+//   box.append(node);
+// }

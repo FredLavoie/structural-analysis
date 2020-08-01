@@ -8,10 +8,11 @@ $(document).change(function() {
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
 
-  $('.joint').change(function() {
+  $('.joint').keyup(function() {
     // clear joints before drawing updated joints
     $('svg').children('circle').remove();
     $('svg').children('text').remove();
+    $('svg').children('line').remove();
 
     let jointArray = $('.joint').map(function() {
       return Number(this.value);
@@ -26,9 +27,11 @@ $(document).change(function() {
     }
   });
 
-  $('.member').change(function() {
-  // clear members before drawing updated members
+  $('.member').keyup(function() {
+    // clear members before drawing updated members
     $('svg').children('line').remove();
+    $('svg').children('#member-tag').remove();
+
     let memberArray = $('.member').map(function() {
       return Number(this.value);
     }).get();
@@ -42,7 +45,6 @@ $(document).change(function() {
       let end = globalNodeObject[memberArray[i + 1]];
 
       globalMemberObject[memberNumber] = { start: start, end: end };
-      console.log('globalMemberObject: ', globalMemberObject);
     }
   });
 
@@ -111,20 +113,18 @@ function drawNode(jointNum, point) {
     box.append(node);
 
     const text = document.createElementNS(ns, 'text');
+    text.setAttributeNS(null, "id",'joint-tag');
     text.setAttribute('x', `${point[0] - 10}`);
     text.setAttribute('y', `${point[1] - 10}`);
     text.setAttribute('height', '5');
     text.setAttribute('width', '5');
-    text.setAttribute('fill', '#000');
     text.textContent = `${jointNum}`;
     box.append(text);
   }
 }
 
 function drawMembers(num, start, end) {
-  console.log('start: ', start); 
-  console.log('end: ', end);
-
+  console.log('this got called');
   if(!(start in globalNodeObject) || !(end in globalNodeObject)) {
     return;
   }
@@ -146,11 +146,11 @@ function drawMembers(num, start, end) {
     let midY = (globalNodeObject[start][1] + globalNodeObject[end][1]) / 2;
 
     const text = document.createElementNS(ns, 'text');
+    text.setAttributeNS(null, "id",'member-tag');
     text.setAttribute('x', `${midX - 10}`);
     text.setAttribute('y', `${midY - 10}`);
     text.setAttribute('height', '5');
     text.setAttribute('width', '5');
-    text.setAttribute('fill', '#000');
     text.textContent = `${num}`;
     box.append(text);
   }

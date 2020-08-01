@@ -125,13 +125,3 @@ function drawMembers(num, start, end) {
     box.append(member);
   }
 }
-
-
-
-// var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
-// newLine.setAttribute('id','line2');
-// newLine.setAttribute('x1','0');
-// newLine.setAttribute('y1','0');
-// newLine.setAttribute('x2','200');
-// newLine.setAttribute('y2','200');
-// newLine.setAttribute("stroke", "black")

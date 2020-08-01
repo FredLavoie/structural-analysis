@@ -42,14 +42,9 @@ app.get('/documentation', (req, res) => {
 
 app.post('/results', (req, res) => {
   console.log('rendering results.ejs');
-  console.log('req.body:');
-  console.log(req.body);
-  
-  
-  let inputObject = createInputObject(req.body);
-  console.log('inputObject:');
-  console.log(inputObject);
-  let dataString = createInputString(inputObject);
+
+  const inputObject = createInputObject(req.body);
+  const dataString = createInputString(inputObject);
 
   // code to write to the input file
   fs.writeFile('program/data_in.txt', dataString, function(error) {
@@ -68,7 +63,7 @@ app.post('/results', (req, res) => {
         return;
       }
       fs.readFile('program/data_string.json', 'utf-8', function(error, data) {
-        console.log('JSON data results object: ', data);
+        console.log('JSON data results object: ', JSON.parse(data));
         if(error) console.log(error);
       });
       res.render('results');

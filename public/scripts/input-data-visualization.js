@@ -1,6 +1,9 @@
 //************************************** DOCUMENT READY ******************************************/
 //************************************************************************************************/
 
+const globalNodeObject = {};
+const globalMemberObject = {};
+
 $(document).change(function() {
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
@@ -12,22 +15,37 @@ $(document).change(function() {
     let jointArray = $('.joint').map(function() {
       return Number(this.value);
     }).get();
-    console.log('jointArray: ', jointArray);
+
     const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
     let jointNum = 0;
     for (const point of jointCoordinates) {
       jointNum += 1;
-      createNode(jointNum, point);
+      drawNode(jointNum, point);
+      globalNodeObject[jointNum] = point;
     }
   });
 
-  // $('.member').change(function() {
-  //   let memberArray = $('.member').map(function() {
-  //     return Number(this.value);
-  //   }).get();
-  //   console.log('member array: ', memberArray);
-  // });
+  $('.member').change(function() {
+    let memberArray = $('.member').map(function() {
+      return Number(this.value);
+    }).get();
+
+    console.log('memberArray: ', memberArray);
+
+    let memberNumber = 0;
+    for(let i = 0; i < memberArray.length; i += 2) {
+      memberNumber += 1;
+      drawMembers(memberNumber, memberArray[i], memberArray[i + 1]);
+      
+      let start = globalNodeObject[memberArray[i]];
+      let end = globalNodeObject[memberArray[i + 1]];
+
+      globalMemberObject[memberNumber] = { start: start, end: end };
+      console.log('globalMemberObject: ', globalMemberObject);
+    }
+  });
 });
+
 
 //**************************************** FUNCTIONS *********************************************/
 //************************************************************************************************/
@@ -71,24 +89,49 @@ function calculateJointCoordinates(arr, windowWidth, windowHeight) {
   return jointCoordinates;
 }
 
-function createNode(jointNum, point) {
-  const ns = 'http://www.w3.org/2000/svg';
-  const box = $('#structure-window');
-  const node = document.createElementNS(ns, 'circle');
-  node.setAttributeNS(null, "id",`joint${jointNum}`);
-  node.setAttributeNS(null, "r", "5");
-  node.setAttributeNS(null, "cx", `${point[0]}`);
-  node.setAttributeNS(null, "cy",`${point[1]}`);
-  box.append(node);
+function drawNode(jointNum, point) {
+  if(isNaN(point[0]) || isNaN(point[1])) return;
+  else {
+    const ns = 'http://www.w3.org/2000/svg';
+    const box = $('#structure-window');
+    const node = document.createElementNS(ns, 'circle');
+    node.setAttributeNS(null, "id",`joint${jointNum}`);
+    node.setAttributeNS(null, "r", "5");
+    node.setAttributeNS(null, "cx", `${point[0]}`);
+    node.setAttributeNS(null, "cy",`${point[1]}`);
+    box.append(node);
+  }
 }
 
-// function createMembers(jointNum, point) {
-//   const ns = 'http://www.w3.org/2000/svg';
-//   const box = $('#structure-window');
-//   const node = document.createElementNS(ns, 'circle');
-//   node.setAttributeNS(null, "id",`joint${jointNum}`);
-//   node.setAttributeNS(null, "r", "5");
-//   node.setAttributeNS(null, "cx", `${point[0]}`);
-//   node.setAttributeNS(null, "cy",`${point[1]}`);
-//   box.append(node);
-// }
+function drawMembers(num, start, end) {
+  console.log('start: ', start); 
+  console.log('end: ', end);
+
+  if(!(start in globalNodeObject) || !(end in globalNodeObject)) {
+    return;
+  }
+
+  if(start !== 0 && end !== 0) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const box = $('#structure-window');
+    const member = document.createElementNS(ns, 'line');
+    member.setAttributeNS(null, "id",`member${num}`);
+    member.setAttributeNS(null, "x1", `${globalNodeObject[start][0]}`);
+    member.setAttributeNS(null, "y1",`${globalNodeObject[start][1]}`);
+    member.setAttributeNS(null, "x2", `${globalNodeObject[end][0]}`);
+    member.setAttributeNS(null, "y2",`${globalNodeObject[end][1]}`);
+    member.setAttribute("stroke", "black");
+    member.setAttribute("stroke-width", 3);
+    box.append(member);
+  }
+}
+
+
+
+// var newLine = document.createElementNS('http://www.w3.org/2000/svg','line');
+// newLine.setAttribute('id','line2');
+// newLine.setAttribute('x1','0');
+// newLine.setAttribute('y1','0');
+// newLine.setAttribute('x2','200');
+// newLine.setAttribute('y2','200');
+// newLine.setAttribute("stroke", "black")

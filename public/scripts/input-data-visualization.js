@@ -4,11 +4,11 @@
 const globalNodeObject = {};
 const globalMemberObject = {};
 
-$(document).change(function() {
+$(document).on('change', function() {
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
 
-  $('.joint').keyup(function() {
+  $('.joint').on('change', function() {
     // clear joints before drawing updated joints
     $('svg').children('circle').remove();
     $('svg').children('text').remove();
@@ -27,7 +27,7 @@ $(document).change(function() {
     }
   });
 
-  $('.member').keyup(function() {
+  $('.member').on('change', function() {
     // clear members before drawing updated members
     $('svg').children('line').remove();
     $('svg').children('#member-tag').remove();
@@ -44,7 +44,13 @@ $(document).change(function() {
       let start = globalNodeObject[memberArray[i]];
       let end = globalNodeObject[memberArray[i + 1]];
 
-      globalMemberObject[memberNumber] = { start: start, end: end };
+      if(start, end) {
+        globalMemberObject[memberNumber] = { 
+          start: start,
+          end: end,
+          forceAngle: calculateForceAngle(start, end),
+        };
+      }
     }
   });
 
@@ -124,7 +130,6 @@ function drawNode(jointNum, point) {
 }
 
 function drawMembers(num, start, end) {
-  console.log('this got called');
   if(!(start in globalNodeObject) || !(end in globalNodeObject)) {
     return;
   }
@@ -154,4 +159,22 @@ function drawMembers(num, start, end) {
     text.textContent = `${num}`;
     box.append(text);
   }
+}
+
+function calculateForceAngle(start, end) {
+  let xDist = end[0] - start[0];
+  let yDist = -(end[1] - start[1]);
+  let angle = Math.abs(Math.atan(yDist/xDist) * (180 / Math.PI));
+  let forceAngle = 0;
+
+  if(xDist >= 0 && yDist >= 0) { // quadrant 1
+    forceAngle = angle + 90;
+  } else if(xDist <= 0 && yDist >= 0) { // quadrant 2
+    forceAngle = (180 - angle) + 90;
+  } else if(xDist <= 0 && yDist <= 0) { // quadrant 3
+    forceAngle = (180 + angle) + 90;
+  } else if(xDist >= 0 && yDist <= 0) { // quadrant 4
+    forceAngle = 90 - angle;
+  }
+  return Math.round(forceAngle);
 }

@@ -38,3 +38,5 @@ Remove image:			`docker rmi <image_id>`
 - Incorporate database into the app where users can save their models
 - Make fields repopulate input data when removing/adding members/joints/etc
 - Add csv file upload
+- Add download results (with graphics)
+- add hover boxes for nodes and members that show properties/coordinates

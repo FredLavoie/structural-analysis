@@ -4,6 +4,31 @@
 const globalNodeObject = {};
 const globalMemberObject = {};
 
+$(window).on('resize', function() {
+  // clear joints and members before drawing update
+  $('svg').children('circle').remove();
+  $('svg').children('text').remove();
+  $('svg').children('line').remove();
+  $('svg').children('line').remove();
+  $('svg').children('#member-tag').remove();
+
+  const windowWidth = $('#structure-window').width();
+  const windowHeight = $('#structure-window').height();
+
+  const memberArray = $('.member').map(function() {
+    return Number(this.value);
+  }).get();
+
+  const jointArray = $('.joint').map(function() {
+    return Number(this.value);
+  }).get();
+
+  const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
+
+  generateJoints(jointCoordinates);
+  generateMembers(memberArray);
+});
+
 $(document).on('change', function() {
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
@@ -14,17 +39,13 @@ $(document).on('change', function() {
     $('svg').children('text').remove();
     $('svg').children('line').remove();
 
-    let jointArray = $('.joint').map(function() {
+    const jointArray = $('.joint').map(function() {
       return Number(this.value);
     }).get();
 
     const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
-    let jointNum = 0;
-    for (const point of jointCoordinates) {
-      jointNum += 1;
-      drawNode(jointNum, point);
-      globalNodeObject[jointNum] = point;
-    }
+
+    generateJoints(jointCoordinates);
   });
 
   $('.member').on('change', function() {
@@ -32,26 +53,11 @@ $(document).on('change', function() {
     $('svg').children('line').remove();
     $('svg').children('#member-tag').remove();
 
-    let memberArray = $('.member').map(function() {
+    const memberArray = $('.member').map(function() {
       return Number(this.value);
     }).get();
 
-    let memberNumber = 0;
-    for(let i = 0; i < memberArray.length; i += 2) {
-      memberNumber += 1;
-      drawMembers(memberNumber, memberArray[i], memberArray[i + 1]);
-      
-      let start = globalNodeObject[memberArray[i]];
-      let end = globalNodeObject[memberArray[i + 1]];
-
-      if(start, end) {
-        globalMemberObject[memberNumber] = { 
-          start: start,
-          end: end,
-          forceAngle: calculateForceAngle(start, end),
-        };
-      }
-    }
+    generateMembers(memberArray);
   });
 
   // $('.supports').change(function() {
@@ -67,7 +73,7 @@ $(document).on('change', function() {
 //**************************************** FUNCTIONS *********************************************/
 //************************************************************************************************/
 
-function calculateJointCoordinates(arr, windowWidth, windowHeight) {
+function calculateJointCoordinates(arr, width, height) {
   const jointCoordinates = [];
   let xCoords = [];
   let yCoords = [];
@@ -79,31 +85,77 @@ function calculateJointCoordinates(arr, windowWidth, windowHeight) {
       yCoords.push(arr[i]);
     }
   }
-  let xMax = Math.max(...xCoords); 
+  let xMax = Math.max(...xCoords);
   let xMin = Math.min(...xCoords);
   let yMax = Math.max(...yCoords);
   let yMin = Math.min(...yCoords);
+
+  if (xMin < 0) { // translate all x-coordiantes by xMin
+    let count = 0;
+    for(let i = 0; i < arr.length; i += 2){
+      arr.splice(i, 1, xCoords[count] -= xMin );
+      count += 1;
+    }
+  }
+
+  if (yMin < 0) { // translate all y-coordiantes by xMin
+    let count = 0;
+    for(let i = 1; i <= arr.length; i += 2){
+      arr.splice(i, 1, yCoords[count] -= yMin );
+      count += 1;
+    }
+  }
+
   let xRange = xMax - xMin;
   let yRange = yMax - yMin;
   let xMidRange = xRange / 2;
   let yMidRange = yRange / 2;
 
   if(xRange > yRange){
-    let multiplier = (windowWidth * 0.8) / xRange;
+    let multiplier = (width * 0.8) / xRange;
     for(let i = 0; i < arr.length; i += 2) {
-      let x = (arr[i] * multiplier) + (windowWidth * 0.1);
-      let y = -((arr[i + 1] - yMidRange) * multiplier) + (windowHeight / 2);
+      let x = (arr[i] * multiplier) + (width * 0.1);
+      let y = -((arr[i + 1] - yMidRange) * multiplier) + (height / 2);
       jointCoordinates.push([Math.floor(x), Math.floor(y)]);
     }
   } else {
-    let multiplier = (windowHeight * 0.8) / yRange;
+    let multiplier = (height * 0.8) / yRange;
     for(let i = 0; i < arr.length; i += 2) {
-      let x = ((arr[i] - xMidRange) * multiplier) + (windowWidth / 2);
-      let y = (windowHeight * 0.9) - (arr[i+1] * multiplier);
+      let x = ((arr[i] - xMidRange) * multiplier) + (width / 2);
+      let y = (height * 0.9) - (arr[i+1] * multiplier);
       jointCoordinates.push([Math.floor(x), Math.floor(y)]);
     }
   }
   return jointCoordinates;
+}
+
+function generateJoints(jointCoordinates) {
+  let jointNum = 0;
+  for (const point of jointCoordinates) {
+    jointNum += 1;
+    drawNode(jointNum, point);
+    globalNodeObject[jointNum] = point;
+  }
+}
+
+function generateMembers(memberArray) {
+  let memberNumber = 0;
+
+  for(let i = 0; i < memberArray.length; i += 2) {
+    memberNumber += 1;
+    drawMembers(memberNumber, memberArray[i], memberArray[i + 1]);
+    
+    let start = globalNodeObject[memberArray[i]];
+    let end = globalNodeObject[memberArray[i + 1]];
+
+    if(start, end) {
+      globalMemberObject[memberNumber] = { 
+        start: start,
+        end: end,
+        forceAngle: calculateForceAngle(start, end),
+      };
+    }
+  }
 }
 
 function drawNode(jointNum, point) {

@@ -1,8 +1,8 @@
 //************************************** DOCUMENT READY ******************************************/
 //************************************************************************************************/
 
-$(document).ready(function() {
-  $('#input-numJoints').change(function() {
+$(document).on('ready', function() {
+  $('#input-numJoints').on('change', function() {
     $('#joints-container-1').empty();
     let num = $('#input-numJoints').val();
     for (let i = 1; i <= num; i++) {
@@ -10,7 +10,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#input-numMembers').change(function() {
+  $('#input-numMembers').on('change', function() {
     $('#members-container-1').empty();
     let num = $('#input-numMembers').val();
     for (let i = 1; i <= num; i++) {
@@ -18,7 +18,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#input-numEMs').change(function() {
+  $('#input-numEMs').on('change', function() {
     $('#em-container').empty();
     let num = $('#input-numEMs').val();
     for (let i = 1; i <= num; i++) {
@@ -26,7 +26,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#input-numAreas').change(function() {
+  $('#input-numAreas').on('change', function() {
     $('#area-container').empty();
     let num = $('#input-numAreas').val();
     for (let i = 1; i <= num; i++) {
@@ -34,7 +34,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#input-numMOIs').change(function() {
+  $('#input-numMOIs').on('change', function() {
     $('#moi-container').empty();
     let num = $('#input-numMOIs').val();
     for (let i = 1; i <= num; i++) {
@@ -42,7 +42,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#input-numJointLoads').change(function() {
+  $('#input-numJointLoads').on('change', function() {
     $('#pl-container').empty();
     let num = $('#input-numJointLoads').val();
     for (let i = 1; i <= num; i++) {
@@ -50,7 +50,7 @@ $(document).ready(function() {
     }
   });
 
-  $('#input-numMemLoads').change(function() {
+  $('#input-numMemLoads').on('change', function() {
     $('#ml-container').empty();
     let num = $('#input-numMemLoads').val();
     for (let i = 1; i <= num; i++) {

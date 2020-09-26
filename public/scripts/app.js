@@ -1,7 +1,7 @@
 //************************************** DOCUMENT READY ******************************************/
 //************************************************************************************************/
 
-$(document).on('ready', function() {
+$(document).ready(function() {
   $('#input-numJoints').on('change', function() {
     $('#joints-container-1').empty();
     let num = $('#input-numJoints').val();

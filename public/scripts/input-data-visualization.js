@@ -9,8 +9,8 @@ $(window).on('resize', function() {
   $('svg').children('circle').remove();
   $('svg').children('text').remove();
   $('svg').children('line').remove();
-  $('svg').children('line').remove();
   $('svg').children('#member-tag').remove();
+  $('svg').children('#support').remove();
 
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
@@ -25,6 +25,11 @@ $(window).on('resize', function() {
 
   const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
 
+  const SupportsArray = $('.supports').map(function() {
+    return Number(this.value);
+  }).get();
+
+  generateSupports(SupportsArray);
   generateJoints(jointCoordinates);
   generateMembers(memberArray);
 });
@@ -60,13 +65,15 @@ $(document).on('change', function() {
     generateMembers(memberArray);
   });
 
-  // $('.supports').change(function() {
-  //   letSupportsArray = $('.supports').map(function() {
-  //     return Number(this.value);
-  //   }).get();
+  $('.supports').on('change', function() {
+    $('svg').children('#support').remove();
 
-
-  // });
+    const supportsArray = $('.supports').map(function() {
+      return Number(this.value);
+    }).get();
+    console.log('supportsArray: ', supportsArray);
+    generateSupports(supportsArray);
+  });
 });
 
 
@@ -129,24 +136,24 @@ function calculateJointCoordinates(arr, width, height) {
   return jointCoordinates;
 }
 
-function generateJoints(jointCoordinates) {
+function generateJoints(arr) {
   let jointNum = 0;
-  for (const point of jointCoordinates) {
+  for (const point of arr) {
     jointNum += 1;
     drawNode(jointNum, point);
     globalNodeObject[jointNum] = point;
   }
 }
 
-function generateMembers(memberArray) {
+function generateMembers(arr) {
   let memberNumber = 0;
 
-  for(let i = 0; i < memberArray.length; i += 2) {
+  for(let i = 0; i < arr.length; i += 2) {
     memberNumber += 1;
-    drawMembers(memberNumber, memberArray[i], memberArray[i + 1]);
+    drawMember(memberNumber, arr[i], arr[i + 1]);
     
-    let start = globalNodeObject[memberArray[i]];
-    let end = globalNodeObject[memberArray[i + 1]];
+    let start = globalNodeObject[arr[i]];
+    let end = globalNodeObject[arr[i + 1]];
 
     if(start, end) {
       globalMemberObject[memberNumber] = { 
@@ -158,60 +165,30 @@ function generateMembers(memberArray) {
   }
 }
 
-function drawNode(jointNum, point) {
-  if(isNaN(point[0]) || isNaN(point[1])) return;
-  else {
-    const ns = 'http://www.w3.org/2000/svg';
-    const box = $('#structure-window');
-    const node = document.createElementNS(ns, 'circle');
-    node.setAttributeNS(null, "id",`joint${jointNum}`);
-    node.setAttributeNS(null, "r", "5");
-    node.setAttributeNS(null, "cx", `${point[0]}`);
-    node.setAttributeNS(null, "cy",`${point[1]}`);
-    box.append(node);
-
-    const text = document.createElementNS(ns, 'text');
-    text.setAttributeNS(null, "id",'joint-tag');
-    text.setAttribute('x', `${point[0] - 10}`);
-    text.setAttribute('y', `${point[1] - 10}`);
-    text.setAttribute('height', '5');
-    text.setAttribute('width', '5');
-    text.textContent = `${jointNum}`;
-    box.append(text);
+function generateSupports(arr) {
+  let jointNum = 1;
+  for(let i = 0; i < arr.length; i += 3) {
+    if(arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) { // fixed
+      drawFixedSupport(jointNum);
+    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) { // pin
+      drawPinnedSupport(jointNum);
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) { // x-rest rot-rest
+      drawXSupport(jointNum);
+      drawRotSupport(jointNum);
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) { // x-rest
+      drawXSupport(jointNum);
+    } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) { // rot-rest
+      drawRotSupport(jointNum);
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) { // y-rest
+      drawYSupport(jointNum);
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) { // y-rest rot-rest
+      drawYSupport(jointNum);
+      drawRotSupport(jointNum);
+    }
+    jointNum += 1;
   }
 }
 
-function drawMembers(num, start, end) {
-  if(!(start in globalNodeObject) || !(end in globalNodeObject)) {
-    return;
-  }
-
-  if(start !== 0 && end !== 0) {
-    const ns = 'http://www.w3.org/2000/svg';
-    const box = $('#structure-window');
-    const member = document.createElementNS(ns, 'line');
-    member.setAttributeNS(null, "id",`member${num}`);
-    member.setAttributeNS(null, "x1", `${globalNodeObject[start][0]}`);
-    member.setAttributeNS(null, "y1",`${globalNodeObject[start][1]}`);
-    member.setAttributeNS(null, "x2", `${globalNodeObject[end][0]}`);
-    member.setAttributeNS(null, "y2",`${globalNodeObject[end][1]}`);
-    member.setAttribute("stroke", "black");
-    member.setAttribute("stroke-width", 3);
-    box.append(member);
-
-    let midX = (globalNodeObject[start][0] + globalNodeObject[end][0]) / 2;
-    let midY = (globalNodeObject[start][1] + globalNodeObject[end][1]) / 2;
-
-    const text = document.createElementNS(ns, 'text');
-    text.setAttributeNS(null, "id",'member-tag');
-    text.setAttribute('x', `${midX - 10}`);
-    text.setAttribute('y', `${midY - 10}`);
-    text.setAttribute('height', '5');
-    text.setAttribute('width', '5');
-    text.textContent = `${num}`;
-    box.append(text);
-  }
-}
 
 function calculateForceAngle(start, end) {
   let xDist = end[0] - start[0];
@@ -229,4 +206,111 @@ function calculateForceAngle(start, end) {
     forceAngle = 90 - angle;
   }
   return Math.round(forceAngle);
+}
+
+//************************************* DRAW FUNCTIONS *******************************************/
+//************************************************************************************************/
+
+function drawNode(jointNum, point) {
+  if(isNaN(point[0]) || isNaN(point[1])) return;
+  else {
+    const ns = 'http://www.w3.org/2000/svg';
+    const box = $('#structure-window');
+    const node = document.createElementNS(ns, 'circle');
+    node.setAttributeNS(null, 'id',`joint${jointNum}`);
+    node.setAttributeNS(null, 'r', '5');
+    node.setAttributeNS(null, 'cx', `${point[0]}`);
+    node.setAttributeNS(null, 'cy',`${point[1]}`);
+    box.append(node);
+
+    const text = document.createElementNS(ns, 'text');
+    text.setAttributeNS(null, 'id','joint-tag');
+    text.setAttribute('x', `${point[0] - 10}`);
+    text.setAttribute('y', `${point[1] - 10}`);
+    text.setAttribute('height', '5');
+    text.setAttribute('width', '5');
+    text.textContent = `${jointNum}`;
+    box.append(text);
+  }
+}
+
+function drawMember(num, start, end) {
+  if(!(start in globalNodeObject) || !(end in globalNodeObject)) return;
+
+  if(start !== 0 && end !== 0) {
+    const ns = 'http://www.w3.org/2000/svg';
+    const box = $('#structure-window');
+    const member = document.createElementNS(ns, 'line');
+    member.setAttributeNS(null, 'id',`member${num}`);
+    member.setAttributeNS(null, 'x1', `${globalNodeObject[start][0]}`);
+    member.setAttributeNS(null, 'y1',`${globalNodeObject[start][1]}`);
+    member.setAttributeNS(null, 'x2', `${globalNodeObject[end][0]}`);
+    member.setAttributeNS(null, 'y2',`${globalNodeObject[end][1]}`);
+    member.setAttribute('stroke', 'black');
+    member.setAttribute('stroke-width', '3');
+    box.append(member);
+
+    let midX = (globalNodeObject[start][0] + globalNodeObject[end][0]) / 2;
+    let midY = (globalNodeObject[start][1] + globalNodeObject[end][1]) / 2;
+
+    const text = document.createElementNS(ns, 'text');
+    text.setAttributeNS(null, 'id','member-tag');
+    text.setAttribute('x', `${midX - 10}`);
+    text.setAttribute('y', `${midY - 10}`);
+    text.setAttribute('height', '5');
+    text.setAttribute('width', '5');
+    text.textContent = `${num}`;
+    box.append(text);
+  }
+}
+
+function drawFixedSupport(jointNum) {
+  console.log('jointNum: ', jointNum);
+  console.log('globalNodeObject: ', globalNodeObject);
+
+  if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const support = document.createElementNS(ns, 'rect');
+  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'stroke', 'green');
+  support.setAttributeNS(null, 'stroke-width', '2');
+  support.setAttributeNS(null, 'fill', 'none');
+  support.setAttributeNS(null, 'height', '14');
+  support.setAttributeNS(null, 'width', '14');
+  support.setAttributeNS(null, 'x', `${globalNodeObject[jointNum][0] - 7}`);
+  support.setAttributeNS(null, 'y',`${globalNodeObject[jointNum][1] + 5}`);
+  box.append(support);
+}
+
+function drawPinnedSupport(jointNum) {
+  console.log('jointNum: ', jointNum);
+  console.log('globalNodeObject: ', globalNodeObject);
+
+  if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const support = document.createElementNS(ns, 'circle');
+  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'stroke', 'green');
+  support.setAttributeNS(null, 'stroke-width', '2');
+  support.setAttributeNS(null, 'fill', 'none');
+  support.setAttributeNS(null, 'r', '7');
+  support.setAttributeNS(null, 'cx', `${globalNodeObject[jointNum][0]}`);
+  support.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1] + 12}`);
+  box.append(support);
+}
+
+function drawXSupport(jointNum) {
+
+}
+
+function drawYSupport(jointNum) {
+
+}
+
+function drawRotSupport(jointNum) {
+
 }

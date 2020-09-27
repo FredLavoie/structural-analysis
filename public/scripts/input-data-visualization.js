@@ -6,11 +6,12 @@ const globalMemberObject = {};
 
 $(window).on('resize', function() {
   // clear joints and members before drawing update
-  $('svg').children('circle').remove();
-  $('svg').children('text').remove();
-  $('svg').children('line').remove();
+  $('svg').children('#joint').remove();
+  $('svg').children('#joint-tag').remove();
+  $('svg').children('#member').remove();
   $('svg').children('#member-tag').remove();
   $('svg').children('#support').remove();
+  $('svg').children('#joint-load').remove();
 
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
@@ -40,9 +41,12 @@ $(document).on('change', function() {
 
   $('.joint').on('change', function() {
     // clear joints before drawing updated joints
-    $('svg').children('circle').remove();
-    $('svg').children('text').remove();
-    $('svg').children('line').remove();
+    $('svg').children('#joint').remove();
+    $('svg').children('#joint-tag').remove();
+    $('svg').children('#member').remove();
+    $('svg').children('#member-tag').remove();
+    $('svg').children('#support').remove();
+    $('svg').children('#joint-load').remove();
 
     const jointArray = $('.joint').map(function() {
       return Number(this.value);
@@ -55,7 +59,7 @@ $(document).on('change', function() {
 
   $('.member').on('change', function() {
     // clear members before drawing updated members
-    $('svg').children('line').remove();
+    $('svg').children('#member').remove();
     $('svg').children('#member-tag').remove();
 
     const memberArray = $('.member').map(function() {
@@ -66,13 +70,24 @@ $(document).on('change', function() {
   });
 
   $('.supports').on('change', function() {
+    // clear supports before drawing updated members
     $('svg').children('#support').remove();
-
     const supportsArray = $('.supports').map(function() {
       return Number(this.value);
     }).get();
-    console.log('supportsArray: ', supportsArray);
+
     generateSupports(supportsArray);
+  });
+
+  $('.joint-loads').on('change', function() {
+    // clear joint loads before drawing updated members
+    $('svg').children('#joint-load').remove();
+
+    const jointLoadArray = $('.joint-loads').map(function() {
+      return Number(this.value);
+    }).get();
+
+    generateJointLoads(jointLoadArray);
   });
 });
 
@@ -187,6 +202,14 @@ function generateSupports(arr) {
   }
 }
 
+function generateJointLoads(arr) {
+  for(let i = 0; i < arr.length; i += 4) {
+    if(!arr[i] || arr[i] === 0) return;
+    if(!arr[i] || arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1]);
+    if(!arr[i] || arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2]);
+    // if(!arr[i] || arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3]);
+  }
+}
 
 function calculateForceAngle(start, end) {
   let xDist = end[0] - start[0];
@@ -215,7 +238,7 @@ function drawNode(jointNum, point) {
     const ns = 'http://www.w3.org/2000/svg';
     const box = $('#structure-window');
     const node = document.createElementNS(ns, 'circle');
-    node.setAttributeNS(null, 'id',`joint${jointNum}`);
+    node.setAttributeNS(null, 'id','joint');
     node.setAttributeNS(null, 'r', '5');
     node.setAttributeNS(null, 'cx', `${point[0]}`);
     node.setAttributeNS(null, 'cy',`${point[1]}`);
@@ -239,7 +262,7 @@ function drawMember(num, start, end) {
     const ns = 'http://www.w3.org/2000/svg';
     const box = $('#structure-window');
     const member = document.createElementNS(ns, 'line');
-    member.setAttributeNS(null, 'id',`member${num}`);
+    member.setAttributeNS(null, 'id','member');
     member.setAttributeNS(null, 'x1', `${globalNodeObject[start][0]}`);
     member.setAttributeNS(null, 'y1',`${globalNodeObject[start][1]}`);
     member.setAttributeNS(null, 'x2', `${globalNodeObject[end][0]}`);
@@ -263,15 +286,12 @@ function drawMember(num, start, end) {
 }
 
 function drawXYRSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -282,7 +302,7 @@ function drawXYRSupport(jointNum) {
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
-  circle.setAttributeNS(null, 'id',`support`);
+  circle.setAttributeNS(null, 'id','support');
   circle.setAttributeNS(null, 'stroke', 'green');
   circle.setAttributeNS(null, 'stroke-width', '1');
   circle.setAttributeNS(null, 'fill', 'none');
@@ -292,7 +312,7 @@ function drawXYRSupport(jointNum) {
   box.append(circle);
 
   const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id',`support`);
+  xLine.setAttributeNS(null, 'id','support');
   xLine.setAttributeNS(null, 'stroke', 'green');
   xLine.setAttributeNS(null, 'stroke-width', '1');
   xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0] + 7}`);
@@ -302,7 +322,7 @@ function drawXYRSupport(jointNum) {
   box.append(xLine);
 
   const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id',`support`);
+  yLine.setAttributeNS(null, 'id','support');
   yLine.setAttributeNS(null, 'stroke', 'green');
   yLine.setAttributeNS(null, 'stroke-width', '1');
   yLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0]}`);
@@ -313,15 +333,12 @@ function drawXYRSupport(jointNum) {
 }
 
 function drawXYSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -332,7 +349,7 @@ function drawXYSupport(jointNum) {
   box.append(support);
 
   const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id',`support`);
+  xLine.setAttributeNS(null, 'id','support');
   xLine.setAttributeNS(null, 'stroke', 'green');
   xLine.setAttributeNS(null, 'stroke-width', '1');
   xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0] + 7}`);
@@ -342,7 +359,7 @@ function drawXYSupport(jointNum) {
   box.append(xLine);
 
   const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id',`support`);
+  yLine.setAttributeNS(null, 'id','support');
   yLine.setAttributeNS(null, 'stroke', 'green');
   yLine.setAttributeNS(null, 'stroke-width', '1');
   yLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0]}`);
@@ -353,15 +370,12 @@ function drawXYSupport(jointNum) {
 }
 
 function drawXRSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -372,7 +386,7 @@ function drawXRSupport(jointNum) {
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
-  circle.setAttributeNS(null, 'id',`support`);
+  circle.setAttributeNS(null, 'id','support');
   circle.setAttributeNS(null, 'stroke', 'green');
   circle.setAttributeNS(null, 'stroke-width', '1');
   circle.setAttributeNS(null, 'fill', 'none');
@@ -382,7 +396,7 @@ function drawXRSupport(jointNum) {
   box.append(circle);
 
   const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id',`support`);
+  xLine.setAttributeNS(null, 'id','support');
   xLine.setAttributeNS(null, 'stroke', 'green');
   xLine.setAttributeNS(null, 'stroke-width', '1');
   xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0] + 7}`);
@@ -393,15 +407,12 @@ function drawXRSupport(jointNum) {
 }
 
 function drawYRSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -412,7 +423,7 @@ function drawYRSupport(jointNum) {
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
-  circle.setAttributeNS(null, 'id',`support`);
+  circle.setAttributeNS(null, 'id','support');
   circle.setAttributeNS(null, 'stroke', 'green');
   circle.setAttributeNS(null, 'stroke-width', '1');
   circle.setAttributeNS(null, 'fill', 'none');
@@ -422,7 +433,7 @@ function drawYRSupport(jointNum) {
   box.append(circle);
 
   const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id',`support`);
+  yLine.setAttributeNS(null, 'id','support');
   yLine.setAttributeNS(null, 'stroke', 'green');
   yLine.setAttributeNS(null, 'stroke-width', '1');
   yLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0]}`);
@@ -433,15 +444,12 @@ function drawYRSupport(jointNum) {
 }
 
 function drawXSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -452,7 +460,7 @@ function drawXSupport(jointNum) {
   box.append(support);
 
   const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id',`support`);
+  xLine.setAttributeNS(null, 'id','support');
   xLine.setAttributeNS(null, 'stroke', 'green');
   xLine.setAttributeNS(null, 'stroke-width', '1');
   xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0] + 7}`);
@@ -463,15 +471,12 @@ function drawXSupport(jointNum) {
 }
 
 function drawYSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -482,7 +487,7 @@ function drawYSupport(jointNum) {
   box.append(support);
 
   const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id',`support`);
+  yLine.setAttributeNS(null, 'id','support');
   yLine.setAttributeNS(null, 'stroke', 'green');
   yLine.setAttributeNS(null, 'stroke-width', '1');
   yLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][0]}`);
@@ -493,15 +498,12 @@ function drawYSupport(jointNum) {
 }
 
 function drawRSupport(jointNum) {
-  console.log('jointNum: ', jointNum);
-  console.log('globalNodeObject: ', globalNodeObject);
-
   if(!globalNodeObject[jointNum][0] || !globalNodeObject[jointNum][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = $('#structure-window');
   const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id',`support`);
+  support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');
   support.setAttributeNS(null, 'stroke-width', '1');
   support.setAttributeNS(null, 'fill', 'none');
@@ -512,7 +514,7 @@ function drawRSupport(jointNum) {
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
-  circle.setAttributeNS(null, 'id',`support`);
+  circle.setAttributeNS(null, 'id','support');
   circle.setAttributeNS(null, 'stroke', 'green');
   circle.setAttributeNS(null, 'stroke-width', '1');
   circle.setAttributeNS(null, 'fill', 'none');
@@ -521,3 +523,72 @@ function drawRSupport(jointNum) {
   circle.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1] + 12}`);
   box.append(circle);
 }
+
+function drawXJointLoad(jointNum, load) {
+  if(!globalNodeObject[jointNum]) return;
+
+  let headX = globalNodeObject[jointNum][0];
+  let headY = globalNodeObject[jointNum][1];
+  let tailX = load > 0 ? headX - 50 : headX + 50;
+  let tailY = headY;
+
+  let base1 = load > 0 ? `${headX - 10} ${headY - 3.5}` : `${headX + 10} ${headY - 3.5}`;
+  let base2 = load > 0 ? `${headX - 10} ${headY + 3.5}` : `${headX + 10} ${headY + 3.5}`;
+  let point = `${headX} ${headY}`;
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const arrow = document.createElementNS(ns, 'polygon');
+  arrow.setAttributeNS(null, 'id','joint-load');
+  arrow.setAttributeNS(null, 'stroke', 'red');
+  arrow.setAttributeNS(null, 'fill', 'red');
+  arrow.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
+  box.append(arrow);
+
+  const line = document.createElementNS(ns, 'line');
+  line.setAttributeNS(null, 'id','joint-load');
+  line.setAttributeNS(null, 'stroke', 'red');
+  line.setAttributeNS(null, 'stroke-width', '1');
+  line.setAttributeNS(null, 'x1', `${headX}`);
+  line.setAttributeNS(null, 'y1',`${headY}`);
+  line.setAttributeNS(null, 'x2', `${tailX}`);
+  line.setAttributeNS(null, 'y2',`${tailY}`);
+  box.append(line);
+}
+
+function drawYJointLoad(jointNum, load) {
+  if(!globalNodeObject[jointNum]) return;
+
+  let headX = globalNodeObject[jointNum][0];
+  let headY = globalNodeObject[jointNum][1];
+  let tailX = headX;
+  let tailY = load < 0 ? headY - 50 : headY + 50;
+
+  let base1 = load < 0 ? `${headX - 3.5} ${headY - 10}` : `${headX - 3.5} ${headY + 10}`;
+  let base2 = load < 0 ? `${headX + 3.5} ${headY - 10}` : `${headX + 3.5} ${headY + 10}`;
+  let point = `${headX} ${headY}`;
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const arrow = document.createElementNS(ns, 'polygon');
+  arrow.setAttributeNS(null, 'id','joint-load');
+  arrow.setAttributeNS(null, 'stroke', 'red');
+  arrow.setAttributeNS(null, 'fill', 'red');
+  arrow.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
+  box.append(arrow);
+
+  const line = document.createElementNS(ns, 'line');
+  line.setAttributeNS(null, 'id','joint-load');
+  line.setAttributeNS(null, 'stroke', 'red');
+  line.setAttributeNS(null, 'stroke-width', '1');
+  line.setAttributeNS(null, 'x1', `${headX}`);
+  line.setAttributeNS(null, 'y1',`${headY}`);
+  line.setAttributeNS(null, 'x2', `${tailX}`);
+  line.setAttributeNS(null, 'y2',`${tailY}`);
+  box.append(line);
+}
+
+// function drawMJointLoad(jointNum, moment) {
+//   if(!globalNodeObject[jointNum]) return;
+
+// }

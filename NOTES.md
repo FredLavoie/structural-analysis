@@ -39,4 +39,5 @@ Remove image:			`docker rmi <image_id>`
 - Make fields repopulate input data when removing/adding members/joints/etc
 - Add csv file upload
 - Add download results (with graphics)
-- add hover boxes for nodes and members that show properties/coordinates
+- add hover boxes for members that show properties
+- add a permanent tag under each node showing coordinates

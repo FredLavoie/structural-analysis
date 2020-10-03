@@ -18,6 +18,7 @@ module.exports = {
     "no-console": "off",
     "semi": ["error", "always"],
     "indent": ["error", "space"],
-    "indent": ["error", 2]
+    "indent": ["error", 2],
+    "no-trailing-spaces": ["error", { "ignoreComments": true }]
   }
 };

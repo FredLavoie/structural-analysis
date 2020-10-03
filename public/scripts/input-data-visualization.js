@@ -89,6 +89,16 @@ $(document).on('change', function() {
 
     generateJointLoads(jointLoadArray);
   });
+  $('.member-loads').on('change', function() {
+    // clear member loads before drawing updated members
+    $('svg').children('#member-load').remove();
+
+    const memberLoadArray = $('.member-loads').map(function() {
+      return Number(this.value);
+    }).get();
+
+    generateMemberLoads(memberLoadArray);
+  });
 });
 
 
@@ -170,7 +180,7 @@ function generateMembers(arr) {
     let start = globalNodeObject[arr[i]];
     let end = globalNodeObject[arr[i + 1]];
 
-    if(start, end) {
+    if(start && end) {
       globalMemberObject[memberNumber] = {
         start: start,
         end: end,
@@ -205,9 +215,17 @@ function generateSupports(arr) {
 function generateJointLoads(arr) {
   for(let i = 0; i < arr.length; i += 4) {
     if(!arr[i] || arr[i] === 0) return;
-    if(!arr[i] || arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1]);
-    if(!arr[i] || arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2]);
-    if(!arr[i] || arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3]);
+    if(arr[i] && arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1]);
+    if(arr[i] && arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2]);
+    if(arr[i] && arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3]);
+  }
+}
+
+function generateMemberLoads(arr) {
+  for(let i = 0; i < arr.length; i += 4) {
+    if(!arr[i] || arr[i] === 0) return;
+    if(arr[i] && arr[i+1] !== 0 && arr[i+2] !== 0) drawMemberPointLoad(arr[i], arr[i+1], arr[i+2]);
+    // if(arr[i] && arr[i+3] !== 0) drawMemberUDLLoad(arr[i], arr[i+3]);
   }
 }
 
@@ -623,3 +641,12 @@ function drawMJointLoad(jointNum, moment) {
   arc.setAttributeNS(null, 'd', path);
   box.append(arc);
 }
+
+function drawMemberPointLoad(memberNum, offset, load) {
+  console.log('globalMemberObject: ', globalMemberObject);
+  console.log('globalNodeObject: ', globalNodeObject);
+}
+
+// function drawMemberUDLLoad(memberNum, udl) {
+
+// }

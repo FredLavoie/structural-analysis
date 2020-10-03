@@ -166,12 +166,12 @@ function generateMembers(arr) {
   for(let i = 0; i < arr.length; i += 2) {
     memberNumber += 1;
     drawMember(memberNumber, arr[i], arr[i + 1]);
-    
+
     let start = globalNodeObject[arr[i]];
     let end = globalNodeObject[arr[i + 1]];
 
     if(start, end) {
-      globalMemberObject[memberNumber] = { 
+      globalMemberObject[memberNumber] = {
         start: start,
         end: end,
         forceAngle: calculateForceAngle(start, end),
@@ -207,7 +207,7 @@ function generateJointLoads(arr) {
     if(!arr[i] || arr[i] === 0) return;
     if(!arr[i] || arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1]);
     if(!arr[i] || arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2]);
-    // if(!arr[i] || arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3]);
+    if(!arr[i] || arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3]);
   }
 }
 
@@ -588,7 +588,38 @@ function drawYJointLoad(jointNum, load) {
   box.append(line);
 }
 
-// function drawMJointLoad(jointNum, moment) {
-//   if(!globalNodeObject[jointNum]) return;
+function drawMJointLoad(jointNum, moment) {
+  if(!globalNodeObject[jointNum]) return;
 
-// }
+  let cx = globalNodeObject[jointNum][0] - 15;
+  let cy = globalNodeObject[jointNum][1] + 15;
+  let base1 = `${globalNodeObject[jointNum][0] + 12} ${globalNodeObject[jointNum][1] - 12}`;
+  let base2 = `${globalNodeObject[jointNum][0] + 18} ${globalNodeObject[jointNum][1] - 18}`;
+  let point = '';
+  let path = '';
+
+  if(moment < 0) {
+    path += `M ${cx},${cy} a 1 1 0 0 1 30 -30`;
+    point += `${globalNodeObject[jointNum][0] + 22} ${globalNodeObject[jointNum][1] - 8}`;
+  } else if(moment > 0) {
+    path += `M ${cx},${cy} a 1 1 0 0 0 30 -30`;
+    point += `${globalNodeObject[jointNum][0] + 8} ${globalNodeObject[jointNum][1] - 22}`;
+  }
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const arrow = document.createElementNS(ns, 'polygon');
+  arrow.setAttributeNS(null, 'id','joint-load');
+  arrow.setAttributeNS(null, 'stroke', 'red');
+  arrow.setAttributeNS(null, 'fill', 'red');
+  arrow.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
+  box.append(arrow);
+
+  const arc = document.createElementNS(ns, 'path');
+  arc.setAttributeNS(null,'id', 'joint-load');
+  arc.setAttributeNS(null, 'stroke', 'red');
+  arc.setAttributeNS(null, 'fill', 'none');
+  arc.setAttributeNS(null, 'stroke-width', '2');
+  arc.setAttributeNS(null, 'd', path);
+  box.append(arc);
+}

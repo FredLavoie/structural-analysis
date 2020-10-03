@@ -32,10 +32,6 @@ label {
 
 /************************** CLASS STYLING **************************/
 /*******************************************************************/
-.form {
-  margin: 0em 10%;
-}
-
 .container-1 {
   display: flex;
   flex-wrap: wrap;
@@ -119,6 +115,10 @@ label {
 
 /*************************** ID STYLING ****************************/
 /*******************************************************************/
+#form {
+  margin: 0em auto;
+  max-width: 80em;
+}
 
 #members-container-1 {
   display: flex;
@@ -138,8 +138,8 @@ label {
   border: 2px solid #808080;
   margin: 1em auto;
   width: 85%;
-  height: 30%;
-  min-width: 75em;
+  max-width: 80em;
+  min-width: 60em;
   min-height: 50em;
 }
 

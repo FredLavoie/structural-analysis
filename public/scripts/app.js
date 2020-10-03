@@ -58,7 +58,7 @@ $(document).ready(function() {
     }
   });
 });
-  
+
 //**************************************** FUNCTIONS *********************************************/
 //************************************************************************************************/
 
@@ -123,7 +123,7 @@ function generateMemberInput(i) {
 function generateEMInput(i) {
   $('#em-container').append($('<label>').text(`Elastic Modulus # ${i}`));
   $('#em-container').append($('<input>')
-    
+
     .addClass('input-style form-control')
     .attr('name', 'ElasticMods'));
 }
@@ -132,7 +132,7 @@ function generateEMInput(i) {
 function generateAreaInput(i) {
   $('#area-container').append($('<label>').text(`Area # ${i}`));
   $('#area-container').append($('<input>')
-    
+
     .addClass('input-style form-control')
     .attr('name', 'Areas'));
 }
@@ -141,7 +141,7 @@ function generateAreaInput(i) {
 function generateMOIInput(i) {
   $('#moi-container').append($('<label>').text(`Moment of Inertia # ${i}`));
   $('#moi-container').append($('<input>')
-    
+
     .addClass('input-style form-control')
     .attr('name', 'MoI'));
 }
@@ -158,14 +158,14 @@ function generateJointLoadsInput(i) {
     .attr('name', 'loads').attr('placeholder', 'Y value');
   let $moment = $('<input>').addClass('input-style form-control joint-loads')
     .attr('name', 'loads').attr('placeholder', 'Moment');
-  
+
   $jointLoadDiv
     .append($jointLoadNum)
     .append($jointNum)
     .append($xValue)
     .append($yValue)
     .append($moment);
-  
+
   $('#pl-container')
     .append($jointLoadDiv);
 }
@@ -181,15 +181,15 @@ function generateMemberLoadsInput(i) {
     .attr('name', 'loads').attr('placeholder', 'Point Load');
   let $udl = $('<input>').addClass('input-style form-control member-loads')
     .attr('name', 'loads').attr('placeholder', 'UDL');
-  
+
   $memberLoadDiv
     .append($memberLoadNum)
     .append($memberNum)
     .append($xDist)
     .append($pl)
     .append($udl);
-  
+
   $('#ml-container')
     .append($memberLoadDiv);
-  
+
 }

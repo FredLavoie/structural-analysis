@@ -55,7 +55,7 @@ app.post('/results', (req, res) => {
       return;
     }
     // code to run executable, then render 'results' page
-    execFile('program/sa-linux-exec', function(error) {
+    execFile('program/sa-mac-exec', function(error) {
       if (error) {
         console.log('There was an error running the executable');
         console.log(error);

@@ -96,7 +96,7 @@ document.addEventListener('change', function() {
     });
   });
 
-  const allSupports = document.querySelectorAll('.support');
+  const allSupports = document.querySelectorAll('.supports');
   allSupports.forEach(ea => {
     ea.addEventListener('change', function() {
       // clear supports before drawing updated members

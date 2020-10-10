@@ -117,30 +117,45 @@ function generateJointInput(i) {
 
 // Generate number of input boxes based on numMembers
 function generateMemberInput(i) {
-  let $memberDiv = $('<div>').addClass('container-2 members-container-2');
-  let $memberNum = $('<label>').text(`Member #${i}`);
-  let $jointStart = $('<input>').addClass('input-style form-control member')
-    .attr('name', 'members').attr('placeholder', 'Joint start');
-  let $jointEnd = $('<input>').addClass('input-style form-control member')
-    .attr('name', 'members').attr('placeholder', 'Joint end');
-  let $emNo = $('<input>').addClass('input-style form-control')
-    .attr('name', 'members').attr('placeholder', 'EM No.');
-  let $areaNo = $('<input>').addClass('input-style form-control')
-    .attr('name', 'members').attr('placeholder', 'Area No.');
-  let $moiNo = $('<input>').addClass('input-style form-control')
-    .attr('name', 'members').attr('placeholder', 'MoI No.');
+  let $memberDiv = document.createElement('div');
+  $memberDiv.setAttribute('class','container-2 members-container-2');
 
-  $memberDiv
-    .append($memberNum)
-    .append($jointStart)
-    .append($jointEnd)
-    .append($emNo)
-    .append($areaNo)
-    .append($moiNo);
+  let $memberNum = document.createElement('label');
+  $memberNum.innerHTML = `Member #${i}`;
 
-  $('#members-container-1')
-    .append($memberDiv);
+  let $jointStart = document.createElement('input');
+  $jointStart.setAttribute('class','input-style form-control member');
+  $jointStart.setAttribute('name', 'members');
+  $jointStart.setAttribute('placeholder', 'Joint start');
 
+  let $jointEnd = document.createElement('input');
+  $jointEnd.setAttribute('class','input-style form-control member');
+  $jointEnd.setAttribute('name', 'members');
+  $jointEnd.setAttribute('placeholder', 'Joint end');
+
+  let $emNo = document.createElement('input');
+  $emNo.setAttribute('class','input-style form-control');
+  $emNo.setAttribute('name', 'members');
+  $emNo.setAttribute('placeholder', 'EM No.');
+
+  let $areaNo = document.createElement('input');
+  $areaNo.setAttribute('class','input-style form-control');
+  $areaNo.setAttribute('name', 'members');
+  $areaNo.setAttribute('placeholder', 'Area No.');
+
+  let $moiNo = document.createElement('input');
+  $moiNo.setAttribute('class','input-style form-control');
+  $moiNo.setAttribute('name', 'members');
+  $moiNo.setAttribute('placeholder', 'MoI No.');
+
+  $memberDiv.appendChild($memberNum);
+  $memberDiv.appendChild($jointStart);
+  $memberDiv.appendChild($jointEnd);
+  $memberDiv.appendChild($emNo);
+  $memberDiv.appendChild($areaNo);
+  $memberDiv.appendChild($moiNo);
+
+  document.querySelector('#members-container-1').appendChild($memberDiv);
 }
 
 // Generate number of input boxes based on numEMs

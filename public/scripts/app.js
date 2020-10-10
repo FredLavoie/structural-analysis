@@ -79,12 +79,12 @@ function generateJointInput(i) {
   $jointNum.innerHTML = `Joint #${i}`;
 
   let $coordInputX = document.createElement('input');
-  $coordInputX.setAttribute('class','input-style form-control supports');
+  $coordInputX.setAttribute('class','input-style form-control joint');
   $coordInputX.setAttribute('name', 'joints');
   $coordInputX.setAttribute('placeholder', 'X-coord.');
 
   let $coordInputY  = document.createElement('input');
-  $coordInputY.setAttribute('class','input-style form-control supports');
+  $coordInputY.setAttribute('class','input-style form-control joint');
   $coordInputY.setAttribute('name', 'joints');
   $coordInputY.setAttribute('placeholder', 'Y-coord.');
 
@@ -260,11 +260,11 @@ function generateMemberLoadsInput(i) {
   $udl.setAttribute('name', 'loads');
   $udl.setAttribute('placeholder', 'UDL');
 
-  $memberLoadDiv.append($memberLoadNum);
-  $memberLoadDiv.append($memberNum);
-  $memberLoadDiv.append($xDist);
-  $memberLoadDiv.append($pl);
-  $memberLoadDiv.append($udl);
+  $memberLoadDiv.appendChild($memberLoadNum);
+  $memberLoadDiv.appendChild($memberNum);
+  $memberLoadDiv.appendChild($xDist);
+  $memberLoadDiv.appendChild($pl);
+  $memberLoadDiv.appendChild($udl);
 
   document.querySelector('#ml-container').appendChild($memberLoadDiv);
 }

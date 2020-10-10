@@ -11,7 +11,8 @@ import {
   drawXJointLoad,
   drawYJointLoad,
   drawMJointLoad,
-  drawMemberPointLoad
+  drawMemberPointLoad,
+  // drawMemberUDLLoad
 } from "./draw-functions.js";
 
 //************************************** DOCUMENT READY ******************************************/
@@ -58,9 +59,6 @@ window.addEventListener('resize', function() {
 });
 
 document.addEventListener('change', function() {
-  const windowWidth = document.querySelector('#structure-window').clientWidth;
-  const windowHeight = document.querySelector('#structure-window').clientHeight;
-
   const allJoints = document.querySelectorAll('.joint');
   allJoints.forEach(ea => {
     ea.addEventListener('change', function() {
@@ -72,6 +70,9 @@ document.addEventListener('change', function() {
       document.querySelectorAll('svg>#support').forEach(n => n.remove());
       document.querySelectorAll('svg>#joint-load').forEach(n => n.remove());
       document.querySelectorAll('svg>#member-load').forEach(n => n.remove());
+
+      const windowWidth = document.querySelector('#structure-window').clientWidth;
+      const windowHeight = document.querySelector('#structure-window').clientHeight;
 
       const jointArray = [...document.querySelectorAll('.joint')]
         .map(e => Number(e.value));
@@ -135,6 +136,7 @@ document.addEventListener('change', function() {
     });
   });
 });
+
 
 
 //**************************************** FUNCTIONS *********************************************/

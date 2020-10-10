@@ -74,31 +74,45 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // Generate number of input boxes based on numJoints
 function generateJointInput(i) {
-  let $jointDiv = $('<div>').addClass('joints-container-2');
-  let $jointNum = $('<label>').text(`Joint #${i}`);
-  let $coordInputX = $('<input>').addClass('input-style form-control joint')
-    .attr('name', 'joints').attr('placeholder', 'X-coord.');
-  let $coordInputY = $('<input>').addClass('input-style form-control joint')
-    .attr('name', 'joints').attr('placeholder', 'Y-coord.');
-  let $xRest = $('<input>').addClass('input-style form-control supports')
-    .attr('name', 'joints').attr('placeholder', 'x-rest.');
-  let $yRest = $('<input>').addClass('input-style form-control supports')
-    .attr('name', 'joints').attr('placeholder', 'y-rest.');
-  let $rotRest = $('<input>').addClass('input-style form-control supports')
-    .attr('name', 'joints').attr('placeholder', 'rot. rest.');
+  let $jointDiv = document.createElement('div');
+  $jointDiv.setAttribute('class','joints-container-2');
 
+  let $jointNum = document.createElement('label');
+  $jointNum.innerHTML = `Joint #${i}`;
 
-  $jointDiv
-    .append($jointNum)
-    .append($coordInputX)
-    .append($coordInputY)
-    .append($xRest)
-    .append($yRest)
-    .append($rotRest);
+  let $coordInputX = document.createElement('input');
+  $coordInputX.setAttribute('class','input-style form-control supports');
+  $coordInputX.setAttribute('name', 'joints');
+  $coordInputX.setAttribute('placeholder', 'X-coord.');
 
-  $('#joints-container-1')
-    .append($jointDiv);
+  let $coordInputY  = document.createElement('input');
+  $coordInputY.setAttribute('class','input-style form-control supports');
+  $coordInputY.setAttribute('name', 'joints');
+  $coordInputY.setAttribute('placeholder', 'Y-coord.');
 
+  let $xRest = document.createElement('input');
+  $xRest.setAttribute('class','input-style form-control supports');
+  $xRest.setAttribute('name', 'joints');
+  $xRest.setAttribute('placeholder', 'x-rest.');
+
+  let $yRest = document.createElement('input');
+  $yRest.setAttribute('class','input-style form-control supports');
+  $yRest.setAttribute('name', 'joints');
+  $yRest.setAttribute('placeholder', 'y-rest.');
+
+  let $rotRest = document.createElement('input');
+  $rotRest.setAttribute('class','input-style form-control supports');
+  $rotRest.setAttribute('name', 'joints');
+  $rotRest.setAttribute('placeholder', 'rot. rest.');
+
+  $jointDiv.appendChild($jointNum);
+  $jointDiv.appendChild($coordInputX);
+  $jointDiv.appendChild($coordInputY);
+  $jointDiv.appendChild($xRest);
+  $jointDiv.appendChild($yRest);
+  $jointDiv.appendChild($rotRest);
+
+  document.querySelector('#joints-container-1').appendChild($jointDiv);
 }
 
 // Generate number of input boxes based on numMembers

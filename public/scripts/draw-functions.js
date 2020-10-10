@@ -2,26 +2,23 @@
 //************************************************************************************************/
 
 export function drawNode(jointNum, point) {
-  if(isNaN(point[0]) || isNaN(point[1])) return;
-  else {
-    const ns = 'http://www.w3.org/2000/svg';
-    const box = document.querySelector('#structure-window');
-    const node = document.createElementNS(ns, 'circle');
-    node.setAttributeNS(null, 'id','joint');
-    node.setAttributeNS(null, 'r', '5');
-    node.setAttributeNS(null, 'cx', `${point[0]}`);
-    node.setAttributeNS(null, 'cy',`${point[1]}`);
-    box.append(node);
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = document.querySelector('#structure-window');
+  const node = document.createElementNS(ns, 'circle');
+  node.setAttributeNS(null, 'id','joint');
+  node.setAttributeNS(null, 'r', '5');
+  node.setAttributeNS(null, 'cx', `${point[0]}`);
+  node.setAttributeNS(null, 'cy',`${point[1]}`);
+  box.append(node);
 
-    const text = document.createElementNS(ns, 'text');
-    text.setAttributeNS(null, 'id','joint-tag');
-    text.setAttribute('x', `${point[0] - 10}`);
-    text.setAttribute('y', `${point[1] - 10}`);
-    text.setAttribute('height', '5');
-    text.setAttribute('width', '5');
-    text.textContent = `${jointNum}`;
-    box.append(text);
-  }
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','joint-tag');
+  text.setAttribute('x', `${point[0] - 10}`);
+  text.setAttribute('y', `${point[1] - 10}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.textContent = `${jointNum}`;
+  box.append(text);
 }
 
 export function drawMember(num, start, end, globalNodeObject) {

@@ -1,7 +1,5 @@
 //************************************** DOCUMENT READY ******************************************/
 //************************************************************************************************/
-
-// $(document).ready(function() {
 document.addEventListener("DOMContentLoaded", function() {
   const inputNumJoints = document.querySelector('#input-numJoints');
   inputNumJoints.addEventListener('change', function() {
@@ -160,29 +158,41 @@ function generateMemberInput(i) {
 
 // Generate number of input boxes based on numEMs
 function generateEMInput(i) {
-  $('#em-container').append($('<label>').text(`Elastic Modulus # ${i}`));
-  $('#em-container').append($('<input>')
+  let $label = document.createElement('label');
+  $label.innerHTML = `Elastic Modulus # ${i}`;
+  let $input = document.createElement('input');
+  $input.setAttribute('class','input-style form-control');
+  $input.setAttribute('name', 'ElasticMods');
 
-    .addClass('input-style form-control')
-    .attr('name', 'ElasticMods'));
+  let $container = document.querySelector('#em-container');
+  $container.appendChild($label);
+  $container.appendChild($input);
 }
 
 // Generate number of input boxes based on numAreas
 function generateAreaInput(i) {
-  $('#area-container').append($('<label>').text(`Area # ${i}`));
-  $('#area-container').append($('<input>')
+  let $label = document.createElement('label');
+  $label.innerHTML = `Area # ${i}`;
+  let $input = document.createElement('input');
+  $input.setAttribute('class','input-style form-control');
+  $input.setAttribute('name', 'Areas');
 
-    .addClass('input-style form-control')
-    .attr('name', 'Areas'));
+  let $container = document.querySelector('#area-container');
+  $container.appendChild($label);
+  $container.appendChild($input);
 }
 
 // Generate number of input boxes based on numMOIs
 function generateMOIInput(i) {
-  $('#moi-container').append($('<label>').text(`Moment of Inertia # ${i}`));
-  $('#moi-container').append($('<input>')
+  let $label = document.createElement('label');
+  $label.innerHTML = `Moment of Inertia # ${i}`;
+  let $input = document.createElement('input');
+  $input.setAttribute('class','input-style form-control');
+  $input.setAttribute('name', 'MoI');
 
-    .addClass('input-style form-control')
-    .attr('name', 'MoI'));
+  let $container = document.querySelector('#moi-container');
+  $container.appendChild($label);
+  $container.appendChild($input);
 }
 
 // Generate joint load input boxes

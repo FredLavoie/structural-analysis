@@ -12,6 +12,7 @@ $(window).on('resize', function() {
   $('svg').children('#member-tag').remove();
   $('svg').children('#support').remove();
   $('svg').children('#joint-load').remove();
+  $('svg').children('#member-load').remove();
 
   const windowWidth = $('#structure-window').width();
   const windowHeight = $('#structure-window').height();
@@ -26,13 +27,23 @@ $(window).on('resize', function() {
 
   const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
 
-  const SupportsArray = $('.supports').map(function() {
+  const supportsArray = $('.supports').map(function() {
     return Number(this.value);
   }).get();
 
-  generateSupports(SupportsArray);
+  const jointLoadArray = $('.joint-loads').map(function() {
+    return Number(this.value);
+  }).get();
+
+  const memberLoadArray = $('.member-loads').map(function() {
+    return Number(this.value);
+  }).get();
+
   generateJoints(jointCoordinates);
   generateMembers(memberArray);
+  generateSupports(supportsArray);
+  generateJointLoads(jointLoadArray);
+  generateMemberLoads(memberLoadArray);
 });
 
 $(document).on('change', function() {
@@ -184,6 +195,7 @@ function generateMembers(arr) {
 
     if(start && end) {
       globalMemberObject[memberNumber] = {
+        joints: [arr[i], arr[i+1]],
         start: start,
         end: end,
         forceAngle: calculateForceAngle(start, end),
@@ -645,8 +657,45 @@ function drawMJointLoad(jointNum, moment) {
 }
 
 function drawMemberPointLoad(memberNum, offset, load) {
-  // console.log('globalMemberObject: ', globalMemberObject);
-  // console.log('globalNodeObject: ', globalNodeObject);
+  console.log('globalMemberObject: ', globalMemberObject);
+  const startJoint = globalMemberObject[memberNum].joints[0];
+  const endJoint = globalMemberObject[memberNum].joints[1];
+  const xDist = globalNodeObject[endJoint][0][0] - globalNodeObject[startJoint][0][0];
+  const yDist = globalNodeObject[endJoint][0][1] - globalNodeObject[startJoint][0][1];
+  const windowXDist = globalNodeObject[endJoint][1][0] - globalNodeObject[startJoint][1][0];
+  const windowYDist = globalNodeObject[endJoint][1][1] - globalNodeObject[startJoint][1][1];
+  const memberLength = Math.sqrt(xDist**2 + yDist**2);
+  const loadOffsetRatio = offset / memberLength;
+  const relLoadPositionX = windowXDist * loadOffsetRatio;
+  const relLoadPositionY = windowYDist * loadOffsetRatio;
+  const arrowPointX = globalNodeObject[startJoint][1][0] + relLoadPositionX;
+  const arrowPointY = globalNodeObject[startJoint][1][1] + relLoadPositionY;
+
+  // if(load > 0) {
+  //   const base1 = 
+  //   const base2 = 
+  // } else if(load > 0) {
+  //   const base1 = 
+  //   const base2 = 
+  // }
+
+  const point = `${arrowPointX} ${arrowPointY}`;
+
+
+  console.log('memberLength: ', memberLength);
+
+  const ns = 'http://www.w3.org/2000/svg';
+  const box = $('#structure-window');
+  const arrow = document.createElementNS(ns, 'circle');
+  arrow.setAttributeNS(null, 'id','member-load');
+  arrow.setAttributeNS(null, 'r', '5');
+  arrow.setAttributeNS(null, 'stroke', '#0000ff');
+  arrow.setAttributeNS(null, 'fill', '#0000ff');
+  arrow.setAttributeNS(null, 'cx', `${arrowPointX}`);
+  arrow.setAttributeNS(null, 'cy',`${arrowPointY}`);
+  box.append(arrow);
+
+
 }
 
 // function drawMemberUDLLoad(memberNum, udl) {

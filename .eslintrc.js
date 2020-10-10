@@ -2,8 +2,8 @@ module.exports = {
   "env": {
     "browser": true,
     "commonjs": true,
-  "es6": true,
-  "jquery": true,
+    "es6": true,
+    "jquery": true,
     "node": true
   },
   "extends": "eslint:recommended",
@@ -12,6 +12,7 @@ module.exports = {
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
+    "sourceType": "module",
     "ecmaVersion": 2018
   },
   "rules": {

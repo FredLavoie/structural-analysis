@@ -301,6 +301,7 @@ export function drawXJointLoad(jointNum, load, globalNodeObject) {
   let base1 = load > 0 ? `${headX - 10} ${headY - 3.5}` : `${headX + 10} ${headY - 3.5}`;
   let base2 = load > 0 ? `${headX - 10} ${headY + 3.5}` : `${headX + 10} ${headY + 3.5}`;
   let point = `${headX} ${headY}`;
+  let offset = load > 0 ? -5 : 5;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -309,6 +310,7 @@ export function drawXJointLoad(jointNum, load, globalNodeObject) {
   arrow.setAttributeNS(null, 'stroke', 'red');
   arrow.setAttributeNS(null, 'fill', 'red');
   arrow.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
+  arrow.setAttributeNS(null, 'transform', `translate(${offset} 0)`);
   box.append(arrow);
 
   const line = document.createElementNS(ns, 'line');
@@ -319,6 +321,7 @@ export function drawXJointLoad(jointNum, load, globalNodeObject) {
   line.setAttributeNS(null, 'y1',`${headY}`);
   line.setAttributeNS(null, 'x2', `${tailX}`);
   line.setAttributeNS(null, 'y2',`${tailY}`);
+  line.setAttributeNS(null, 'transform', `translate(${offset} 0)`);
   box.append(line);
 }
 
@@ -333,6 +336,7 @@ export function drawYJointLoad(jointNum, load, globalNodeObject) {
   let base1 = load < 0 ? `${headX - 3.5} ${headY - 10}` : `${headX - 3.5} ${headY + 10}`;
   let base2 = load < 0 ? `${headX + 3.5} ${headY - 10}` : `${headX + 3.5} ${headY + 10}`;
   let point = `${headX} ${headY}`;
+  let offset = load > 0 ? 5 : -5;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -341,6 +345,7 @@ export function drawYJointLoad(jointNum, load, globalNodeObject) {
   arrow.setAttributeNS(null, 'stroke', 'red');
   arrow.setAttributeNS(null, 'fill', 'red');
   arrow.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
+  arrow.setAttributeNS(null, 'transform', `translate(0 ${offset})`);
   box.append(arrow);
 
   const line = document.createElementNS(ns, 'line');
@@ -351,6 +356,7 @@ export function drawYJointLoad(jointNum, load, globalNodeObject) {
   line.setAttributeNS(null, 'y1',`${headY}`);
   line.setAttributeNS(null, 'x2', `${tailX}`);
   line.setAttributeNS(null, 'y2',`${tailY}`);
+  line.setAttributeNS(null, 'transform', `translate(0 ${offset})`);
   box.append(line);
 }
 
@@ -436,6 +442,8 @@ export function drawMemberPointLoad(memberNum, offset, load, globalNodeObject, g
   box.append(line);
 }
 
-// export function drawMemberUDLLoad(memberNum, udl) {
+// export function drawMemberUDLLoad(memberNum, udl, globalNodeObject, globalMemberObject) {
+//   const startJoint = globalMemberObject[memberNum].joints[0];
+//   const endJoint = globalMemberObject[memberNum].joints[1];
 
 // }

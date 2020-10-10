@@ -280,13 +280,13 @@ function calculateForceAngle(start, end) {
   let forceAngle = 0;
 
   if(xDist >= 0 && yDist >= 0) { // quadrant 1
-    forceAngle = angle + 90;
+    forceAngle = angle;
   } else if(xDist <= 0 && yDist >= 0) { // quadrant 2
-    forceAngle = (180 - angle) + 90;
+    forceAngle = 180 - angle;
   } else if(xDist <= 0 && yDist <= 0) { // quadrant 3
-    forceAngle = (180 + angle) + 90;
+    forceAngle = 180 + angle;
   } else if(xDist >= 0 && yDist <= 0) { // quadrant 4
-    forceAngle = 90 - angle;
+    forceAngle = angle * -1;
   }
   return Math.round(forceAngle);
 }

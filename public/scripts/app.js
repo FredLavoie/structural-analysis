@@ -187,27 +187,41 @@ function generateMOIInput(i) {
 
 // Generate joint load input boxes
 function generateJointLoadsInput(i) {
-  let $jointLoadDiv = $('<div>').addClass('container-2 joint-load-container');
-  let $jointLoadNum = $('<label>').text(`Joint Load #${i}`);
-  let $jointNum = $('<input>').addClass('input-style form-control joint-loads')
-    .attr('name', 'loads').attr('placeholder', 'Joint No.');
-  let $xValue = $('<input>').addClass('input-style form-control joint-loads')
-    .attr('name', 'loads').attr('placeholder', 'X value');
-  let $yValue = $('<input>').addClass('input-style form-control joint-loads')
-    .attr('name', 'loads').attr('placeholder', 'Y value');
-  let $moment = $('<input>').addClass('input-style form-control joint-loads')
-    .attr('name', 'loads').attr('placeholder', 'Moment');
+  let $jointLoadDiv = document.createElement('div');
+  $jointLoadDiv.setAttribute('class','container-2 joint-load-container');
 
-  $jointLoadDiv
-    .append($jointLoadNum)
-    .append($jointNum)
-    .append($xValue)
-    .append($yValue)
-    .append($moment);
+  let $jointLoadNum = document.createElement('label');
+  $jointLoadNum.innerHTML = `Joint Load #${i}`;
 
-  $('#pl-container')
-    .append($jointLoadDiv);
+  let $jointNum = document.createElement('input');
+  $jointNum.setAttribute('class','input-style form-control joint-loads');
+  $jointNum.setAttribute('name', 'loads');
+  $jointNum.setAttribute('placeholder', 'Joint No.');
+
+  let $xValue = document.createElement('input');
+  $xValue.setAttribute('class','input-style form-control joint-loads');
+  $xValue.setAttribute('name', 'loads');
+  $xValue.setAttribute('placeholder', 'X value');
+
+  let $yValue = document.createElement('input');
+  $yValue.setAttribute('class','input-style form-control joint-loads');
+  $yValue.setAttribute('name', 'loads');
+  $yValue.setAttribute('placeholder', 'Y value');
+
+  let $moment = document.createElement('input');
+  $moment.setAttribute('class','input-style form-control joint-loads');
+  $moment.setAttribute('name', 'loads');
+  $moment.setAttribute('placeholder', 'Moment');
+
+  $jointLoadDiv.appendChild($jointLoadNum);
+  $jointLoadDiv.appendChild($jointNum);
+  $jointLoadDiv.appendChild($xValue);
+  $jointLoadDiv.appendChild($yValue);
+  $jointLoadDiv.appendChild($moment);
+
+  document.querySelector('#pl-container').appendChild($jointLoadDiv);
 }
+
 // Generate member load input boxes
 function generateMemberLoadsInput(i) {
   let $memberLoadDiv = $('<div>').addClass('container-2 member-load-container');

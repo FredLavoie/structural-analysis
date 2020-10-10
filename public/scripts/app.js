@@ -1,58 +1,68 @@
 //************************************** DOCUMENT READY ******************************************/
 //************************************************************************************************/
 
-$(document).ready(function() {
-  $('#input-numJoints').on('change', function() {
-    $('#joints-container-1').empty();
-    let num = $('#input-numJoints').val();
+// $(document).ready(function() {
+document.addEventListener("DOMContentLoaded", function() {
+  const inputNumJoints = document.querySelector('#input-numJoints');
+  inputNumJoints.addEventListener('change', function() {
+    document.querySelectorAll('#joints-container-1>.joints-container-2').forEach(n => n.remove());
+    let num = document.querySelector('#input-numJoints').value;
+    console.log('num: ', num);
     for (let i = 1; i <= num; i++) {
       generateJointInput(i);
     }
   });
 
-  $('#input-numMembers').on('change', function() {
-    $('#members-container-1').empty();
-    let num = $('#input-numMembers').val();
+
+  const inputNumMembers = document.querySelector('#input-numMembers');
+  inputNumMembers.addEventListener('change', function() {
+    document.querySelectorAll('#members-container-1>.members-container-2').forEach(n => n.remove());
+    let num = document.querySelector('#input-numMembers').value;
     for (let i = 1; i <= num; i++) {
       generateMemberInput(i);
     }
   });
 
-  $('#input-numEMs').on('change', function() {
-    $('#em-container').empty();
-    let num = $('#input-numEMs').val();
+  const inputNumEMs = document.querySelector('#input-numEMs');
+  inputNumEMs.addEventListener('change', function() {
+    document.querySelector('#em-container').innerHTML = '';
+    let num = document.querySelector('#input-numEMs').value;
     for (let i = 1; i <= num; i++) {
       generateEMInput(i);
     }
   });
 
-  $('#input-numAreas').on('change', function() {
-    $('#area-container').empty();
-    let num = $('#input-numAreas').val();
+  const inputNumAreas = document.querySelector('#input-numAreas');
+  inputNumAreas.addEventListener('change', function() {
+    document.querySelector('#area-container').innerHTML = '';
+    let num = document.querySelector('#input-numAreas').value;
     for (let i = 1; i <= num; i++) {
       generateAreaInput(i);
     }
   });
 
-  $('#input-numMOIs').on('change', function() {
-    $('#moi-container').empty();
-    let num = $('#input-numMOIs').val();
+  const inputNumMOIs = document.querySelector('#input-numMOIs');
+  inputNumMOIs.addEventListener('change', function() {
+    document.querySelector('#moi-container').innerHTML = '';
+    let num = document.querySelector('#input-numMOIs').value;
     for (let i = 1; i <= num; i++) {
       generateMOIInput(i);
     }
   });
 
-  $('#input-numJointLoads').on('change', function() {
-    $('#pl-container').empty();
-    let num = $('#input-numJointLoads').val();
+  const inputNumJointLoads = document.querySelector('#input-numJointLoads');
+  inputNumJointLoads.addEventListener('change', function() {
+    document.querySelectorAll('#pl-container').innerHTML = '';
+    let num = document.querySelector('#input-numJointLoads').value;
     for (let i = 1; i <= num; i++) {
       generateJointLoadsInput(i);
     }
   });
 
-  $('#input-numMemLoads').on('change', function() {
-    $('#ml-container').empty();
-    let num = $('#input-numMemLoads').val();
+  const inputNumMemLoads = document.querySelector('#input-numMemLoads');
+  inputNumMemLoads.addEventListener('change', function() {
+    document.querySelectorAll('#ml-container').innerHTML = '';
+    let num = document.querySelector('#input-numMemLoads').value;
     for (let i = 1; i <= num; i++) {
       generateMemberLoadsInput(i);
     }

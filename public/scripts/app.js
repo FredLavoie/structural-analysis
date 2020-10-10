@@ -224,25 +224,37 @@ function generateJointLoadsInput(i) {
 
 // Generate member load input boxes
 function generateMemberLoadsInput(i) {
-  let $memberLoadDiv = $('<div>').addClass('container-2 member-load-container');
-  let $memberLoadNum = $('<label>').text(`Member Load #${i}`);
-  let $memberNum = $('<input>').addClass('input-style form-control member-loads')
-    .attr('name', 'loads').attr('placeholder', 'Member No.');
-  let $xDist = $('<input>').addClass('input-style form-control member-loads')
-    .attr('name', 'loads').attr('placeholder', 'X-distance');
-  let $pl = $('<input>').addClass('input-style form-control member-loads')
-    .attr('name', 'loads').attr('placeholder', 'Point Load');
-  let $udl = $('<input>').addClass('input-style form-control member-loads')
-    .attr('name', 'loads').attr('placeholder', 'UDL');
+  let $memberLoadDiv = document.createElement('div');
+  $memberLoadDiv.setAttribute('class','container-2 member-load-container');
 
-  $memberLoadDiv
-    .append($memberLoadNum)
-    .append($memberNum)
-    .append($xDist)
-    .append($pl)
-    .append($udl);
+  let $memberLoadNum = document.createElement('label');
+  $memberLoadNum.innerHTML = `Member Load #${i}`;
 
-  $('#ml-container')
-    .append($memberLoadDiv);
+  let $memberNum = document.createElement('input');
+  $memberNum.setAttribute('class','input-style form-control member-loads');
+  $memberNum.setAttribute('name', 'loads');
+  $memberNum.setAttribute('placeholder', 'Member No.');
 
+  let $xDist = document.createElement('input');
+  $xDist.setAttribute('class','input-style form-control member-loads');
+  $xDist.setAttribute('name', 'loads');
+  $xDist.setAttribute('placeholder', 'X-distance');
+
+  let $pl = document.createElement('input');
+  $pl.setAttribute('class','input-style form-control member-loads');
+  $pl.setAttribute('name', 'loads');
+  $pl.setAttribute('placeholder', 'Point Load');
+
+  let $udl = document.createElement('input');
+  $udl.setAttribute('class','input-style form-control member-loads');
+  $udl.setAttribute('name', 'loads');
+  $udl.setAttribute('placeholder', 'UDL');
+
+  $memberLoadDiv.append($memberLoadNum);
+  $memberLoadDiv.append($memberNum);
+  $memberLoadDiv.append($xDist);
+  $memberLoadDiv.append($pl);
+  $memberLoadDiv.append($udl);
+
+  document.querySelector('#ml-container').appendChild($memberLoadDiv);
 }

@@ -49,7 +49,7 @@ export function drawMember(num, start, end, globalNodeObject) {
   }
 }
 
-export function drawXYRSupport(jointNum, globalNodeObject) {
+export function drawXYRSupport(jointNum, globalNodeObject) { // fixed support
   if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
@@ -96,41 +96,56 @@ export function drawXYRSupport(jointNum, globalNodeObject) {
   box.append(yLine);
 }
 
-export function drawXYSupport(jointNum, globalNodeObject) {
+export function drawXYSupport(jointNum, globalNodeObject) { // pin support
   if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+
+  const xCoord = globalNodeObject[jointNum][1][0];
+  const yCoord = globalNodeObject[jointNum][1][1];
+  const point = `${xCoord} ${yCoord + 5}`;
+  const base1 = `${xCoord - 8} ${yCoord + 14}`;
+  const base2 = `${xCoord + 8} ${yCoord + 14}`;
+  const lineStartX = xCoord - 12;
+  const lineStartY = yCoord + 14;
+  const lineEndX = xCoord + 12;
+  const lineEndY = yCoord + 14;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
-  const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id','support');
-  support.setAttributeNS(null, 'stroke', 'green');
-  support.setAttributeNS(null, 'stroke-width', '1');
-  support.setAttributeNS(null, 'fill', 'none');
-  support.setAttributeNS(null, 'height', '14');
-  support.setAttributeNS(null, 'width', '14');
-  support.setAttributeNS(null, 'x', `${globalNodeObject[jointNum][1][0] - 7}`);
-  support.setAttributeNS(null, 'y',`${globalNodeObject[jointNum][1][1] + 5}`);
-  box.append(support);
+  const triangle = document.createElementNS(ns, 'polygon');
+  triangle.setAttributeNS(null, 'id','support');
+  triangle.setAttributeNS(null, 'stroke', 'green');
+  triangle.setAttributeNS(null, 'fill', 'none');
+  triangle.setAttributeNS(null, 'stroke-width', '2');
+  triangle.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
+  box.append(triangle);
 
-  const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id','support');
-  xLine.setAttributeNS(null, 'stroke', 'green');
-  xLine.setAttributeNS(null, 'stroke-width', '1');
-  xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0] + 7}`);
-  xLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 12}`);
-  xLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0] - 7}`);
-  xLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 12}`);
-  box.append(xLine);
+  const line = document.createElementNS(ns, 'line');
+  line.setAttributeNS(null, 'id','support');
+  line.setAttributeNS(null, 'stroke', 'green');
+  line.setAttributeNS(null, 'stroke-width', '2');
+  line.setAttributeNS(null, 'x1', `${lineStartX}`);
+  line.setAttributeNS(null, 'y1', `${lineStartY}`);
+  line.setAttributeNS(null, 'x2', `${lineEndX}`);
+  line.setAttributeNS(null, 'y2', `${lineEndY}`);
+  box.append(line);
 
-  const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id','support');
-  yLine.setAttributeNS(null, 'stroke', 'green');
-  yLine.setAttributeNS(null, 'stroke-width', '1');
-  yLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0]}`);
-  yLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 5}`);
-  yLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0]}`);
-  yLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 18}`);
-  box.append(yLine);
+  for(let i = 1; i <= 5; i++) {
+    const offset = ((24/ 5) * i) - 2;
+    const lSX = `${lineStartX + offset}`;
+    const lSY = `${lineStartY}`;
+    const lEX = `${lineStartX + offset - 3}`;
+    const lEY = `${lineStartY + 4}`;
+
+    const dLine = document.createElementNS(ns, 'line');
+    dLine.setAttributeNS(null, 'id','support');
+    dLine.setAttributeNS(null, 'stroke', 'green');
+    dLine.setAttributeNS(null, 'stroke-width', '1');
+    dLine.setAttributeNS(null, 'x1', `${lSX}`);
+    dLine.setAttributeNS(null, 'y1', `${lSY}`);
+    dLine.setAttributeNS(null, 'x2', `${lEX}`);
+    dLine.setAttributeNS(null, 'y2', `${lEY}`);
+    box.append(dLine);
+  }
 }
 
 export function drawXRSupport(jointNum, globalNodeObject) {

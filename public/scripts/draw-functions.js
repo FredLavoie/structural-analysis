@@ -314,7 +314,7 @@ export function drawXJointLoad(jointNum, load, globalNodeObject) {
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','joint-load');
   line.setAttributeNS(null, 'stroke', 'red');
-  line.setAttributeNS(null, 'stroke-width', '1');
+  line.setAttributeNS(null, 'stroke-width', '2');
   line.setAttributeNS(null, 'x1', `${headX}`);
   line.setAttributeNS(null, 'y1',`${headY}`);
   line.setAttributeNS(null, 'x2', `${tailX}`);
@@ -349,7 +349,7 @@ export function drawYJointLoad(jointNum, load, globalNodeObject) {
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','joint-load');
   line.setAttributeNS(null, 'stroke', 'red');
-  line.setAttributeNS(null, 'stroke-width', '1');
+  line.setAttributeNS(null, 'stroke-width', '2');
   line.setAttributeNS(null, 'x1', `${headX}`);
   line.setAttributeNS(null, 'y1',`${headY}`);
   line.setAttributeNS(null, 'x2', `${tailX}`);
@@ -431,7 +431,7 @@ export function drawMemberPointLoad(memberNum, offset, load, globalNodeObject, g
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','member-load');
   line.setAttributeNS(null, 'stroke', '#0000ff');
-  line.setAttributeNS(null, 'stroke-width', '1');
+  line.setAttributeNS(null, 'stroke-width', '2');
   line.setAttributeNS(null, 'x1', `${headX}`);
   line.setAttributeNS(null, 'y1',`${headY}`);
   line.setAttributeNS(null, 'x2', `${tailX}`);
@@ -481,7 +481,7 @@ export function drawMemberUDLLoad(memberNum, udl, globalNodeObject, globalMember
     const line = document.createElementNS(ns, 'line');
     line.setAttributeNS(null, 'id','member-load');
     line.setAttributeNS(null, 'stroke', '#0000ff');
-    line.setAttributeNS(null, 'stroke-width', '1');
+    line.setAttributeNS(null, 'stroke-width', '2');
     line.setAttributeNS(null, 'x1', `${headX}`);
     line.setAttributeNS(null, 'y1',`${headY}`);
     line.setAttributeNS(null, 'x2', `${tailX}`);
@@ -501,7 +501,7 @@ export function drawMemberUDLLoad(memberNum, udl, globalNodeObject, globalMember
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','member-load');
   line.setAttributeNS(null, 'stroke', '#0000ff');
-  line.setAttributeNS(null, 'stroke-width', '1');
+  line.setAttributeNS(null, 'stroke-width', '2');
   line.setAttributeNS(null, 'x1', `${crossLineStartX}`);
   line.setAttributeNS(null, 'y1',`${crossLineStartY}`);
   line.setAttributeNS(null, 'x2', `${crossLineEndX}`);

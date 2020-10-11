@@ -49,51 +49,96 @@ export function drawMember(num, start, end, globalNodeObject) {
   }
 }
 
-export function drawXYRSupport(jointNum, globalNodeObject) { // fixed support
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+export function drawXYRSupport(jointNum, globalNodeObject, globalMemberObject) { // fixed support
+  if(!globalNodeObject[jointNum][1][0] ||
+    !globalNodeObject[jointNum][1][1] ||
+    globalNodeObject[jointNum][1][0] === 0 ||
+    globalNodeObject[jointNum][1][1] === 0
+  ) return;
+
+  let angle = -1;
+  for(const ea in globalMemberObject) {
+    if(globalMemberObject[ea].joints[0] === jointNum || globalMemberObject[ea].joints[1] === jointNum) {
+      const deltaX = globalMemberObject[ea].end[0] - globalMemberObject[ea].start[0];
+      const deltaY = globalMemberObject[ea].end[1] - globalMemberObject[ea].start[1];
+      const orientation = Math.abs(deltaX) > Math.abs(deltaY) ? 'horz' : 'vert';
+
+      if(orientation === 'horz' &&
+      globalMemberObject[ea].joints[0] === jointNum &&
+      globalMemberObject[ea].start[0] < globalMemberObject[ea].end[0]) {
+        angle = 0;
+      } else if(orientation === 'horz' &&
+      globalMemberObject[ea].joints[1] === jointNum &&
+      globalMemberObject[ea].end[0] > globalMemberObject[ea].start[0]) {
+        angle = 180;
+      } else if(orientation === 'horz' &&
+      globalMemberObject[ea].joints[0] === jointNum &&
+      globalMemberObject[ea].start[0] > globalMemberObject[ea].end[0]) {
+        angle = 180;
+      } else if(orientation === 'horz' &&
+      globalMemberObject[ea].joints[1] === jointNum &&
+      globalMemberObject[ea].end[0] < globalMemberObject[ea].start[0]) {
+        angle = 0;
+      } else if(orientation === 'vert' &&
+      globalMemberObject[ea].joints[0] === jointNum &&
+      globalMemberObject[ea].end[1] < globalMemberObject[ea].start[1]) {
+        angle = 270;
+      } else if(orientation === 'vert' &&
+      globalMemberObject[ea].joints[1] === jointNum &&
+      globalMemberObject[ea].end[1] > globalMemberObject[ea].start[1]) {
+        angle = 90;
+      } else if(orientation === 'vert' &&
+      globalMemberObject[ea].joints[0] === jointNum &&
+      globalMemberObject[ea].end[1] > globalMemberObject[ea].start[1]) {
+        angle = 90;
+      } else if(orientation === 'vert' &&
+      globalMemberObject[ea].joints[1] === jointNum &&
+      globalMemberObject[ea].end[1] < globalMemberObject[ea].start[1]) {
+        angle = 270;
+      } else {
+        return;
+      }
+    }
+  }
+
+  const xCoord = globalNodeObject[jointNum][1][0];
+  const yCoord = globalNodeObject[jointNum][1][1];
+  const lineStartX = xCoord - 5;
+  const lineStartY = yCoord - 12;
+  const lineEndX = xCoord - 5;
+  const lineEndY = yCoord + 12;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
-  const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id','support');
-  support.setAttributeNS(null, 'stroke', 'green');
-  support.setAttributeNS(null, 'stroke-width', '1');
-  support.setAttributeNS(null, 'fill', 'none');
-  support.setAttributeNS(null, 'height', '14');
-  support.setAttributeNS(null, 'width', '14');
-  support.setAttributeNS(null, 'x', `${globalNodeObject[jointNum][1][0] - 7}`);
-  support.setAttributeNS(null, 'y',`${globalNodeObject[jointNum][1][1] + 5}`);
-  box.append(support);
+  const line = document.createElementNS(ns, 'line');
+  line.setAttributeNS(null, 'id','support');
+  line.setAttributeNS(null, 'stroke', 'green');
+  line.setAttributeNS(null, 'stroke-width', '2');
+  line.setAttributeNS(null, 'x1', `${lineStartX}`);
+  line.setAttributeNS(null, 'y1', `${lineStartY}`);
+  line.setAttributeNS(null, 'x2', `${lineEndX}`);
+  line.setAttributeNS(null, 'y2', `${lineEndY}`);
+  line.setAttributeNS(null, 'transform', `rotate(${angle} ${xCoord} ${yCoord})`);
+  box.append(line);
 
-  const circle = document.createElementNS(ns, 'circle');
-  circle.setAttributeNS(null, 'id','support');
-  circle.setAttributeNS(null, 'stroke', 'green');
-  circle.setAttributeNS(null, 'stroke-width', '1');
-  circle.setAttributeNS(null, 'fill', 'none');
-  circle.setAttributeNS(null, 'r', '6');
-  circle.setAttributeNS(null, 'cx', `${globalNodeObject[jointNum][1][0]}`);
-  circle.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1][1] + 12}`);
-  box.append(circle);
+  for(let i = 1; i <= 5; i++) {
+    const offset = ((24/ 5) * i) - 2;
+    const lSX = `${lineStartX}`;
+    const lSY = `${lineStartY + offset}`;
+    const lEX = `${lineStartX - 4}`;
+    const lEY = `${lineStartY  + offset - 4}`;
 
-  const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id','support');
-  xLine.setAttributeNS(null, 'stroke', 'green');
-  xLine.setAttributeNS(null, 'stroke-width', '1');
-  xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0] + 7}`);
-  xLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 12}`);
-  xLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0] - 7}`);
-  xLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 12}`);
-  box.append(xLine);
-
-  const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id','support');
-  yLine.setAttributeNS(null, 'stroke', 'green');
-  yLine.setAttributeNS(null, 'stroke-width', '1');
-  yLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0]}`);
-  yLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 5}`);
-  yLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0]}`);
-  yLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 18}`);
-  box.append(yLine);
+    const dLine = document.createElementNS(ns, 'line');
+    dLine.setAttributeNS(null, 'id','support');
+    dLine.setAttributeNS(null, 'stroke', 'green');
+    dLine.setAttributeNS(null, 'stroke-width', '1');
+    dLine.setAttributeNS(null, 'x1', `${lSX}`);
+    dLine.setAttributeNS(null, 'y1', `${lSY}`);
+    dLine.setAttributeNS(null, 'x2', `${lEX}`);
+    dLine.setAttributeNS(null, 'y2', `${lEY}`);
+    dLine.setAttributeNS(null, 'transform', `rotate(${angle} ${xCoord} ${yCoord})`);
+    box.append(dLine);
+  }
 }
 
 export function drawXYSupport(jointNum, globalNodeObject) { // pin support

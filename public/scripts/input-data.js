@@ -196,7 +196,7 @@ function generateSupports(arr) {
   let jointNum = 1;
   for(let i = 0; i < arr.length; i += 3) {
     if(arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) {
-      drawXYRSupport(jointNum, globalNodeObject); // fixed support
+      drawXYRSupport(jointNum, globalNodeObject, globalMemberObject); // fixed support
     } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) {
       drawXYSupport(jointNum, globalNodeObject); // pin support
     } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) {

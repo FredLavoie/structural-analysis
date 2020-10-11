@@ -22,7 +22,53 @@ const globalNodeObject = {};
 const globalMemberObject = {};
 
 window.addEventListener('resize', function() {
-  // clear joints and members before drawing update
+  redrawAllData();
+});
+
+document.addEventListener('change', function() {
+  const allJoints = document.querySelectorAll('.joint');
+  allJoints.forEach(ea => {
+    ea.addEventListener('change', function() {
+      redrawAllData();
+    });
+  });
+
+  const allMembers = document.querySelectorAll('.member');
+  allMembers.forEach(ea => {
+    ea.addEventListener('change', function() {
+      redrawAllData();
+    });
+  });
+
+  const allSupports = document.querySelectorAll('.supports');
+  allSupports.forEach(ea => {
+    ea.addEventListener('change', function() {
+      redrawAllData();
+    });
+  });
+
+  const allJointLoads = document.querySelectorAll('.joint-loads');
+  allJointLoads.forEach(ea => {
+    ea.addEventListener('change', function() {
+      redrawAllData();
+    });
+  });
+
+  const allMemberLoads = document.querySelectorAll('.member-loads');
+  allMemberLoads.forEach(ea => {
+    ea.addEventListener('change', function() {
+      redrawAllData();
+    });
+  });
+});
+
+
+
+//**************************************** FUNCTIONS *********************************************/
+//************************************************************************************************/
+
+function redrawAllData() {
+  // clear all svg nodes before redrawing
   document.querySelectorAll('svg>#joint').forEach(n => n.remove());
   document.querySelectorAll('svg>#joint-tag').forEach(n => n.remove());
   document.querySelectorAll('svg>#member').forEach(n => n.remove());
@@ -56,91 +102,7 @@ window.addEventListener('resize', function() {
   generateSupports(supportsArray);
   generateJointLoads(jointLoadArray);
   generateMemberLoads(memberLoadArray);
-});
-
-document.addEventListener('change', function() {
-  const allJoints = document.querySelectorAll('.joint');
-  allJoints.forEach(ea => {
-    ea.addEventListener('change', function() {
-      // clear joints before drawing updated joints
-      document.querySelectorAll('svg>#joint').forEach(n => n.remove());
-      document.querySelectorAll('svg>#joint-tag').forEach(n => n.remove());
-      document.querySelectorAll('svg>#member').forEach(n => n.remove());
-      document.querySelectorAll('svg>#member-tag').forEach(n => n.remove());
-      document.querySelectorAll('svg>#support').forEach(n => n.remove());
-      document.querySelectorAll('svg>#joint-load').forEach(n => n.remove());
-      document.querySelectorAll('svg>#member-load').forEach(n => n.remove());
-
-      const windowWidth = document.querySelector('#structure-window').clientWidth;
-      const windowHeight = document.querySelector('#structure-window').clientHeight;
-
-      const jointArray = [...document.querySelectorAll('.joint')]
-        .map(e => Number(e.value));
-
-      const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
-
-      generateJoints(jointCoordinates);
-    });
-  });
-
-  const allMembers = document.querySelectorAll('.member');
-  allMembers.forEach(ea => {
-    ea.addEventListener('change', function() {
-      // clear members before drawing updated members
-      document.querySelectorAll('svg>#member').forEach(n => n.remove());
-      document.querySelectorAll('svg>#member-tag').forEach(n => n.remove());
-
-      const memberArray = [...document.querySelectorAll('.member')]
-        .map(e => Number(e.value));
-
-      generateMembers(memberArray);
-    });
-  });
-
-  const allSupports = document.querySelectorAll('.supports');
-  allSupports.forEach(ea => {
-    ea.addEventListener('change', function() {
-      // clear supports before drawing updated members
-      document.querySelectorAll('svg>#support').forEach(n => n.remove());
-
-      const supportsArray = [...document.querySelectorAll('.supports')]
-        .map(e => Number(e.value));
-
-      generateSupports(supportsArray);
-    });
-  });
-
-  const allJointLoads = document.querySelectorAll('.joint-loads');
-  allJointLoads.forEach(ea => {
-    ea.addEventListener('change', function() {
-      // clear joint loads before drawing updated members
-      document.querySelectorAll('svg>#joint-load').forEach(n => n.remove());
-
-      const jointLoadArray = [...document.querySelectorAll('.joint-loads')]
-        .map(e => Number(e.value));
-
-      generateJointLoads(jointLoadArray);
-    });
-  });
-
-  const allMemberLoads = document.querySelectorAll('.member-loads');
-  allMemberLoads.forEach(ea => {
-    ea.addEventListener('change', function() {
-      // clear member loads before drawing updated members
-      document.querySelectorAll('svg>#member-load').forEach(n => n.remove());
-
-      const memberLoadArray = [...document.querySelectorAll('.member-loads')]
-        .map(e => Number(e.value));
-
-      generateMemberLoads(memberLoadArray);
-    });
-  });
-});
-
-
-
-//**************************************** FUNCTIONS *********************************************/
-//************************************************************************************************/
+}
 
 function calculateJointCoordinates(arr, width, height) {
   const jointCoordinates = [];

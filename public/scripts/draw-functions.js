@@ -4,7 +4,7 @@ export function drawNode(jointNum, point) {
   const box = document.querySelector('#structure-window');
   const node = document.createElementNS(ns, 'circle');
   node.setAttributeNS(null, 'id','joint');
-  node.setAttributeNS(null, 'r', '5');
+  node.setAttributeNS(null, 'r', '4');
   node.setAttributeNS(null, 'cx', `${point[0]}`);
   node.setAttributeNS(null, 'cy',`${point[1]}`);
   box.append(node);

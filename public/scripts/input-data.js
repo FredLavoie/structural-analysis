@@ -195,20 +195,20 @@ function generateMembers(arr) {
 function generateSupports(arr) {
   let jointNum = 1;
   for(let i = 0; i < arr.length; i += 3) {
-    if(arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) { // fixed support
-      drawXYRSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) { // pin support
-      drawXYSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) { // x-rest rot-rest
-      drawXRSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) { // x-rest / roller support
-      drawXSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) { // rot-rest
-      drawRSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) { // y-rest / roller support
-      drawYSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) { // y-rest rot-rest
-      drawYRSupport(jointNum, globalNodeObject);
+    if(arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) {
+      drawXYRSupport(jointNum, globalNodeObject); // fixed support
+    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) {
+      drawXYSupport(jointNum, globalNodeObject); // pin support
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) {
+      drawXRSupport(jointNum, globalNodeObject); // x-rest rot-rest
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) {
+      drawXSupport(jointNum, globalNodeObject); // x-rest / roller support
+    } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) {
+      drawRSupport(jointNum, globalNodeObject); // rot-rest
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) {
+      drawYSupport(jointNum, globalNodeObject); // y-rest / roller support
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) {
+      drawYRSupport(jointNum, globalNodeObject); // y-rest rot-rest
     }
     jointNum += 1;
   }

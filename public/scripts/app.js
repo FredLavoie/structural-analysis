@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const inputNumJointLoads = document.querySelector('#input-numJointLoads');
   inputNumJointLoads.addEventListener('change', function() {
-    document.querySelectorAll('#pl-container').innerHTML = '';
+    document.querySelector('#pl-container').innerHTML = '';
     let num = document.querySelector('#input-numJointLoads').value;
     for (let i = 1; i <= num; i++) {
       generateJointLoadsInput(i);
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   const inputNumMemLoads = document.querySelector('#input-numMemLoads');
   inputNumMemLoads.addEventListener('change', function() {
-    document.querySelectorAll('#ml-container').innerHTML = '';
+    document.querySelector('#ml-container').innerHTML = '';
     let num = document.querySelector('#input-numMemLoads').value;
     for (let i = 1; i <= num; i++) {
       generateMemberLoadsInput(i);

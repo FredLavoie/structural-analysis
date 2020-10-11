@@ -11,8 +11,8 @@ export function drawNode(jointNum, point) {
 
   const text = document.createElementNS(ns, 'text');
   text.setAttributeNS(null, 'id','joint-tag');
-  text.setAttribute('x', `${point[0] - 10}`);
-  text.setAttribute('y', `${point[1] - 10}`);
+  text.setAttribute('x', `${point[0] - 15}`);
+  text.setAttribute('y', `${point[1] - 15}`);
   text.setAttribute('height', '5');
   text.setAttribute('width', '5');
   text.textContent = `${jointNum}`;
@@ -40,8 +40,8 @@ export function drawMember(num, start, end, globalNodeObject) {
 
     const text = document.createElementNS(ns, 'text');
     text.setAttributeNS(null, 'id','member-tag');
-    text.setAttribute('x', `${midX - 10}`);
-    text.setAttribute('y', `${midY - 10}`);
+    text.setAttribute('x', `${midX - 15}`);
+    text.setAttribute('y', `${midY - 15}`);
     text.setAttribute('height', '5');
     text.setAttribute('width', '5');
     text.textContent = `${num}`;

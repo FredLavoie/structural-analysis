@@ -12,7 +12,7 @@ import {
   drawYJointLoad,
   drawMJointLoad,
   drawMemberPointLoad,
-  // drawMemberUDLLoad
+  drawMemberUDLLoad
 } from "./draw-functions.js";
 
 //************************************** DOCUMENT READY ******************************************/
@@ -267,9 +267,9 @@ function generateMemberLoads(arr) {
     if(arr[i] && arr[i+1] !== 0 && arr[i+2] !== 0) {
       drawMemberPointLoad(arr[i], arr[i+1], arr[i+2], globalNodeObject, globalMemberObject);
     }
-    // if(arr[i] && arr[i+3] !== 0) {
-    //   drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject);
-    // }
+    if(arr[i] && arr[i+3] !== 0) {
+      drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject);
+    }
   }
 }
 

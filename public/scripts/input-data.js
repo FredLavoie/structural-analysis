@@ -26,36 +26,36 @@ window.addEventListener('resize', function() {
 });
 
 document.addEventListener('change', function() {
-  const allJoints = document.querySelectorAll('.joint');
-  allJoints.forEach(ea => {
+  const allJointsClasses = document.querySelectorAll('.joint');
+  allJointsClasses.forEach(ea => {
     ea.addEventListener('change', function() {
       redrawAllData();
     });
   });
 
-  const allMembers = document.querySelectorAll('.member');
-  allMembers.forEach(ea => {
+  const allMembersClasses = document.querySelectorAll('.member');
+  allMembersClasses.forEach(ea => {
     ea.addEventListener('change', function() {
       redrawAllData();
     });
   });
 
-  const allSupports = document.querySelectorAll('.supports');
-  allSupports.forEach(ea => {
+  const allSupportsClasses = document.querySelectorAll('.supports');
+  allSupportsClasses.forEach(ea => {
     ea.addEventListener('change', function() {
       redrawAllData();
     });
   });
 
-  const allJointLoads = document.querySelectorAll('.joint-loads');
-  allJointLoads.forEach(ea => {
+  const allJointLoadsClasses = document.querySelectorAll('.joint-loads');
+  allJointLoadsClasses.forEach(ea => {
     ea.addEventListener('change', function() {
       redrawAllData();
     });
   });
 
-  const allMemberLoads = document.querySelectorAll('.member-loads');
-  allMemberLoads.forEach(ea => {
+  const allMemberLoadsClasses = document.querySelectorAll('.member-loads');
+  allMemberLoadsClasses.forEach(ea => {
     ea.addEventListener('change', function() {
       redrawAllData();
     });
@@ -195,17 +195,17 @@ function generateMembers(arr) {
 function generateSupports(arr) {
   let jointNum = 1;
   for(let i = 0; i < arr.length; i += 3) {
-    if(arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) { // fixed
+    if(arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) { // fixed support
       drawXYRSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) { // pin
+    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) { // pin support
       drawXYSupport(jointNum, globalNodeObject);
     } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) { // x-rest rot-rest
       drawXRSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) { // x-rest
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) { // x-rest / roller support
       drawXSupport(jointNum, globalNodeObject);
     } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) { // rot-rest
       drawRSupport(jointNum, globalNodeObject);
-    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) { // y-rest
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) { // y-rest / roller support
       drawYSupport(jointNum, globalNodeObject);
     } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) { // y-rest rot-rest
       drawYRSupport(jointNum, globalNodeObject);

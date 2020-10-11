@@ -129,7 +129,7 @@ function calculateJointCoordinates(arr, width, height) {
     }
   }
 
-  if (yMin < 0) { // translate all y-coordiantes by xMin
+  if (yMin < 0) { // translate all y-coordiantes by yMin
     let count = 0;
     for(let i = 1; i <= arr.length; i += 2){
       arr.splice(i, 1, yCoords[count] -= yMin );

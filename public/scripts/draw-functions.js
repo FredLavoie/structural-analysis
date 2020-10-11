@@ -225,28 +225,52 @@ export function drawYRSupport(jointNum, globalNodeObject) {
 export function drawXSupport(jointNum, globalNodeObject) {  // X - roller support
   if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
+  const xCoord = globalNodeObject[jointNum][1][0];
+  const yCoord = globalNodeObject[jointNum][1][1];
+  const lineStartX = xCoord - 15;
+  const lineStartY = yCoord - 12;
+  const lineEndX = xCoord - 15;
+  const lineEndY = yCoord + 12;
+
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
-  const support = document.createElementNS(ns, 'rect');
-  support.setAttributeNS(null, 'id','support');
-  support.setAttributeNS(null, 'stroke', 'green');
-  support.setAttributeNS(null, 'stroke-width', '1');
-  support.setAttributeNS(null, 'fill', 'none');
-  support.setAttributeNS(null, 'height', '14');
-  support.setAttributeNS(null, 'width', '14');
-  support.setAttributeNS(null, 'x', `${globalNodeObject[jointNum][1][0] - 7}`);
-  support.setAttributeNS(null, 'y',`${globalNodeObject[jointNum][1][1] + 5}`);
-  box.append(support);
+  const circle = document.createElementNS(ns, 'circle');
+  circle.setAttributeNS(null, 'id','support');
+  circle.setAttributeNS(null, 'stroke', 'green');
+  circle.setAttributeNS(null, 'stroke-width', '2');
+  circle.setAttributeNS(null, 'fill', 'none');
+  circle.setAttributeNS(null, 'r', '5');
+  circle.setAttributeNS(null, 'cx', `${globalNodeObject[jointNum][1][0] - 9}`);
+  circle.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1][1]}`);
+  box.append(circle);
 
-  const xLine = document.createElementNS(ns, 'line');
-  xLine.setAttributeNS(null, 'id','support');
-  xLine.setAttributeNS(null, 'stroke', 'green');
-  xLine.setAttributeNS(null, 'stroke-width', '1');
-  xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0] + 7}`);
-  xLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 12}`);
-  xLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0] - 7}`);
-  xLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 12}`);
-  box.append(xLine);
+  const line = document.createElementNS(ns, 'line');
+  line.setAttributeNS(null, 'id','support');
+  line.setAttributeNS(null, 'stroke', 'green');
+  line.setAttributeNS(null, 'stroke-width', '2');
+  line.setAttributeNS(null, 'x1', `${lineStartX}`);
+  line.setAttributeNS(null, 'y1', `${lineStartY}`);
+  line.setAttributeNS(null, 'x2', `${lineEndX}`);
+  line.setAttributeNS(null, 'y2', `${lineEndY}`);
+  box.append(line);
+
+  for(let i = 1; i <= 5; i++) {
+    const offset = ((24/ 5) * i) - 2;
+    const lSX = `${lineStartX}`;
+    const lSY = `${lineStartY + offset}`;
+    const lEX = `${lineStartX - 3}`;
+    const lEY = `${lineStartY  + offset - 3}`;
+
+    const dLine = document.createElementNS(ns, 'line');
+    dLine.setAttributeNS(null, 'id','support');
+    dLine.setAttributeNS(null, 'stroke', 'green');
+    dLine.setAttributeNS(null, 'stroke-width', '1');
+    dLine.setAttributeNS(null, 'x1', `${lSX}`);
+    dLine.setAttributeNS(null, 'y1', `${lSY}`);
+    dLine.setAttributeNS(null, 'x2', `${lEX}`);
+    dLine.setAttributeNS(null, 'y2', `${lEY}`);
+    box.append(dLine);
+  }
 }
 
 export function drawYSupport(jointNum, globalNodeObject) { // Y - roller support

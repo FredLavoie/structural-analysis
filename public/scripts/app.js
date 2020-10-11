@@ -5,7 +5,6 @@ document.addEventListener("DOMContentLoaded", function() {
   inputNumJoints.addEventListener('change', function() {
     document.querySelectorAll('#joints-container-1>.joints-container-2').forEach(n => n.remove());
     let num = document.querySelector('#input-numJoints').value;
-    console.log('num: ', num);
     for (let i = 1; i <= num; i++) {
       generateJointInput(i);
     }

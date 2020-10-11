@@ -196,6 +196,9 @@ export function drawXYSupport(jointNum, globalNodeObject) { // pin support
 export function drawXRSupport(jointNum, globalNodeObject) {
   if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
+  const xCoord = globalNodeObject[jointNum][1][0];
+  const yCoord = globalNodeObject[jointNum][1][1];
+
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
   const support = document.createElementNS(ns, 'rect');
@@ -207,6 +210,7 @@ export function drawXRSupport(jointNum, globalNodeObject) {
   support.setAttributeNS(null, 'width', '14');
   support.setAttributeNS(null, 'x', `${globalNodeObject[jointNum][1][0] - 7}`);
   support.setAttributeNS(null, 'y',`${globalNodeObject[jointNum][1][1] + 5}`);
+  support.setAttributeNS(null, 'transform', `rotate(90 ${xCoord} ${yCoord})`);
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
@@ -217,16 +221,18 @@ export function drawXRSupport(jointNum, globalNodeObject) {
   circle.setAttributeNS(null, 'r', '6');
   circle.setAttributeNS(null, 'cx', `${globalNodeObject[jointNum][1][0]}`);
   circle.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1][1] + 12}`);
+  circle.setAttributeNS(null, 'transform', `rotate(90 ${xCoord} ${yCoord})`);
   box.append(circle);
 
   const xLine = document.createElementNS(ns, 'line');
   xLine.setAttributeNS(null, 'id','support');
   xLine.setAttributeNS(null, 'stroke', 'green');
   xLine.setAttributeNS(null, 'stroke-width', '1');
-  xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0] + 7}`);
-  xLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 12}`);
-  xLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0] - 7}`);
-  xLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 12}`);
+  xLine.setAttributeNS(null, 'x1', `${globalNodeObject[jointNum][1][0]}`);
+  xLine.setAttributeNS(null, 'y1',`${globalNodeObject[jointNum][1][1] + 5}`);
+  xLine.setAttributeNS(null, 'x2', `${globalNodeObject[jointNum][1][0]}`);
+  xLine.setAttributeNS(null, 'y2',`${globalNodeObject[jointNum][1][1] + 18}`);
+  xLine.setAttributeNS(null, 'transform', `rotate(90 ${xCoord} ${yCoord})`);
   box.append(xLine);
 }
 

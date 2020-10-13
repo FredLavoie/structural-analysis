@@ -9,7 +9,7 @@
   <!-- Stylesheets -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="../styles/reset.css">
-  <link rel="stylesheet" href="../styles/main.css">
+  <link rel="stylesheet" href="../styles/results.css">
   <!-- Script JS -->
 </head>
 
@@ -18,12 +18,29 @@
     <% include ./partials/_navbar %>
   </header>
 
-  <main>
-    <div id="results-content">
-      <p id="result-frame"><iframe src="data_out.txt" height="600" width="650"></iframe></p>
-    </div>
-  </main>
+  <main id="main-container">
 
+    <svg xmlns="http://www.w3.org/2000/svg" id="input-diagram">
+      <rect width="100%" height="100%" fill="#eee"></rect>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" id="shear-forces-diagram">
+      <rect width="100%" height="100%" fill="#eee"></rect>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" id="moment-forces-diagram">
+      <rect width="100%" height="100%" fill="#eee"></rect>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" id="displacements-diagram">
+      <rect width="100%" height="100%" fill="#eee"></rect>
+    </svg>
+
+    <svg xmlns="http://www.w3.org/2000/svg" id="reactions-diagram">
+      <rect width="100%" height="100%" fill="#eee"></rect>
+    </svg>
+  
+  </main>
 
 </body>
 </html>

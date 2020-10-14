@@ -47,7 +47,7 @@ app.post('/results', (req, res) => {
   const dataString = createInputString(inputObject);
 
   // code to write to the input file
-  fs.writeFile('program/data_in.txt', dataString, function(error) {
+  fs.writeFile('program/data_in.txt', dataString, (error) => {
     if (error) {
       console.log('There was an error writing the input file');
       console.log(error);
@@ -55,16 +55,16 @@ app.post('/results', (req, res) => {
       return;
     }
     // code to run executable, then render 'results' page
-    execFile('program/sa-mac-exec', function(error) {
+    execFile('program/sa-mac-exec', (error) => {
       if (error) {
         console.log('There was an error running the executable');
         console.log(error);
         res.render('error-exec');
         return;
       }
-      fs.readFile('program/data_string.json', 'utf-8', function(error, data) {
+      fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
         console.log('JSON data results object: ', JSON.parse(data));
-        if(error) console.log(error);
+        if (error) console.log(error);
       });
       res.render('results');
     });

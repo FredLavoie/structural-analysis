@@ -1,6 +1,6 @@
 module.exports = function (obj) {
 
-  let inputObject = {};
+  const inputObject = {};
   inputObject.numJoints = Number(obj.numJoints);
   inputObject.numMembers = Number(obj.numMembers);
   inputObject.numElasticModulus = Number(obj.numElasticModulus);
@@ -21,11 +21,11 @@ module.exports = function (obj) {
 /**********************************************************************************/
 
 function extractJointsAndMembers(data) {
-  let resultArr = [];
-  let num = data.length / 5;
+  const resultArr = [];
+  const num = data.length / 5;
   for (let i = 0; i < num; i++) {
-    let arr = [];
-    let section = i * 5;
+    const arr = [];
+    const section = i * 5;
     for (let i = 0; i < 5; i++) {
       arr.push(Number(data[section + i]));
     }
@@ -35,17 +35,17 @@ function extractJointsAndMembers(data) {
 }
 
 function extractProperties(data) {
-  if(typeof data == 'string') data = [ data ];
-  let resultArr = data.map(e => Number(e));
+  if (typeof data == 'string') data = [ data ];
+  const resultArr = data.map((e) => Number(e));
   return resultArr;
 }
 
 function extractLoads(data, njl, nml) {
-  let resultArr = [[Number(njl), Number(nml)]];
-  let num = data.length / 4;
+  const resultArr = [[Number(njl), Number(nml)]];
+  const num = data.length / 4;
   for (let i = 0; i < num; i++) {
-    let arr = [];
-    let section = i * 4;
+    const arr = [];
+    const section = i * 4;
     for (let i = 0; i < 4; i++) {
       arr.push(Number(data[section + i]));
     }

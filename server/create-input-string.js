@@ -14,11 +14,11 @@ module.exports = function (obj) {
     obj.numMomentOfInertia.toString() + ' ' +
     obj.numLoadCases.toString() + '\n'
   );
-  
+
   // write joint data block of input file
   let count = 1;
-  for (let joint of obj.joints) {
-    let num = count.toString();
+  for (const joint of obj.joints) {
+    const num = count.toString();
     dataString += num + ' ';
     dataString += joint[0] + ' ';
     dataString += joint[1] + ' ';
@@ -30,24 +30,24 @@ module.exports = function (obj) {
 
   // write properties block of input file
   count = 1;
-  for (let em of obj.elasticMods) {
-    let num = count.toString();
+  for (const em of obj.elasticMods) {
+    const num = count.toString();
     dataString += num + ' ';
     dataString += em + '\n';
     count += 1;
   }
 
   count = 1;
-  for (let area of obj.areas) {
-    let num = count.toString();
+  for (const area of obj.areas) {
+    const num = count.toString();
     dataString += num + ' ';
     dataString += area + '\n';
     count += 1;
   }
 
   count = 1;
-  for (let Mo of obj.MoI) {
-    let num = count.toString();
+  for (const Mo of obj.MoI) {
+    const num = count.toString();
     dataString += num + ' ';
     dataString += Mo + '\n';
     count += 1;
@@ -55,8 +55,8 @@ module.exports = function (obj) {
 
   // write member data block of input file
   count = 1;
-  for (let member of obj.members) {
-    let num = count.toString();
+  for (const member of obj.members) {
+    const num = count.toString();
     dataString += num + ' ';
     dataString += member[0] + ' ';
     dataString += member[1] + ' ';
@@ -67,8 +67,8 @@ module.exports = function (obj) {
   }
 
   // write loads block of input file
-  for (let ea of obj.loads) {
-    let removeComma = ea.reduce((acc, e) => {
+  for (const ea of obj.loads) {
+    const removeComma = ea.reduce((acc, e) => {
       return acc += ' ' + e.toString();
     });
     dataString += removeComma + '\n';

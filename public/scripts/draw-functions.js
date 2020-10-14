@@ -1,5 +1,5 @@
 export function drawNode(jointNum, point) {
-  if(isNaN(point[0]) || isNaN(point[1])) return;
+  if (isNaN(point[0]) || isNaN(point[1])) return;
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
   const node = document.createElementNS(ns, 'circle');
@@ -20,9 +20,9 @@ export function drawNode(jointNum, point) {
 }
 
 export function drawMember(num, start, end, globalNodeObject) {
-  if(!(start in globalNodeObject) || !(end in globalNodeObject)) return;
+  if (!(start in globalNodeObject) || !(end in globalNodeObject)) return;
 
-  if(start !== 0 && end !== 0) {
+  if (start !== 0 && end !== 0) {
     const ns = 'http://www.w3.org/2000/svg';
     const box = document.querySelector('#structure-window');
     const member = document.createElementNS(ns, 'line');
@@ -35,8 +35,8 @@ export function drawMember(num, start, end, globalNodeObject) {
     member.setAttribute('stroke-width', '3');
     box.append(member);
 
-    let midX = (globalNodeObject[start][1][0] + globalNodeObject[end][1][0]) / 2;
-    let midY = (globalNodeObject[start][1][1] + globalNodeObject[end][1][1]) / 2;
+    const midX = (globalNodeObject[start][1][0] + globalNodeObject[end][1][0]) / 2;
+    const midY = (globalNodeObject[start][1][1] + globalNodeObject[end][1][1]) / 2;
 
     const text = document.createElementNS(ns, 'text');
     text.setAttributeNS(null, 'id','member-tag');
@@ -50,50 +50,33 @@ export function drawMember(num, start, end, globalNodeObject) {
 }
 
 export function drawXYRSupport(jointNum, globalNodeObject, globalMemberObject) { // fixed support
-  if(!globalNodeObject[jointNum][1][0] ||
-    !globalNodeObject[jointNum][1][1] ||
-    globalNodeObject[jointNum][1][0] === 0 ||
-    globalNodeObject[jointNum][1][1] === 0
-  ) return;
+  const currentJoint = globalNodeObject[jointNum];
+
+  if (!currentJoint[1][0] || !currentJoint[1][1] || currentJoint[1][0] === 0 || currentJoint[1][1] === 0) return;
 
   let angle = -1;
-  for(const ea in globalMemberObject) {
-    if(globalMemberObject[ea].joints[0] === jointNum || globalMemberObject[ea].joints[1] === jointNum) {
-      const deltaX = globalMemberObject[ea].end[0] - globalMemberObject[ea].start[0];
-      const deltaY = globalMemberObject[ea].end[1] - globalMemberObject[ea].start[1];
+  for (const ea in globalMemberObject) {
+    const currentMember = globalMemberObject[ea];
+    if (currentMember.joints[0] === jointNum || currentMember.joints[1] === jointNum) {
+      const deltaX = currentMember.end[0] - currentMember.start[0];
+      const deltaY = currentMember.end[1] - currentMember.start[1];
       const orientation = Math.abs(deltaX) > Math.abs(deltaY) ? 'horz' : 'vert';
 
-      if(orientation === 'horz' &&
-      globalMemberObject[ea].joints[0] === jointNum &&
-      globalMemberObject[ea].start[0] < globalMemberObject[ea].end[0]) {
+      if (orientation === 'horz' && currentMember.joints[0] === jointNum && currentMember.start[0] < currentMember.end[0]) {
         angle = 0;
-      } else if(orientation === 'horz' &&
-      globalMemberObject[ea].joints[1] === jointNum &&
-      globalMemberObject[ea].end[0] > globalMemberObject[ea].start[0]) {
+      } else if (orientation === 'horz' && currentMember.joints[1] === jointNum && currentMember.end[0] > currentMember.start[0]) {
         angle = 180;
-      } else if(orientation === 'horz' &&
-      globalMemberObject[ea].joints[0] === jointNum &&
-      globalMemberObject[ea].start[0] > globalMemberObject[ea].end[0]) {
+      } else if (orientation === 'horz' && currentMember.joints[0] === jointNum && currentMember.start[0] > currentMember.end[0]) {
         angle = 180;
-      } else if(orientation === 'horz' &&
-      globalMemberObject[ea].joints[1] === jointNum &&
-      globalMemberObject[ea].end[0] < globalMemberObject[ea].start[0]) {
+      } else if (orientation === 'horz' && currentMember.joints[1] === jointNum && currentMember.end[0] < currentMember.start[0]) {
         angle = 0;
-      } else if(orientation === 'vert' &&
-      globalMemberObject[ea].joints[0] === jointNum &&
-      globalMemberObject[ea].end[1] < globalMemberObject[ea].start[1]) {
+      } else if (orientation === 'vert' && currentMember.joints[0] === jointNum && currentMember.end[1] < currentMember.start[1]) {
         angle = 270;
-      } else if(orientation === 'vert' &&
-      globalMemberObject[ea].joints[1] === jointNum &&
-      globalMemberObject[ea].end[1] > globalMemberObject[ea].start[1]) {
+      } else if (orientation === 'vert' && currentMember.joints[1] === jointNum && currentMember.end[1] > currentMember.start[1]) {
         angle = 90;
-      } else if(orientation === 'vert' &&
-      globalMemberObject[ea].joints[0] === jointNum &&
-      globalMemberObject[ea].end[1] > globalMemberObject[ea].start[1]) {
+      } else if (orientation === 'vert' && currentMember.joints[0] === jointNum && currentMember.end[1] > currentMember.start[1]) {
         angle = 90;
-      } else if(orientation === 'vert' &&
-      globalMemberObject[ea].joints[1] === jointNum &&
-      globalMemberObject[ea].end[1] < globalMemberObject[ea].start[1]) {
+      } else if (orientation === 'vert' && currentMember.joints[1] === jointNum && currentMember.end[1] < currentMember.start[1]) {
         angle = 270;
       } else {
         return;
@@ -121,7 +104,7 @@ export function drawXYRSupport(jointNum, globalNodeObject, globalMemberObject) {
   line.setAttributeNS(null, 'transform', `rotate(${angle} ${xCoord} ${yCoord})`);
   box.append(line);
 
-  for(let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 5; i++) {
     const offset = ((24/ 5) * i) - 2;
     const lSX = `${lineStartX}`;
     const lSY = `${lineStartY + offset}`;
@@ -142,7 +125,7 @@ export function drawXYRSupport(jointNum, globalNodeObject, globalMemberObject) {
 }
 
 export function drawXYSupport(jointNum, globalNodeObject) { // pin support
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const xCoord = globalNodeObject[jointNum][1][0];
   const yCoord = globalNodeObject[jointNum][1][1];
@@ -174,7 +157,7 @@ export function drawXYSupport(jointNum, globalNodeObject) { // pin support
   line.setAttributeNS(null, 'y2', `${lineEndY}`);
   box.append(line);
 
-  for(let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 5; i++) {
     const offset = ((24/ 5) * i) - 2;
     const lSX = `${lineStartX + offset}`;
     const lSY = `${lineStartY}`;
@@ -194,7 +177,7 @@ export function drawXYSupport(jointNum, globalNodeObject) { // pin support
 }
 
 export function drawXRSupport(jointNum, globalNodeObject) {
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const xCoord = globalNodeObject[jointNum][1][0];
   const yCoord = globalNodeObject[jointNum][1][1];
@@ -237,7 +220,7 @@ export function drawXRSupport(jointNum, globalNodeObject) {
 }
 
 export function drawYRSupport(jointNum, globalNodeObject) {
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -274,7 +257,7 @@ export function drawYRSupport(jointNum, globalNodeObject) {
 }
 
 export function drawXSupport(jointNum, globalNodeObject) {  // X - roller support
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const xCoord = globalNodeObject[jointNum][1][0];
   const yCoord = globalNodeObject[jointNum][1][1];
@@ -305,7 +288,7 @@ export function drawXSupport(jointNum, globalNodeObject) {  // X - roller suppor
   line.setAttributeNS(null, 'y2', `${lineEndY}`);
   box.append(line);
 
-  for(let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 5; i++) {
     const offset = ((24/ 5) * i) - 2;
     const lSX = `${lineStartX}`;
     const lSY = `${lineStartY + offset}`;
@@ -325,7 +308,7 @@ export function drawXSupport(jointNum, globalNodeObject) {  // X - roller suppor
 }
 
 export function drawYSupport(jointNum, globalNodeObject) { // Y - roller support
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const xCoord = globalNodeObject[jointNum][1][0];
   const yCoord = globalNodeObject[jointNum][1][1];
@@ -356,7 +339,7 @@ export function drawYSupport(jointNum, globalNodeObject) { // Y - roller support
   line.setAttributeNS(null, 'y2', `${lineEndY}`);
   box.append(line);
 
-  for(let i = 1; i <= 5; i++) {
+  for (let i = 1; i <= 5; i++) {
     const offset = ((24/ 5) * i) - 2;
     const lSX = `${lineStartX + offset}`;
     const lSY = `${lineStartY}`;
@@ -376,7 +359,7 @@ export function drawYSupport(jointNum, globalNodeObject) { // Y - roller support
 }
 
 export function drawRSupport(jointNum, globalNodeObject) {
-  if(!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -403,17 +386,17 @@ export function drawRSupport(jointNum, globalNodeObject) {
 }
 
 export function drawXJointLoad(jointNum, load, globalNodeObject) {
-  if(!globalNodeObject[jointNum]) return;
+  if (!globalNodeObject[jointNum]) return;
 
-  let headX = globalNodeObject[jointNum][1][0];
-  let headY = globalNodeObject[jointNum][1][1];
-  let tailX = load > 0 ? headX - 50 : headX + 50;
-  let tailY = headY;
+  const headX = globalNodeObject[jointNum][1][0];
+  const headY = globalNodeObject[jointNum][1][1];
+  const tailX = load > 0 ? headX - 50 : headX + 50;
+  const tailY = headY;
 
-  let base1 = load > 0 ? `${headX - 10} ${headY - 3.5}` : `${headX + 10} ${headY - 3.5}`;
-  let base2 = load > 0 ? `${headX - 10} ${headY + 3.5}` : `${headX + 10} ${headY + 3.5}`;
-  let point = `${headX} ${headY}`;
-  let offset = load > 0 ? -5 : 5;
+  const base1 = load > 0 ? `${headX - 10} ${headY - 3.5}` : `${headX + 10} ${headY - 3.5}`;
+  const base2 = load > 0 ? `${headX - 10} ${headY + 3.5}` : `${headX + 10} ${headY + 3.5}`;
+  const point = `${headX} ${headY}`;
+  const offset = load > 0 ? -5 : 5;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -438,17 +421,17 @@ export function drawXJointLoad(jointNum, load, globalNodeObject) {
 }
 
 export function drawYJointLoad(jointNum, load, globalNodeObject) {
-  if(!globalNodeObject[jointNum]) return;
+  if (!globalNodeObject[jointNum]) return;
 
-  let headX = globalNodeObject[jointNum][1][0];
-  let headY = globalNodeObject[jointNum][1][1];
-  let tailX = headX;
-  let tailY = load < 0 ? headY - 50 : headY + 50;
+  const headX = globalNodeObject[jointNum][1][0];
+  const headY = globalNodeObject[jointNum][1][1];
+  const tailX = headX;
+  const tailY = load < 0 ? headY - 50 : headY + 50;
 
-  let base1 = load < 0 ? `${headX - 3.5} ${headY - 10}` : `${headX - 3.5} ${headY + 10}`;
-  let base2 = load < 0 ? `${headX + 3.5} ${headY - 10}` : `${headX + 3.5} ${headY + 10}`;
-  let point = `${headX} ${headY}`;
-  let offset = load > 0 ? 5 : -5;
+  const base1 = load < 0 ? `${headX - 3.5} ${headY - 10}` : `${headX - 3.5} ${headY + 10}`;
+  const base2 = load < 0 ? `${headX + 3.5} ${headY - 10}` : `${headX + 3.5} ${headY + 10}`;
+  const point = `${headX} ${headY}`;
+  const offset = load > 0 ? 5 : -5;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -473,19 +456,19 @@ export function drawYJointLoad(jointNum, load, globalNodeObject) {
 }
 
 export function drawMJointLoad(jointNum, moment, globalNodeObject) {
-  if(!globalNodeObject[jointNum]) return;
+  if (!globalNodeObject[jointNum]) return;
 
-  let cx = globalNodeObject[jointNum][1][0] - 15;
-  let cy = globalNodeObject[jointNum][1][1] + 15;
-  let base1 = `${globalNodeObject[jointNum][1][0] + 12} ${globalNodeObject[jointNum][1][1] - 12}`;
-  let base2 = `${globalNodeObject[jointNum][1][0] + 18} ${globalNodeObject[jointNum][1][1] - 18}`;
+  const cx = globalNodeObject[jointNum][1][0] - 15;
+  const cy = globalNodeObject[jointNum][1][1] + 15;
+  const base1 = `${globalNodeObject[jointNum][1][0] + 12} ${globalNodeObject[jointNum][1][1] - 12}`;
+  const base2 = `${globalNodeObject[jointNum][1][0] + 18} ${globalNodeObject[jointNum][1][1] - 18}`;
   let point = '';
   let path = '';
 
-  if(moment < 0) {
+  if (moment < 0) {
     path += `M ${cx},${cy} a 1 1 0 0 1 30 -30`;
     point += `${globalNodeObject[jointNum][1][0] + 22} ${globalNodeObject[jointNum][1][1] - 8}`;
-  } else if(moment > 0) {
+  } else if (moment > 0) {
     path += `M ${cx},${cy} a 1 1 0 0 0 30 -30`;
     point += `${globalNodeObject[jointNum][1][0] + 8} ${globalNodeObject[jointNum][1][1] - 22}`;
   }
@@ -567,7 +550,7 @@ export function drawMemberUDLLoad(memberNum, udl, globalNodeObject, globalMember
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
 
-  for(let i = 0; i < 8; i++) {
+  for (let i = 0; i < 8; i++) {
     const offset = (memberLength / 7) * i;
     const loadOffsetRatio =  offset / memberLength;
     const relLoadPositionX = windowXDist * loadOffsetRatio;

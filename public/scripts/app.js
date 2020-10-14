@@ -1,6 +1,6 @@
 //************************************************ DOCUMENT READY ****************************************************/
 //********************************************************************************************************************/
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener('DOMContentLoaded', () => {
   const inputNumJoints = document.querySelector('#input-numJoints');
   inputNumJoints.addEventListener('change', () => {
     document.querySelectorAll('#joints-container-1>.joints-container-2').forEach((n) => n.remove());

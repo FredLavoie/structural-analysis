@@ -40,11 +40,11 @@ app.get('/documentation', (req, res) => {
 /************************************************* POST REQUEST ******************************************************/
 /*********************************************************************************************************************/
 
-app.post('/results', (req, res) => {
+app.post('/results', async (req, res) => {
   console.log('rendering results.ejs');
 
-  const inputObject = createInputObject(req.body);
-  const dataString = createInputString(inputObject);
+  const inputObject = await createInputObject(req.body);
+  const dataString = await createInputString(inputObject);
 
   // code to write to the input file
   fs.writeFile('program/data_in.txt', dataString, (error) => {

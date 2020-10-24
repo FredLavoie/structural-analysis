@@ -1,4 +1,4 @@
-module.exports = function (obj) {
+module.exports = async function (obj) {
 
   const inputObject = {};
   inputObject.numJoints = Number(obj.numJoints);

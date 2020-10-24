@@ -1,11 +1,11 @@
-export default function drawXYRSupport(jointNum, globalNodeObject, globalMemberObject) { // fixed support
-  const currentJoint = globalNodeObject[jointNum];
+export function drawXYRSupport(jointNum, nodes, members) { // fixed support
+  const currentJoint = nodes[jointNum];
 
   if (!currentJoint[1][0] || !currentJoint[1][1] || currentJoint[1][0] === 0 || currentJoint[1][1] === 0) return;
 
   let angle = -1;
-  for (const ea in globalMemberObject) {
-    const currentMember = globalMemberObject[ea];
+  for (const member in members) {
+    const currentMember = members[member];
     if (currentMember.joints[0] === jointNum || currentMember.joints[1] === jointNum) {
       const deltaX = currentMember.end[0] - currentMember.start[0];
       const deltaY = currentMember.end[1] - currentMember.start[1];
@@ -33,8 +33,8 @@ export default function drawXYRSupport(jointNum, globalNodeObject, globalMemberO
     }
   }
 
-  const xCoord = globalNodeObject[jointNum][1][0];
-  const yCoord = globalNodeObject[jointNum][1][1];
+  const xCoord = nodes[jointNum][1][0];
+  const yCoord = nodes[jointNum][1][1];
   const lineStartX = xCoord - 5;
   const lineStartY = yCoord - 12;
   const lineEndX = xCoord - 5;

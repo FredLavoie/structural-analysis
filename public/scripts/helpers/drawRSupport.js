@@ -1,5 +1,5 @@
-export default function drawRSupport(jointNum, globalNodeObject) {
-  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+export function drawRSupport(jointNum, nodes) {
+  if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -10,8 +10,8 @@ export default function drawRSupport(jointNum, globalNodeObject) {
   support.setAttributeNS(null, 'fill', 'none');
   support.setAttributeNS(null, 'height', '14');
   support.setAttributeNS(null, 'width', '14');
-  support.setAttributeNS(null, 'x', `${globalNodeObject[jointNum][1][0] - 7}`);
-  support.setAttributeNS(null, 'y',`${globalNodeObject[jointNum][1][1] + 5}`);
+  support.setAttributeNS(null, 'x', `${nodes[jointNum][1][0] - 7}`);
+  support.setAttributeNS(null, 'y',`${nodes[jointNum][1][1] + 5}`);
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
@@ -20,7 +20,7 @@ export default function drawRSupport(jointNum, globalNodeObject) {
   circle.setAttributeNS(null, 'stroke-width', '1');
   circle.setAttributeNS(null, 'fill', 'none');
   circle.setAttributeNS(null, 'r', '6');
-  circle.setAttributeNS(null, 'cx', `${globalNodeObject[jointNum][1][0]}`);
-  circle.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1][1] + 12}`);
+  circle.setAttributeNS(null, 'cx', `${nodes[jointNum][1][0]}`);
+  circle.setAttributeNS(null, 'cy',`${nodes[jointNum][1][1] + 12}`);
   box.append(circle);
 }

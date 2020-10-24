@@ -1,19 +1,19 @@
-export default function drawMJointLoad(jointNum, moment, globalNodeObject) {
-  if (!globalNodeObject[jointNum]) return;
+export function drawMJointLoad(jointNum, moment, nodes) {
+  if (!nodes[jointNum]) return;
 
-  const cx = globalNodeObject[jointNum][1][0] - 15;
-  const cy = globalNodeObject[jointNum][1][1] + 15;
-  const base1 = `${globalNodeObject[jointNum][1][0] + 12} ${globalNodeObject[jointNum][1][1] - 12}`;
-  const base2 = `${globalNodeObject[jointNum][1][0] + 18} ${globalNodeObject[jointNum][1][1] - 18}`;
+  const cx = nodes[jointNum][1][0] - 15;
+  const cy = nodes[jointNum][1][1] + 15;
+  const base1 = `${nodes[jointNum][1][0] + 12} ${nodes[jointNum][1][1] - 12}`;
+  const base2 = `${nodes[jointNum][1][0] + 18} ${nodes[jointNum][1][1] - 18}`;
   let point = '';
   let path = '';
 
   if (moment < 0) {
     path += `M ${cx},${cy} a 1 1 0 0 1 30 -30`;
-    point += `${globalNodeObject[jointNum][1][0] + 22} ${globalNodeObject[jointNum][1][1] - 8}`;
+    point += `${nodes[jointNum][1][0] + 22} ${nodes[jointNum][1][1] - 8}`;
   } else if (moment > 0) {
     path += `M ${cx},${cy} a 1 1 0 0 0 30 -30`;
-    point += `${globalNodeObject[jointNum][1][0] + 8} ${globalNodeObject[jointNum][1][1] - 22}`;
+    point += `${nodes[jointNum][1][0] + 8} ${nodes[jointNum][1][1] - 22}`;
   }
 
   const ns = 'http://www.w3.org/2000/svg';

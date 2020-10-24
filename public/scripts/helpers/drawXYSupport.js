@@ -1,8 +1,8 @@
-export default function drawXYSupport(jointNum, globalNodeObject) { // pin support
-  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+export function drawXYSupport(jointNum, nodes) { // pin support
+  if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
-  const xCoord = globalNodeObject[jointNum][1][0];
-  const yCoord = globalNodeObject[jointNum][1][1];
+  const xCoord = nodes[jointNum][1][0];
+  const yCoord = nodes[jointNum][1][1];
   const point = `${xCoord} ${yCoord + 5}`;
   const base1 = `${xCoord - 8} ${yCoord + 14}`;
   const base2 = `${xCoord + 8} ${yCoord + 14}`;

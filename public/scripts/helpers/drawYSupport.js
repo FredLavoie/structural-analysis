@@ -1,8 +1,8 @@
-export default function drawYSupport(jointNum, globalNodeObject) { // Y - roller support
-  if (!globalNodeObject[jointNum][1][0] || !globalNodeObject[jointNum][1][1]) return;
+export function drawYSupport(jointNum, nodes) { // Y - roller support
+  if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
-  const xCoord = globalNodeObject[jointNum][1][0];
-  const yCoord = globalNodeObject[jointNum][1][1];
+  const xCoord = nodes[jointNum][1][0];
+  const yCoord = nodes[jointNum][1][1];
   const lineStartX = xCoord - 12;
   const lineStartY = yCoord + 15;
   const lineEndX = xCoord + 12;
@@ -16,8 +16,8 @@ export default function drawYSupport(jointNum, globalNodeObject) { // Y - roller
   circle.setAttributeNS(null, 'stroke-width', '2');
   circle.setAttributeNS(null, 'fill', 'none');
   circle.setAttributeNS(null, 'r', '5');
-  circle.setAttributeNS(null, 'cx', `${globalNodeObject[jointNum][1][0]}`);
-  circle.setAttributeNS(null, 'cy',`${globalNodeObject[jointNum][1][1] + 9}`);
+  circle.setAttributeNS(null, 'cx', `${nodes[jointNum][1][0]}`);
+  circle.setAttributeNS(null, 'cy',`${nodes[jointNum][1][1] + 9}`);
   box.append(circle);
 
   const line = document.createElementNS(ns, 'line');

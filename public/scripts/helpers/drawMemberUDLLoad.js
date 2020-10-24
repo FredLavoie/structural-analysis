@@ -1,12 +1,12 @@
-export default function drawMemberUDLLoad(memberNum, udl, globalNodeObject, globalMemberObject) {
-  const startJoint = globalMemberObject[memberNum].joints[0];
-  const endJoint = globalMemberObject[memberNum].joints[1];
-  const xDist = globalNodeObject[endJoint][0][0] - globalNodeObject[startJoint][0][0];
-  const yDist = globalNodeObject[endJoint][0][1] - globalNodeObject[startJoint][0][1];
-  const windowXDist = globalNodeObject[endJoint][1][0] - globalNodeObject[startJoint][1][0];
-  const windowYDist = globalNodeObject[endJoint][1][1] - globalNodeObject[startJoint][1][1];
+export function drawMemberUDLLoad(memberNum, udl, nodes, members) {
+  const startJoint = members[memberNum].joints[0];
+  const endJoint = members[memberNum].joints[1];
+  const xDist = nodes[endJoint][0][0] - nodes[startJoint][0][0];
+  const yDist = nodes[endJoint][0][1] - nodes[startJoint][0][1];
+  const windowXDist = nodes[endJoint][1][0] - nodes[startJoint][1][0];
+  const windowYDist = nodes[endJoint][1][1] - nodes[startJoint][1][1];
   const memberLength = Math.sqrt(xDist **2 + yDist **2);
-  const rotateAngle = udl < 0 ? globalMemberObject[memberNum].forceAngle * -1 : 360 - globalMemberObject[memberNum].forceAngle;
+  const rotateAngle = udl < 0 ? members[memberNum].forceAngle * -1 : 360 - members[memberNum].forceAngle;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');
@@ -16,8 +16,8 @@ export default function drawMemberUDLLoad(memberNum, udl, globalNodeObject, glob
     const loadOffsetRatio =  offset / memberLength;
     const relLoadPositionX = windowXDist * loadOffsetRatio;
     const relLoadPositionY = windowYDist * loadOffsetRatio;
-    const arrowPointX = globalNodeObject[startJoint][1][0] + relLoadPositionX;
-    const arrowPointY = globalNodeObject[startJoint][1][1] + relLoadPositionY;
+    const arrowPointX = nodes[startJoint][1][0] + relLoadPositionX;
+    const arrowPointY = nodes[startJoint][1][1] + relLoadPositionY;
 
     const point = `${arrowPointX} ${arrowPointY}`;
     const base1 = udl < 0 ? `${arrowPointX + 3.5} ${arrowPointY - 10}`: `${arrowPointX + 3.5} ${arrowPointY + 10}`;
@@ -49,12 +49,12 @@ export default function drawMemberUDLLoad(memberNum, udl, globalNodeObject, glob
   }
 
   // draw line across tails of arrows
-  const opp = 35 * Math.sin(globalMemberObject[memberNum].forceAngle / (180 / Math.PI));
-  const adj = 35 * Math.cos(globalMemberObject[memberNum].forceAngle / (180 / Math.PI));
-  const crossLineStartX = udl < 0 ? globalNodeObject[startJoint][1][0] - opp : globalNodeObject[startJoint][1][0] + opp;
-  const crossLineStartY = udl < 0 ? globalNodeObject[startJoint][1][1] - adj : globalNodeObject[startJoint][1][1] + adj;
-  const crossLineEndX = udl < 0 ? globalNodeObject[endJoint][1][0] - opp : globalNodeObject[endJoint][1][0] + opp;
-  const crossLineEndY = udl < 0 ? globalNodeObject[endJoint][1][1] - adj : globalNodeObject[endJoint][1][1] + adj;
+  const opp = 35 * Math.sin(members[memberNum].forceAngle / (180 / Math.PI));
+  const adj = 35 * Math.cos(members[memberNum].forceAngle / (180 / Math.PI));
+  const crossLineStartX = udl < 0 ? nodes[startJoint][1][0] - opp : nodes[startJoint][1][0] + opp;
+  const crossLineStartY = udl < 0 ? nodes[startJoint][1][1] - adj : nodes[startJoint][1][1] + adj;
+  const crossLineEndX = udl < 0 ? nodes[endJoint][1][0] - opp : nodes[endJoint][1][0] + opp;
+  const crossLineEndY = udl < 0 ? nodes[endJoint][1][1] - adj : nodes[endJoint][1][1] + adj;
 
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','member-load');

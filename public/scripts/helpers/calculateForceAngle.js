@@ -1,4 +1,4 @@
-export default function calculateForceAngle(start, end) {
+export function calculateForceAngle(start, end) {
   const xDist = end[0] - start[0];
   const yDist = -(end[1] - start[1]);
   const angle = Math.abs(Math.atan(yDist/xDist) * (180 / Math.PI));

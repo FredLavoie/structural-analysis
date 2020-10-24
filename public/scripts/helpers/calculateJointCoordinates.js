@@ -1,4 +1,4 @@
-export default function calculateJointCoordinates(arr, width, height) {
+export function calculateJointCoordinates(arr, width, height) {
   const jointCoordinates = [];
   const xCoords = [];
   const yCoords = [];
@@ -15,7 +15,8 @@ export default function calculateJointCoordinates(arr, width, height) {
   const yMax = Math.max(...yCoords);
   const yMin = Math.min(...yCoords);
 
-  if (xMin < 0) { // translate all x-coordiantes by xMin
+  // translate all x-coordiantes by xMin
+  if (xMin < 0) {
     let count = 0;
     for (let i = 0; i < arr.length; i += 2) {
       arr.splice(i, 1, xCoords[count] -= xMin);
@@ -23,7 +24,8 @@ export default function calculateJointCoordinates(arr, width, height) {
     }
   }
 
-  if (yMin < 0) { // translate all y-coordiantes by yMin
+  // translate all y-coordiantes by yMin
+  if (yMin < 0) {
     let count = 0;
     for (let i = 1; i <= arr.length; i += 2) {
       arr.splice(i, 1, yCoords[count] -= yMin);

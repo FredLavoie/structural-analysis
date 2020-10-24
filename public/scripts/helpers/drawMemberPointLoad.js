@@ -1,21 +1,21 @@
-export default function drawMemberPointLoad(memberNum, offset, load, globalNodeObject, globalMemberObject) {
-  const startJoint = globalMemberObject[memberNum].joints[0];
-  const endJoint = globalMemberObject[memberNum].joints[1];
-  const xDist = globalNodeObject[endJoint][0][0] - globalNodeObject[startJoint][0][0];
-  const yDist = globalNodeObject[endJoint][0][1] - globalNodeObject[startJoint][0][1];
-  const windowXDist = globalNodeObject[endJoint][1][0] - globalNodeObject[startJoint][1][0];
-  const windowYDist = globalNodeObject[endJoint][1][1] - globalNodeObject[startJoint][1][1];
+export function drawMemberPointLoad(memberNum, offset, load, nodes, members) {
+  const startJoint = members[memberNum].joints[0];
+  const endJoint = members[memberNum].joints[1];
+  const xDist = nodes[endJoint][0][0] - nodes[startJoint][0][0];
+  const yDist = nodes[endJoint][0][1] - nodes[startJoint][0][1];
+  const windowXDist = nodes[endJoint][1][0] - nodes[startJoint][1][0];
+  const windowYDist = nodes[endJoint][1][1] - nodes[startJoint][1][1];
   const memberLength = Math.sqrt(xDist **2 + yDist **2);
   const loadOffsetRatio = offset / memberLength;
   const relLoadPositionX = windowXDist * loadOffsetRatio;
   const relLoadPositionY = windowYDist * loadOffsetRatio;
-  const arrowPointX = globalNodeObject[startJoint][1][0] + relLoadPositionX;
-  const arrowPointY = globalNodeObject[startJoint][1][1] + relLoadPositionY;
+  const arrowPointX = nodes[startJoint][1][0] + relLoadPositionX;
+  const arrowPointY = nodes[startJoint][1][1] + relLoadPositionY;
 
   const point = `${arrowPointX} ${arrowPointY}`;
   const base1 = load < 0 ? `${arrowPointX + 3.5} ${arrowPointY - 10}`: `${arrowPointX + 3.5} ${arrowPointY + 10}`;
   const base2 = load < 0 ? `${arrowPointX - 3.5} ${arrowPointY - 10}`: `${arrowPointX - 3.5} ${arrowPointY + 10}`;
-  const rotateAngle = load < 0 ? globalMemberObject[memberNum].forceAngle * -1 : 360 - globalMemberObject[memberNum].forceAngle;
+  const rotateAngle = load < 0 ? members[memberNum].forceAngle * -1 : 360 - members[memberNum].forceAngle;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#structure-window');

@@ -1,8 +1,8 @@
-export default function drawXJointLoad(jointNum, load, globalNodeObject) {
-  if (!globalNodeObject[jointNum]) return;
+export function drawXJointLoad(jointNum, load, nodes) {
+  if (!nodes[jointNum]) return;
 
-  const headX = globalNodeObject[jointNum][1][0];
-  const headY = globalNodeObject[jointNum][1][1];
+  const headX = nodes[jointNum][1][0];
+  const headY = nodes[jointNum][1][1];
   const tailX = load > 0 ? headX - 50 : headX + 50;
   const tailY = headY;
 

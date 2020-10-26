@@ -45,6 +45,8 @@ app.post('/results', async (req, res) => {
 
   const inputObject = await createInputObject(req.body);
   const dataString = await createInputString(inputObject);
+  console.log('inputObject: ', inputObject);
+  console.log('dataString: ', dataString);
 
   // code to write to the input file
   fs.writeFile('program/data_in.txt', dataString, (error) => {
@@ -63,7 +65,7 @@ app.post('/results', async (req, res) => {
         return;
       }
       fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
-        console.log('JSON data results object: ', JSON.parse(data));
+        // console.log('JSON data results object: ', JSON.parse(data));
         if (error) console.log(error);
       });
       res.render('results');

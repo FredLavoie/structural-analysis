@@ -62,6 +62,35 @@ document.addEventListener('change', () => {
   });
 });
 
+const submitForm = document.querySelector('#input-form');
+submitForm.addEventListener('submit', (event) => {
+  console.log('Submit event listener got triggered');
+  event.preventDefault();
+
+  sessionStorage.setItem('globalNodeObject', JSON.stringify(globalNodeObject));
+  sessionStorage.setItem('globalMemberObject', JSON.stringify(globalMemberObject));
+
+  // implement error checking before submitting the form
+
+  // submit the form
+  const data = new URLSearchParams();
+  for (const pair of new FormData(submitForm)) {
+    data.append(pair[0], pair[1]);
+  }
+
+  fetch('/results', {
+    method: 'POST',
+    body: data
+  }).then((response) => {
+    if (response.redirected) {
+      window.location.href = response.url;
+    }
+  }).catch((error) => {
+    console.log(error);
+  });
+});
+
+
 //************************************************** FUNCTIONS *******************************************************/
 //********************************************************************************************************************/
 function redrawAllData() {
@@ -77,22 +106,12 @@ function redrawAllData() {
   const windowWidth = document.querySelector('#structure-window').clientWidth;
   const windowHeight = document.querySelector('#structure-window').clientHeight;
 
-  const memberArray = [...document.querySelectorAll('.member')]
-    .map((e) => Number(e.value));
-
-  const jointArray = [...document.querySelectorAll('.joint')]
-    .map((e) => Number(e.value));
-
+  const memberArray = [...document.querySelectorAll('.member')].map((e) => Number(e.value));
+  const jointArray = [...document.querySelectorAll('.joint')].map((e) => Number(e.value));
   const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
-
-  const supportsArray = [...document.querySelectorAll('.supports')]
-    .map((e) => Number(e.value));
-
-  const jointLoadArray = [...document.querySelectorAll('.joint-loads')]
-    .map((e) => Number(e.value));
-
-  const memberLoadArray = [...document.querySelectorAll('.member-loads')]
-    .map((e) => Number(e.value));
+  const supportsArray = [...document.querySelectorAll('.supports')].map((e) => Number(e.value));
+  const jointLoadArray = [...document.querySelectorAll('.joint-loads')].map((e) => Number(e.value));
+  const memberLoadArray = [...document.querySelectorAll('.member-loads')].map((e) => Number(e.value));
 
   generateJoints(jointCoordinates);
   generateMembers(memberArray);

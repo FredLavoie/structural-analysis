@@ -62,38 +62,6 @@ document.addEventListener('change', () => {
   });
 });
 
-const submitForm = document.querySelector('#input-form');
-submitForm.addEventListener('submit', (event) => {
-  console.log('Submit event listener got triggered');
-  event.preventDefault();
-
-  const data = new URLSearchParams();
-  for (const pair of new FormData(submitForm)) {
-    data.append(pair[0], pair[1]);
-  }
-
-  const validForm = validateInput(data);
-  if (!validForm) {
-    // show failure flag on front end
-    return;
-  }
-
-  sessionStorage.setItem('globalNodeObject', JSON.stringify(globalNodeObject));
-  sessionStorage.setItem('globalMemberObject', JSON.stringify(globalMemberObject));
-
-  // submit the form
-  fetch('/results', {
-    method: 'POST',
-    body: data
-  }).then((response) => {
-    if (response.redirected) {
-      window.location.href = response.url;
-    }
-  }).catch((error) => {
-    console.log(error);
-  });
-});
-
 
 //************************************************** FUNCTIONS *******************************************************/
 //********************************************************************************************************************/
@@ -197,8 +165,4 @@ function generateMemberLoads(arr) {
       drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject);
     }
   }
-}
-
-function validateInput() {
-  // validate data inputed by user
 }

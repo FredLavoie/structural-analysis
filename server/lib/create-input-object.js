@@ -27,7 +27,7 @@ function extractJointsAndMembers(data) {
     const arr = [];
     const section = i * 5;
     for (let i = 0; i < 5; i++) {
-      arr.push(Number(data[section + i]));
+      arr.push(Number(data[ section + i ]));
     }
     resultArr.push(arr);
   }
@@ -47,7 +47,7 @@ function extractLoads(data, njl, nml) {
     const arr = [];
     const section = i * 4;
     for (let i = 0; i < 4; i++) {
-      arr.push(Number(data[section + i]));
+      arr.push(Number(data[ section + i ]));
     }
     resultArr.push(arr);
   }

@@ -4,7 +4,7 @@
   "description": "2D Structural analysis software",
   "main": "express_server.js",
   "scripts": {
-    "start": "node server/express_server.js",
+    "start": "./node_modules/.bin/nodemon -L server/express_server.js",
     "lint": "eslint ./"
   },
   "repository": {

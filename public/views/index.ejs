@@ -21,7 +21,9 @@
   </header>
 
   <main id="main-container">
-
+    <% if(error === true) { %>
+      <h4>TEST TEST <%= error %> </h4>
+    <% } %>
     <svg xmlns="http://www.w3.org/2000/svg" id="structure-window">
       <rect width="100%" height="100%" fill="#eee"></rect>
     </svg>
@@ -55,15 +57,15 @@
       <div class="container-2">
         <div id="em-container">
           <label>Elastic Modulus #1</label>
-          <input class="input-style form-control" name="ElasticMods">
+          <input class="input-style form-control" type="number" name="ElasticMods">
         </div>
         <div id="area-container">
           <label>Area # 1</label>
-          <input class="input-style form-control" name="Areas">
+          <input class="input-style form-control" type="number" name="Areas">
         </div>
         <div id="moi-container">
           <label>Moment of Inertia # 1</label>
-          <input class="input-style form-control" name="MoI">
+          <input class="input-style form-control" type="number" name="MoI">
         </div>
       </div>
       <h3 class="section-header">Joint Input</h3>
@@ -71,19 +73,19 @@
         <div id="joints-container-1">
           <div class="joints-container-2">
             <label>Joint #1</label>
-            <input class="input-style form-control joint" name="joints" placeholder="X-coord.">
-            <input class="input-style form-control joint" name="joints" placeholder="Y-coord.">
-            <input class="input-style form-control supports" name="joints" placeholder="x-rest.">
-            <input class="input-style form-control supports" name="joints" placeholder="y-rest.">
-            <input class="input-style form-control supports" name="joints" placeholder="rot. rest.">
+            <input class="input-style form-control joint" type="number" name="joints" placeholder="X-coord.">
+            <input class="input-style form-control joint" type="number" name="joints" placeholder="Y-coord.">
+            <input class="input-style form-control supports" type="number" name="joints" placeholder="x-rest.">
+            <input class="input-style form-control supports" type="number" name="joints" placeholder="y-rest.">
+            <input class="input-style form-control supports" type="number" name="joints" placeholder="rot. rest.">
           </div>
           <div class="joints-container-2">
             <label>Joint #2</label>
-            <input class="input-style form-control joint" name="joints" placeholder="X-coord.">
-            <input class="input-style form-control joint" name="joints" placeholder="Y-coord.">
-            <input class="input-style form-control supports" name="joints" placeholder="x-rest.">
-            <input class="input-style form-control supports" name="joints" placeholder="y-rest.">
-            <input class="input-style form-control supports" name="joints" placeholder="rot. rest.">
+            <input class="input-style form-control joint" type="number" name="joints" placeholder="X-coord.">
+            <input class="input-style form-control joint" type="number" name="joints" placeholder="Y-coord.">
+            <input class="input-style form-control supports" type="number" name="joints" placeholder="x-rest.">
+            <input class="input-style form-control supports" type="number" name="joints" placeholder="y-rest.">
+            <input class="input-style form-control supports" type="number" name="joints" placeholder="rot. rest.">
             </div>
           </div>
         </div>
@@ -92,11 +94,11 @@
       <div id="members-container-1">
         <div class="container-2 members-container-2">
           <label>Member #1</label>
-          <input class="input-style form-control member" name="members" placeholder="Joint start">
-          <input class="input-style form-control member" name="members" placeholder="Joint end">
-          <input class="input-style form-control" name="members" placeholder="EM No.">
-          <input class="input-style form-control" name="members" placeholder="Area No.">
-          <input class="input-style form-control" name="members" placeholder="MoI No.">
+          <input class="input-style form-control member" type="number" name="members" placeholder="Joint start">
+          <input class="input-style form-control member" type="number" name="members" placeholder="Joint end">
+          <input class="input-style form-control" type="number" name="members" placeholder="EM No.">
+          <input class="input-style form-control" type="number" name="members" placeholder="Area No.">
+          <input class="input-style form-control" type="number" name="members" placeholder="MoI No.">
           </div>
         </div>
       </div>
@@ -104,11 +106,11 @@
       <div class="container-1">
         <div class="gen-info-container">
           <label>No. Joint Loads</label>
-          <input id="input-numJointLoads" class="input-style form-control" name="numJointLoads" value="0">
+          <input id="input-numJointLoads" class="input-style form-control" type="number" name="numJointLoads" value="0">
         </div>
         <div class="gen-info-container">
           <label>No. Member Loads</label>
-          <input id="input-numMemLoads" class="input-style form-control" name="numMemLoads" value="0">
+          <input id="input-numMemLoads" class="input-style form-control" type="number" name="numMemLoads" value="0">
         </div>
       </div>
       <div id="pl-container"></div>

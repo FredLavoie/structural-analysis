@@ -160,6 +160,9 @@ label {
   justify-content: space-between;
 }
 
+/******************** BROWSER SPECIFIC STYLING *********************/
+/*******************************************************************/
+
 input[type=checkbox] {
   -ms-transform: scale(1);		/* IE */
   -moz-transform: scale(1);		/* FF */
@@ -167,4 +170,16 @@ input[type=checkbox] {
   -o-transform: scale(1);		/* Opera */
   transform: scale(1);
   padding: 8px;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }

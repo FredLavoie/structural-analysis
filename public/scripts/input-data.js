@@ -1,19 +1,19 @@
-import { calculateJointCoordinates } from './helpers/calculateJointCoordinates.js';
-import { calculateForceAngle } from './helpers/calculateForceAngle.js';
-import { drawNode } from './helpers/drawNode.js';
-import { drawMember } from './helpers/drawMember.js';
-import { drawXYRSupport } from './helpers/drawXYRSupport.js';
-import { drawXYSupport } from './helpers/drawXYSupport.js';
-import { drawXRSupport } from './helpers/drawXRSupport.js';
-import { drawYRSupport } from './helpers/drawYRSupport.js';
-import { drawXSupport } from './helpers/drawXSupport.js';
-import { drawYSupport } from './helpers/drawYSupport.js';
-import { drawRSupport } from './helpers/drawRSupport.js';
-import { drawXJointLoad } from './helpers/drawXJointLoad.js';
-import { drawYJointLoad } from './helpers/drawYJointLoad.js';
-import { drawMJointLoad } from './helpers/drawMJointLoad.js';
-import { drawMemberPointLoad } from './helpers/drawMemberPointLoad.js';
-import { drawMemberUDLLoad } from './helpers/drawMemberUDLLoad.js';
+import { calculateJointCoordinates } from './lib/calculateJointCoordinates.js';
+import { calculateForceAngle } from './lib/calculateForceAngle.js';
+import { drawNode } from './lib/drawNode.js';
+import { drawMember } from './lib/drawMember.js';
+import { drawXYRSupport } from './lib/drawXYRSupport.js';
+import { drawXYSupport } from './lib/drawXYSupport.js';
+import { drawXRSupport } from './lib/drawXRSupport.js';
+import { drawYRSupport } from './lib/drawYRSupport.js';
+import { drawXSupport } from './lib/drawXSupport.js';
+import { drawYSupport } from './lib/drawYSupport.js';
+import { drawRSupport } from './lib/drawRSupport.js';
+import { drawXJointLoad } from './lib/drawXJointLoad.js';
+import { drawYJointLoad } from './lib/drawYJointLoad.js';
+import { drawMJointLoad } from './lib/drawMJointLoad.js';
+import { drawMemberPointLoad } from './lib/drawMemberPointLoad.js';
+import { drawMemberUDLLoad } from './lib/drawMemberUDLLoad.js';
 
 //************************************************ DOCUMENT READY ****************************************************/
 //********************************************************************************************************************/
@@ -62,6 +62,48 @@ document.addEventListener('change', () => {
   });
 });
 
+const submitForm = document.querySelector('#input-form');
+submitForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+
+  // const validForm = validateInput(data);
+  // if (!validForm) {
+  //   // show failure flag on front end
+  //   return;
+  // }
+
+  sessionStorage.setItem('globalNodeObject', JSON.stringify(globalNodeObject));
+  sessionStorage.setItem('globalMemberObject', JSON.stringify(globalMemberObject));
+
+  const data = new URLSearchParams();
+  for (const pair of new FormData(submitForm)) {
+    data.append(pair[0], pair[1]);
+  }
+
+  // submit the form
+  fetch('/results', {
+    method: 'POST',
+    body: data
+  }).then((res) => res.json())
+    .then((data) => {
+      switch (data.message) {
+      case 'Success':
+        window.location.href = '/results';
+        break;
+      case 'Wrong Input':
+        window.location.href = '/';
+        break;
+      case 'Error: write file':
+        window.location.href = '/error-write';
+        break;
+      case 'Error: executing program':
+        window.location.href = '/error-exec';
+        break;
+      default:
+        return;
+      }
+    });
+});
 
 //************************************************** FUNCTIONS *******************************************************/
 //********************************************************************************************************************/

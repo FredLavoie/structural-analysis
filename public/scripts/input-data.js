@@ -63,15 +63,16 @@ document.addEventListener('change', () => {
 });
 
 const submitForm = document.querySelector('#input-form');
-submitForm.addEventListener('submit', (event) => {
+submitForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
-  // const validForm = validateInput(data);
-  // if (!validForm) {
-  //   // show failure flag on front end
-  //   return;
-  // }
+  const validForm = await validateFormClientSide();
 
+  if (validForm === false) {
+    return;
+  }
+
+  // add global objects to sessions storage
   sessionStorage.setItem('globalNodeObject', JSON.stringify(globalNodeObject));
   sessionStorage.setItem('globalMemberObject', JSON.stringify(globalMemberObject));
 
@@ -80,7 +81,6 @@ submitForm.addEventListener('submit', (event) => {
     data.append(pair[0], pair[1]);
   }
 
-  // submit the form
   fetch('/results', {
     method: 'POST',
     body: data
@@ -207,4 +207,180 @@ function generateMemberLoads(arr) {
       drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject);
     }
   }
+}
+
+function validateFormClientSide() {
+  const NumJoints = document.querySelector('#input-numJoints');
+  const NumMembers = document.querySelector('#input-numMembers');
+  const NumEMs = document.querySelector('#input-numEMs');
+  const NumAreas = document.querySelector('#input-numAreas');
+  const NumMoI = document.querySelector('#input-numMOIs');
+  const allJointsClasses = document.querySelectorAll('.joint');
+  const allMembersClasses = document.querySelectorAll('.member');
+  const allSupportsClasses = document.querySelectorAll('.supports');
+  const allNumPropClasses = document.querySelectorAll('.num-prop');
+  const allJLJ = document.querySelectorAll('.jl-j');
+  const allJLX = document.querySelectorAll('.jl-x');
+  const allJLY = document.querySelectorAll('.jl-y');
+  const allJLL = document.querySelectorAll('.jl-l');
+  const allMLM = document.querySelectorAll('.ml-m');
+  const allMLXD = document.querySelectorAll('.ml-xd');
+  const allMLPL = document.querySelectorAll('.ml-pl');
+  const allMLUDL = document.querySelectorAll('.ml-udl');
+  let errorBool = true;
+
+  NumJoints.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control';
+    }
+  });
+
+  NumMembers.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control';
+    }
+  });
+
+  NumEMs.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control';
+    }
+  });
+
+  NumAreas.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control';
+    }
+  });
+
+  NumMoI.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control';
+    }
+  });
+
+  allJointsClasses.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e')) {
+      ea.className = 'input-style form-control joint error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control joint';
+    }
+  });
+
+  allMembersClasses.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control member error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control member';
+    }
+  });
+
+  allSupportsClasses.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value)) || Number(ea.value) > 1) {
+      ea.className = 'input-style form-control supports error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control supports';
+    }
+  });
+
+  allNumPropClasses.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control num-prop error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control num-prop';
+    }
+  });
+
+  allJLJ.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control joint-loads jl-j error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control joint-loads jl-j';
+    }
+  });
+
+  allJLX.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e')) {
+      ea.className = 'input-style form-control joint-loads jl-x error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control joint-loads jl-x';
+    }
+  });
+
+  allJLY.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e')) {
+      ea.className = 'input-style form-control joint-loads jl-y error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control joint-loads jl-y';
+    }
+  });
+
+  allJLL.forEach((ea) => {
+    if (ea.value === '') {
+      ea.className = 'input-style form-control joint-loads jl-l error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control joint-loads jl-l';
+    }
+  });
+
+  allMLM.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control member-loads ml-m error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control member-loads ml-m';
+    }
+  });
+
+  allMLXD.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e')) {
+      ea.className = 'input-style form-control member-loads ml-xd error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control member-loads mlxd';
+    }
+  });
+
+  allMLPL.forEach((ea) => {
+    if (ea.value === '' || ea.value.includes('e')) {
+      ea.className = 'input-style form-control member-loads ml-pl error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control member-loads mlpl';
+    }
+  });
+
+  allMLUDL.forEach((ea) => {
+    if (ea.value === '' || ea.value.includes('e')) {
+      ea.className = 'input-style form-control member-loads ml-udl error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control member-loads mludl';
+    }
+  });
+
+  return errorBool;
 }

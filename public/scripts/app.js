@@ -80,13 +80,11 @@ function generateJointInput(i) {
   const $coordInputX = document.createElement('input');
   $coordInputX.setAttribute('class','input-style form-control joint');
   $coordInputX.setAttribute('name', 'joints');
-  $coordInputX.setAttribute('type', 'number');
   $coordInputX.setAttribute('placeholder', 'X-coord.');
 
   const $coordInputY  = document.createElement('input');
   $coordInputY.setAttribute('class','input-style form-control joint');
   $coordInputY.setAttribute('name', 'joints');
-  $coordInputY.setAttribute('type', 'number');
   $coordInputY.setAttribute('placeholder', 'Y-coord.');
 
   const $xRest = document.createElement('input');
@@ -138,19 +136,19 @@ function generateMemberInput(i) {
   $jointEnd.setAttribute('placeholder', 'Joint end');
 
   const $emNo = document.createElement('input');
-  $emNo.setAttribute('class','input-style form-control');
+  $emNo.setAttribute('class','input-style form-control num-prop');
   $emNo.setAttribute('name', 'members');
   $emNo.setAttribute('type', 'number');
   $emNo.setAttribute('placeholder', 'EM No.');
 
   const $areaNo = document.createElement('input');
-  $areaNo.setAttribute('class','input-style form-control');
+  $areaNo.setAttribute('class','input-style form-control num-prop');
   $areaNo.setAttribute('name', 'members');
   $areaNo.setAttribute('type', 'number');
   $areaNo.setAttribute('placeholder', 'Area No.');
 
   const $moiNo = document.createElement('input');
-  $moiNo.setAttribute('class','input-style form-control');
+  $moiNo.setAttribute('class','input-style form-control num-prop');
   $moiNo.setAttribute('name', 'members');
   $moiNo.setAttribute('type', 'number');
   $moiNo.setAttribute('placeholder', 'MoI No.');
@@ -172,7 +170,6 @@ function generateEMInput(i) {
   const $input = document.createElement('input');
   $input.setAttribute('class','input-style form-control');
   $input.setAttribute('name', 'ElasticMods');
-  $input.setAttribute('type', 'number');
 
   const $container = document.querySelector('#em-container');
   $container.appendChild($label);
@@ -186,7 +183,6 @@ function generateAreaInput(i) {
   const $input = document.createElement('input');
   $input.setAttribute('class','input-style form-control');
   $input.setAttribute('name', 'Areas');
-  $input.setAttribute('type', 'number');
 
   const $container = document.querySelector('#area-container');
   $container.appendChild($label);
@@ -200,7 +196,6 @@ function generateMOIInput(i) {
   const $input = document.createElement('input');
   $input.setAttribute('class','input-style form-control');
   $input.setAttribute('name', 'MoI');
-  $input.setAttribute('type', 'number');
 
   const $container = document.querySelector('#moi-container');
   $container.appendChild($label);
@@ -216,27 +211,24 @@ function generateJointLoadsInput(i) {
   $jointLoadNum.innerHTML = `Joint Load #${i}`;
 
   const $jointNum = document.createElement('input');
-  $jointNum.setAttribute('class','input-style form-control joint-loads');
+  $jointNum.setAttribute('class','input-style form-control joint-loads jl-j');
   $jointNum.setAttribute('name', 'loads');
   $jointNum.setAttribute('type', 'number');
   $jointNum.setAttribute('placeholder', 'Joint No.');
 
   const $xValue = document.createElement('input');
-  $xValue.setAttribute('class','input-style form-control joint-loads');
+  $xValue.setAttribute('class','input-style form-control joint-loads jl-x');
   $xValue.setAttribute('name', 'loads');
-  $xValue.setAttribute('type', 'number');
   $xValue.setAttribute('placeholder', 'X value');
 
   const $yValue = document.createElement('input');
-  $yValue.setAttribute('class','input-style form-control joint-loads');
+  $yValue.setAttribute('class','input-style form-control joint-loads jl-y');
   $yValue.setAttribute('name', 'loads');
-  $yValue.setAttribute('type', 'number');
   $yValue.setAttribute('placeholder', 'Y value');
 
   const $moment = document.createElement('input');
-  $moment.setAttribute('class','input-style form-control joint-loads');
+  $moment.setAttribute('class','input-style form-control joint-loads jl-l');
   $moment.setAttribute('name', 'loads');
-  $moment.setAttribute('type', 'number');
   $moment.setAttribute('placeholder', 'Moment');
 
   $jointLoadDiv.appendChild($jointLoadNum);
@@ -257,27 +249,24 @@ function generateMemberLoadsInput(i) {
   $memberLoadNum.innerHTML = `Member Load #${i}`;
 
   const $memberNum = document.createElement('input');
-  $memberNum.setAttribute('class','input-style form-control member-loads');
+  $memberNum.setAttribute('class','input-style form-control member-loads ml-m');
   $memberNum.setAttribute('name', 'loads');
   $memberNum.setAttribute('type', 'number');
   $memberNum.setAttribute('placeholder', 'Member No.');
 
   const $xDist = document.createElement('input');
-  $xDist.setAttribute('class','input-style form-control member-loads');
+  $xDist.setAttribute('class','input-style form-control member-loads ml-xd');
   $xDist.setAttribute('name', 'loads');
-  $xDist.setAttribute('type', 'number');
   $xDist.setAttribute('placeholder', 'X-distance');
 
   const $pl = document.createElement('input');
-  $pl.setAttribute('class','input-style form-control member-loads');
+  $pl.setAttribute('class','input-style form-control member-loads ml-pl');
   $pl.setAttribute('name', 'loads');
-  $pl.setAttribute('type', 'number');
   $pl.setAttribute('placeholder', 'Point Load');
 
   const $udl = document.createElement('input');
-  $udl.setAttribute('class','input-style form-control member-loads');
+  $udl.setAttribute('class','input-style form-control member-loads ml-udl');
   $udl.setAttribute('name', 'loads');
-  $udl.setAttribute('type', 'number');
   $udl.setAttribute('placeholder', 'UDL');
 
   $memberLoadDiv.appendChild($memberLoadNum);

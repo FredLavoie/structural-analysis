@@ -35,7 +35,7 @@ function extractJointsAndMembers(data) {
 }
 
 function extractProperties(data) {
-  if (typeof data == 'string') data = [ data ];
+  if (typeof data === 'string') data = [ data ];
   const resultArr = data.map((e) => Number(e));
   return resultArr;
 }

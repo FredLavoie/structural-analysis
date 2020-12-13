@@ -168,7 +168,7 @@ function generateEMInput(i) {
   const $label = document.createElement('label');
   $label.innerHTML = `Elastic Modulus # ${i}`;
   const $input = document.createElement('input');
-  $input.setAttribute('class','input-style form-control');
+  $input.setAttribute('class','input-style form-control input-EM');
   $input.setAttribute('name', 'ElasticMods');
 
   const $container = document.querySelector('#em-container');
@@ -181,7 +181,7 @@ function generateAreaInput(i) {
   const $label = document.createElement('label');
   $label.innerHTML = `Area # ${i}`;
   const $input = document.createElement('input');
-  $input.setAttribute('class','input-style form-control');
+  $input.setAttribute('class','input-style form-control input-Area');
   $input.setAttribute('name', 'Areas');
 
   const $container = document.querySelector('#area-container');
@@ -194,7 +194,7 @@ function generateMOIInput(i) {
   const $label = document.createElement('label');
   $label.innerHTML = `Moment of Inertia # ${i}`;
   const $input = document.createElement('input');
-  $input.setAttribute('class','input-style form-control');
+  $input.setAttribute('class','input-style form-control input-MoI');
   $input.setAttribute('name', 'MoI');
 
   const $container = document.querySelector('#moi-container');
@@ -227,7 +227,7 @@ function generateJointLoadsInput(i) {
   $yValue.setAttribute('placeholder', 'Y value');
 
   const $moment = document.createElement('input');
-  $moment.setAttribute('class','input-style form-control joint-loads jl-l');
+  $moment.setAttribute('class','input-style form-control joint-loads jl-m');
   $moment.setAttribute('name', 'loads');
   $moment.setAttribute('placeholder', 'Moment');
 

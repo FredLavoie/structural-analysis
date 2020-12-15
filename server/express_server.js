@@ -52,6 +52,12 @@ app.get('/error-exec', (req, res) => {
   res.render('error-exec');
 });
 
+app.get('/error-input', async (req, res) => {
+  console.log('rendering error-input.ejs');
+  const validForm = await validateForm(req.body);
+  res.render('error-input', validForm);
+});
+
 /************************************************* POST REQUEST ******************************************************/
 /*********************************************************************************************************************/
 
@@ -59,11 +65,12 @@ app.post('/results', async (req, res) => {
   // console.log(req.body);
   const validForm = await validateForm(req.body);
   console.log(validForm);
-  res.json({ message: 'Success' }); // might need to be res.send() instead???
 
-  if (!validForm) {
-    res.render('index', { error: true });
-    res.send({ status: 'Wrong Input' });
+
+  if (validForm.valid === false) {
+    res.send({ message: 'wrong_input' });
+  } else {
+    res.send({ message: 'success' });
   }
 
   // const inputObject = await createInputObject(req.body);
@@ -74,7 +81,7 @@ app.post('/results', async (req, res) => {
   //   if (error) {
   //     console.log('There was an error writing the input file');
   //     console.log(error);
-  //     res.send({ status: 'Error: write file' });
+  //     res.send({ message: 'Error: write file' });
   //     return;
   //   }
   //   // code to run executable, then render 'results' page
@@ -82,14 +89,14 @@ app.post('/results', async (req, res) => {
   //     if (error) {
   //       console.log('There was an error running the executable');
   //       console.log(error);
-  //       res.send({ status: 'Error: executing program' });
+  //       res.send({ message: 'Error: executing program' });
   //       return;
   //     }
   //     fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
   //       // console.log('JSON data results object: ', JSON.parse(data));
   //       if (error) console.log(error);
   //     });
-  //     res.send({ status: 'Success' });
+  //     res.send({ message: 'Success' });
   //   });
   // });
 

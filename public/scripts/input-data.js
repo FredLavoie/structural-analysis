@@ -88,16 +88,16 @@ submitForm.addEventListener('submit', async (event) => {
   }).then((res) => res.json())
     .then((data) => {
       switch (data.message) {
-      case 'Success':
+      case 'success':
         window.location.href = '/results';
         break;
-      case 'Wrong Input':
-        window.location.href = '/';  // add another view for wrong input
+      case 'wrong_input':
+        window.location.href = '/error-input';
         break;
-      case 'Error: write file':
+      case 'error_write_file':
         window.location.href = '/error-write';
         break;
-      case 'Error: executing program':
+      case 'error_execute_program':
         window.location.href = '/error-exec';
         break;
       default:

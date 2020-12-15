@@ -81,13 +81,8 @@ module.exports = async function (obj) {
   }
 
   for (let i = 0; i < members.length; i += 5) {
-    if (members[i] < 0 || members[i+1] < 0 || members[i] > numJoints || members[i+1] > numJoints || !Number.isInteger(members[i]) || !Number.isInteger(members[i+1])) {
-      console.log(typeof members[i]);
-      console.log('members[i]: ', members[i]);
-      console.log('members[i+1]: ', members[i+1]);
-      console.log('numJoints: ', numJoints);
-      console.log('!Number.isInteger(members[i]): ', !Number.isInteger(members[i]));
-      console.log('!Number.isInteger(members[i+1]): ', !Number.isInteger(members[i+1]));
+    if (members[i] < 0 || members[i+1] < 0 || members[i] > numJoints || members[i+1] > numJoints
+      || !Number.isInteger(members[i]) || !Number.isInteger(members[i+1])) {
       errorBool = false,
       messages.push('One or more member number values are incorrect');
     }

@@ -4,11 +4,9 @@ export async function validateForm() {
   const NumEMs = document.querySelector('#input-numEMs');
   const NumA = document.querySelector('#input-numAreas');
   const NumMoI = document.querySelector('#input-numMOIs');
-
   const allEM = document.querySelectorAll('.input-EM');
   const allAreas = document.querySelectorAll('.input-Area');
   const allMoI = document.querySelectorAll('.input-MoI');
-
   const allJointsClasses = document.querySelectorAll('.joint');
   const allMembersClasses = document.querySelectorAll('.member');
   const allSupportsClasses = document.querySelectorAll('.supports');
@@ -27,7 +25,7 @@ export async function validateForm() {
   const alphaChar = /[a-zA-Z]/;
   let errorBool = true;
 
-
+  /*************** GENERAL INFO ****************/
   if (Number(NumJ.value) < 0 || NumJ.value === '' || !Number.isInteger(Number(NumJ.value))) {
     NumJ.className = 'input-style form-control error';
     errorBool = false;
@@ -63,6 +61,7 @@ export async function validateForm() {
     NumMoI.className = 'input-style form-control';
   }
 
+  /************* PROPERTIES INPUT **************/
   allEM.forEach((ea) => {
     if (Number(ea.value) < 0 || ea.value === '' || specChar.test(ea.value) || alphaChar.test(ea.value)) {
       ea.className = 'input-style form-control input-EM error';
@@ -90,21 +89,13 @@ export async function validateForm() {
     }
   });
 
+  /*************** JOINTS INPUT ****************/
   allJointsClasses.forEach((ea) => {
     if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e')) {
       ea.className = 'input-style form-control joint error';
       errorBool = false;
     } else if (ea.classList.contains('error')) {
       ea.className = 'input-style form-control joint';
-    }
-  });
-
-  allMembersClasses.forEach((ea) => {
-    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
-      ea.className = 'input-style form-control member error';
-      errorBool = false;
-    } else if (ea.classList.contains('error')) {
-      ea.className = 'input-style form-control member';
     }
   });
 
@@ -117,6 +108,16 @@ export async function validateForm() {
     }
   });
 
+  /************** MEMBERS INPUT ****************/
+  allMembersClasses.forEach((ea) => {
+    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+      ea.className = 'input-style form-control member error';
+      errorBool = false;
+    } else if (ea.classList.contains('error')) {
+      ea.className = 'input-style form-control member';
+    }
+  });
+
   allNumPropClasses.forEach((ea) => {
     if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
       ea.className = 'input-style form-control num-prop error';
@@ -126,6 +127,7 @@ export async function validateForm() {
     }
   });
 
+  /************* JOINT LOAD INPUT **************/
   allJLJ.forEach((ea) => {
     if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
       ea.className = 'input-style form-control joint-loads jl-j error';
@@ -162,6 +164,7 @@ export async function validateForm() {
     }
   });
 
+  /************* MEMBER LOAD INPUT *************/
   allMLM.forEach((ea) => {
     if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
       ea.className = 'input-style form-control member-loads ml-m error';

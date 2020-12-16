@@ -85,25 +85,26 @@ submitForm.addEventListener('submit', async (event) => {
   fetch('/results', {
     method: 'POST',
     body: data
-  }).then((res) => res.json())
-    .then((data) => {
-      switch (data.message) {
-      case 'success':
-        window.location.href = '/results';
-        break;
-      case 'wrong_input':
-        window.location.href = '/error-input';
-        break;
-      case 'error_write_file':
-        window.location.href = '/error-write';
-        break;
-      case 'error_execute_program':
-        window.location.href = '/error-exec';
-        break;
-      default:
-        return;
-      }
-    });
+  }).then((res) => {
+    res.json();
+  }).then((data) => {
+    switch (data.message) {
+    case 'success':
+      window.location.href = '/results';
+      break;
+    case 'wrong_input':
+      window.location.href = '/error-input';
+      break;
+    case 'error_write_file':
+      window.location.href = '/error-write';
+      break;
+    case 'error_execute_program':
+      window.location.href = '/error-exec';
+      break;
+    default:
+      return;
+    }
+  });
 });
 
 //************************************************** FUNCTIONS *******************************************************/

@@ -16,39 +16,33 @@ module.exports = async function (obj) {
   let valid = true;
   const messages = [];
 
-  // eslint-disable-next-line no-useless-escape
-  const specChar = /[!@#$%^&*()_+=\[\]{};':"\\|,<>\/?]+/;
-  const alphaChar = /[a-zA-Z]/;
-
   /******************************************************* TEST ********************************************************************/
   /*********************************************************************************************************************************/
 
   /*************** GENERAL INFO ****************/
-  if (numJoints < 0 || numJoints === '' || !Number.isInteger(numJoints) || specChar.test(numJoints)|| alphaChar.test(numJoints)) {
+  if (isNotIntegerNumber(numJoints)) {
     valid = false,
-    messages.push('The number of joints input is incorrect');
+    messages.push('The number of joints input is incorrect in the general info section');
   }
 
-  if (numMembers < 0 || numMembers === '' || !Number.isInteger(numMembers)) {
+  if (isNotIntegerNumber(numMembers)) {
     valid = false,
-    messages.push('The number of members input is incorrect');
+    messages.push('The number of members input is incorrect in the general info section');
   }
 
-  if (numElasticModulus < 0 || numElasticModulus === '' || !Number.isInteger(numElasticModulus)
-    || specChar.test(numElasticModulus)|| alphaChar.test(numElasticModulus)) {
+  if (isNotIntegerNumber(numElasticModulus)) {
     valid = false,
-    messages.push('The number of elestic moduli input is incorrect');
+    messages.push('The number of elestic moduli input is incorrect in the general info section');
   }
 
-  if (numAreas < 0 || numAreas === '' || !Number.isInteger(numAreas)) {
+  if (isNotIntegerNumber(numAreas)) {
     valid = false,
-    messages.push('The number of areas input is incorrect');
+    messages.push('The number of areas input is incorrect in the general info section');
   }
 
-  if (numMomentOfInertia < 0 || numMomentOfInertia === '' || !Number.isInteger(numMomentOfInertia)
-    || specChar.test(numMomentOfInertia)|| alphaChar.test(numMomentOfInertia)) {
+  if (isNotIntegerNumber(numMomentOfInertia)) {
     valid = false,
-    messages.push('The number of moment of inertias input is incorrect');
+    messages.push('The number of moment of inertias input is incorrect in the general info section');
   }
 
   // stop validation at this point if errors exist in general info
@@ -56,62 +50,58 @@ module.exports = async function (obj) {
 
   /************* PROPERTIES INPUT **************/
   for (const ea of elasticMods) {
-    if (ea < 0 || ea === '' || specChar.test(ea) || alphaChar.test(ea) || elasticMods.length !== numElasticModulus) {
+    if (isNotAnyNegativeZeroNumber(ea) || elasticMods.length !== numElasticModulus) {
       valid = false,
-      messages.push('One or more elastic modulus values are incorrect');
+      messages.push('One or more elastic modulus values are incorrect in the properties input section');
       break;
     }
   }
 
   for (const ea of areas) {
-    if (ea < 0 || ea === '' || specChar.test(ea) || alphaChar.test(ea) || areas.length !== numAreas) {
+    if (isNotAnyNegativeZeroNumber(ea) || areas.length !== numAreas) {
       valid = false,
-      messages.push('One or more elastic modulus values are incorrect');
+      messages.push('One or more area values are incorrect in the properties input section');
       break;
     }
   }
 
   for (const ea of MoIs) {
-    if (ea < 0 || ea === '' || specChar.test(ea) || alphaChar.test(ea) || MoIs.length !== numMomentOfInertia) {
+    if (isNotAnyNegativeZeroNumber(ea) || MoIs.length !== numMomentOfInertia) {
       valid = false,
-      messages.push('One or more elastic modulus values are incorrect');
+      messages.push('One or more moment of inertia values are incorrect in the properties input section');
       break;
     }
   }
 
   /*************** JOINTS INPUT ****************/
   for (let i = 0; i < joints.length; i += 5) {
-    if (joints[i] === '' || joints[i+1] === '' || specChar.test(joints[i]) || specChar.test(joints[i+1])
-    || alphaChar.test(joints[i]) || alphaChar.test(joints[i+1])) {
+    if (isNotAnyTypeOfNumber(joints[i]) || isNotAnyTypeOfNumber(joints[i+1])) {
       valid = false,
-      messages.push('One or more joint coordinate values are incorrect');
+      messages.push('One or more joint coordinate values are incorrect in the joint input section');
     }
-    if (joints[i+2] < 0 || joints[i+3] < 0 || joints[i+4] < 0 || joints[i+2] > 1 || joints[i+3] > 1 || joints[i+4] > 1
-      || alphaChar.test(joints[i+2]) || alphaChar.test(joints[i+3])|| alphaChar.test(joints[i+4])
-      || specChar.test(joints[i+2]) || specChar.test(joints[i+3])|| specChar.test(joints[i+4])) {
+    if (isNotBetweenZeroAndOne(joints[i+2]) || isNotBetweenZeroAndOne(joints[i+3]) || isNotBetweenZeroAndOne(joints[i+4])) {
       valid = false,
-      messages.push('One or more joint support values are incorrect');
+      messages.push('One or more joint support values are incorrect in the joint input section');
     }
   }
 
   /************** MEMBERS INPUT ****************/
   for (let i = 0; i < members.length; i += 5) {
-    if (members[i] < 0 || members[i+1] < 0 || members[i] > numJoints || members[i+1] > numJoints
-      || !Number.isInteger(members[i]) || !Number.isInteger(members[i+1])) {
+    if (isNotIntegerNumber(members[i]) || isNotIntegerNumber(members[i+1]) || members[i] > numJoints || members[i+1] > numJoints) {
       valid = false,
-      messages.push('One or more member number values are incorrect');
+      messages.push('One or more member number are incorrect in the member input section');
     }
-    if (members[i+2] < 0 ||members[i+2] > numElasticModulus || !Number.isInteger(members[i+2])) {
+    if (isNotIntegerNumber(members[i+2]) || members[i+2] > numElasticModulus) {
       valid = false,
-      messages.push('One or more elastic modulus values are incorrect');
+      messages.push('One or more elastic modulus numbers are incorrect in the member input section');
     }
-    if (members[i+3] < 0 ||members[i+3] > numAreas || !Number.isInteger(members[i+3])) {
+    if (isNotIntegerNumber(members[i+3]) || members[i+3] > numAreas) {
       valid = false,
-      messages.push('One or more area values are incorrect');
+      messages.push('One or more area numbers are incorrect in the member input section');
     }
-    if (members[i+4] < 0 ||members[i+4] > numMomentOfInertia || !Number.isInteger(members[i+4])) {
+    if (isNotIntegerNumber(members[i+4]) || members[i+4] > numMomentOfInertia) {
       valid = false,
-      messages.push('One or more moment of inertia values are incorrect');
+      messages.push('One or more moment of inertia numbers are incorrect in the member input section');
     }
   }
 
@@ -119,21 +109,21 @@ module.exports = async function (obj) {
   for (let i = 0; i < numJointLoads; i++) {
     const endIndex = numJointLoads * 4;
     for (let i = 0; i < endIndex; i += 4) {
-      if (loads[i] < 0 || loads[i] === '' || !Number.isInteger(loads[i])) {
+      if (isNotIntegerNumber(loads[i])) {
         valid = false,
-        messages.push('One or more joint number values are incorrect');
+        messages.push('One or more joint number values are incorrect in the joint load input section');
       }
-      if (loads[i+1] === '' || specChar.test(loads[i+1])|| alphaChar.test(loads[i+1])) {
+      if (isNotAnyTypeOfNumber(loads[i+1])) {
         valid = false,
-        messages.push('One or more joint x-direction force values are incorrect');
+        messages.push('One or more joint x-direction force values are incorrect in the joint load input section');
       }
-      if (loads[i+2] === '' || specChar.test(loads[i+2])|| alphaChar.test(loads[i+2])) {
+      if (isNotAnyTypeOfNumber(loads[i+2])) {
         valid = false,
-        messages.push('One or more joint x-direction force values are incorrect');
+        messages.push('One or more joint x-direction force values are incorrect in the joint load input section');
       }
-      if (loads[i+3] === '' || specChar.test(loads[i+3])|| alphaChar.test(loads[i+3])) {
+      if (isNotAnyTypeOfNumber(loads[i+3])) {
         valid = false,
-        messages.push('One or more joint moment force values are incorrect');
+        messages.push('One or more joint moment force values are incorrect in the joint load input section');
       }
     }
   }
@@ -142,32 +132,32 @@ module.exports = async function (obj) {
   for (let i = 0; i < numMemLoads; i++) {
     const startIndex = numJointLoads * 4;
     for (let i = startIndex; i < loads.length; i += 4) {
-      if (loads[i] < 0 || loads[i] === '' || !Number.isInteger(loads[i])) {
+      if (isNotIntegerNumber(loads[i])) {
         valid = false,
-        messages.push('One or more member number values are incorrect');
+        messages.push('One or more member number values are incorrect in the member load input section');
       }
-      if (loads[i+1] === '' || specChar.test(loads[i+1])|| alphaChar.test(loads[i+1])) {
+      if (isNotAnyNegativeZeroNumber(loads[i+1])) {
         valid = false,
-        messages.push('One or more point load distance values are incorrect');
+        messages.push('One or more point load distance values are incorrect in the member load input section');
       }
-      if (loads[i+2] < 0 || loads[i+2] === '' || specChar.test(loads[i+2])|| alphaChar.test(loads[i+2])) {
+      if (isNotAnyTypeOfNumber(loads[i+2])) {
         valid = false,
-        messages.push('One or more point load force values are incorrect');
+        messages.push('One or more point load force values are incorrect in the member load input section');
       }
-      if (loads[i+3] === '' || specChar.test(loads[i+3])|| alphaChar.test(loads[i+3])) {
+      if (isNotAnyTypeOfNumber(loads[i+3])) {
         valid = false,
-        messages.push('One or more UDL force values are incorrect');
+        messages.push('One or more UDL force values are incorrect in the member load input section');
       }
     }
   }
 
   /*********** NUMBER OF LOADS INPUT ***********/
-  if (numJointLoads < 0 || numJointLoads === '' || !Number.isInteger(numJointLoads)) {
+  if (isNotIntegerNumber(numJointLoads)) {
     valid = false,
     messages.push('The number of joint loads input is incorrect');
   }
 
-  if (numMemLoads < 0 || numMemLoads === '' || !Number.isInteger(numMemLoads)) {
+  if (isNotIntegerNumber(numMemLoads)) {
     valid = false,
     messages.push('The number of member loads input is incorrect');
   }
@@ -179,9 +169,45 @@ module.exports = async function (obj) {
 /***************************************************** FUNCTIONS *****************************************************************/
 /*********************************************************************************************************************************/
 
-
 function extractProperties(data) {
   if (typeof data === 'string') data = [ data ];
   const resultArr = data.map((e) => Number(e));
   return resultArr;
 }
+
+// eslint-disable-next-line no-useless-escape
+const specChar = /[!@#$%^&*()_+=\[\]{};':"\\|,<>\/?]+/;
+const alphaChar = /[a-zA-Z]/;
+
+function isNotIntegerNumber(data) {
+  if (data < 0 || data === '' || !Number.isInteger(data) || specChar.test(data)|| alphaChar.test(data)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isNotAnyNegativeZeroNumber(data) {
+  if (data < 0 || data === '' || specChar.test(data) || alphaChar.test(data)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isNotAnyTypeOfNumber(data) {
+  if (data === '' || specChar.test(data) || alphaChar.test(data)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+function isNotBetweenZeroAndOne(data) {
+  if (data < 0 || data > 1 || data === '' || specChar.test(data) || alphaChar.test(data)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+

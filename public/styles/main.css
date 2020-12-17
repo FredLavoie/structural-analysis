@@ -87,9 +87,9 @@ label {
   margin: 0em 1em;
 }
 
-.error {
+.error-container {
   text-align: center;
-  margin-top: 4em;
+  margin-top: 8em;
 }
 
 .input-style {
@@ -110,6 +110,10 @@ label {
 .error {
   border-color: red;
   text-align: left;
+}
+
+.error-message {
+  color: red;
 }
 
 /*************************** ID STYLING ****************************/

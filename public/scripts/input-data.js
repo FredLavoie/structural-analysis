@@ -63,7 +63,6 @@ document.addEventListener('change', () => {
   });
 });
 
-// validate form data, set global objects to session storage and submit form
 const submitForm = document.querySelector('#input-form');
 submitForm.addEventListener('submit', async (event) => {
   event.preventDefault();

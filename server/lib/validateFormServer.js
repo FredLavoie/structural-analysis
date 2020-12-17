@@ -1,4 +1,19 @@
 module.exports = async function (obj) {
+
+  if (!obj.numJoints) return { valid: false, messageList: ['Missing data: numJoints']};
+  if (!obj.numMembers) return { valid: false, messageList: ['Missing data: numMembers']};
+  if (!obj.numElasticModulus) return { valid: false, messageList: ['Missing data: numElasticModulus']};
+  if (!obj.numAreas) return { valid: false, messageList: ['Missing data: numAreas']};
+  if (!obj.numMomentOfInertia) return { valid: false, messageList: ['Missing data: numMomentOfInertia']};
+  if (!obj.ElasticMods) return { valid: false, messageList: ['Missing data: ElasticMods']};
+  if (!obj.Areas) return { valid: false, messageList: ['Missing data: Areas']};
+  if (!obj.MoI) return { valid: false, messageList: ['Missing data: MoI']};
+  if (!obj.joints) return { valid: false, messageList: ['Missing data: joints']};
+  if (!obj.members) return { valid: false, messageList: ['Missing data: members']};
+  if (!obj.loads) return { valid: false, messageList: ['Missing data: loads']};
+  if (!obj.numJointLoads) return { valid: false, messageList: ['Missing data: numJointLoads']};
+  if (!obj.numMemLoads) return { valid: false, messageList: ['Missing data: numMemLoads']};
+
   const numJoints = Number(obj.numJoints);
   const numMembers = Number(obj.numMembers);
   const numElasticModulus = Number(obj.numElasticModulus);

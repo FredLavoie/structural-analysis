@@ -1,14 +1,14 @@
 /******************************************** REQUIRED PACKAGES / PORT ***********************************************/
 /*********************************************************************************************************************/
-const express	      			= require('express');
-const bodyParser			    = require('body-parser');
-const app				        	= express();
-const fs					        = require('fs');
-const { execFile }	  		= require('child_process');
-const PORT					      = process.env.PORT || 8080; // default port 8080
+const express	            = require('express');
+const bodyParser          = require('body-parser');
+const app                 = express();
+const fs                  = require('fs');
+const { execFile }        = require('child_process');
+const PORT                = process.env.PORT || 8080; // default port 8080
 const validateForm        = require('./lib/validateformServer');
-const createInputObject		= require('./lib/create-input-object');
-const createInputString		= require('./lib/create-input-string');
+const createInputObject   = require('./lib/create-input-object');
+const createInputString   = require('./lib/create-input-string');
 
 /*********************************************** SET / USE / LISTEN **************************************************/
 /*********************************************************************************************************************/
@@ -41,41 +41,44 @@ app.get('/documentation', (req, res) => {
 /*********************************************************************************************************************/
 
 app.post('/results', async (req, res) => {
-  console.log('req.body in /results POST route: ', req.body);
   const validForm = await validateForm(req.body);
 
   if (validForm.valid === false) {
     res.render('error-input', validForm);
-  } else {
-    res.redirect('/results');
+    return;
   }
 
-  // const inputObject = await createInputObject(req.body);
-  // const dataString = await createInputString(inputObject);
+  const inputObject = await createInputObject(req.body);
+  const dataString = await createInputString(inputObject);
 
-  // // code to write to the input file
-  // fs.writeFile('program/data_in.txt', dataString, (error) => {
-  //   if (error) {
-  //     console.log('There was an error writing the input file');
-  //     console.log(error);
-  //     res.render('error-write');
-  //     return;
-  //   }
-  //   // code to run executable, then render 'results' page
-  //   execFile('program/sa-mac-exec', (error) => {
-  //     if (error) {
-  //       console.log('There was an error running the executable');
-  //       console.log(error);
-  //       res.render('error-exec');
-  //       return;
-  //     }
-  //     fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
-  //       // console.log('JSON data results object: ', JSON.parse(data));
-  //       if (error) console.log(error);
-  //     });
-  //     res.render('results'); // maybe send data with it instead of sessions storage?
-  //   });
-  // });
+  // code to write to the input file
+  fs.writeFile('program/data_in.txt', dataString, (error) => {
+    if (error) {
+      console.log('There was an error writing the input file');
+      console.log(error);
+      res.render('error-write');
+      return;
+    }
+    // code to run executable, then render 'results' page
+    execFile('program/sa-mac-exec', (error) => {
+      if (error) {
+        console.log('There was an error running the executable');
+        console.log(error);
+        res.render('error-exec');
+        return;
+      }
+      fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
+        // console.log('JSON data results object: ', JSON.parse(data));
+        if (error) {
+          console.log(error);
+          console.log('There was an error reading the output JSON file');
+          res.render('error-exec');
+          return;
+        }
+        res.render('results', data); // send data with it instead of sessions storage?
+      });
+    });
+  });
 
 });
 

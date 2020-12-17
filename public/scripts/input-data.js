@@ -63,12 +63,12 @@ document.addEventListener('change', () => {
   });
 });
 
+// validate form data, set global objects to session storage and submit form
 const submitForm = document.querySelector('#input-form');
 submitForm.addEventListener('submit', async (event) => {
   event.preventDefault();
 
   const validForm = await validateForm();
-
   if (validForm === false) {
     return;
   }
@@ -77,34 +77,8 @@ submitForm.addEventListener('submit', async (event) => {
   sessionStorage.setItem('globalNodeObject', JSON.stringify(globalNodeObject));
   sessionStorage.setItem('globalMemberObject', JSON.stringify(globalMemberObject));
 
-  const data = new URLSearchParams();
-  for (const pair of new FormData(submitForm)) {
-    data.append(pair[0], pair[1]);
-  }
-
-  fetch('/results', {
-    method: 'POST',
-    body: data
-  }).then((res) => {
-    res.json();
-  }).then((data) => {
-    switch (data.message) {
-    case 'success':
-      window.location.href = '/results';
-      break;
-    case 'wrong_input':
-      window.location.href = '/error-input';
-      break;
-    case 'error_write_file':
-      window.location.href = '/error-write';
-      break;
-    case 'error_execute_program':
-      window.location.href = '/error-exec';
-      break;
-    default:
-      return;
-    }
-  });
+  // submit form
+  submitForm.submit();
 });
 
 //************************************************** FUNCTIONS *******************************************************/

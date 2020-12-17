@@ -37,40 +37,17 @@ app.get('/documentation', (req, res) => {
   res.render('documentation');
 });
 
-app.get('/results', (req, res) => {
-  console.log('rendering results.ejs');
-  res.render('results');
-});
-
-app.get('/rerror-write', (req, res) => {
-  console.log('rendering rerror-write.ejs');
-  res.render('rerror-write');
-});
-
-app.get('/error-exec', (req, res) => {
-  console.log('rendering error-exec.ejs');
-  res.render('error-exec');
-});
-
-app.get('/error-input', async (req, res) => {
-  console.log('rendering error-input.ejs');
-  const validForm = await validateForm(req.body);
-  res.render('error-input', validForm);
-});
-
 /************************************************* POST REQUEST ******************************************************/
 /*********************************************************************************************************************/
 
 app.post('/results', async (req, res) => {
-  // console.log(req.body);
+  console.log('req.body in /results POST route: ', req.body);
   const validForm = await validateForm(req.body);
-  console.log(validForm);
-
 
   if (validForm.valid === false) {
-    res.send({ message: 'wrong_input' });
+    res.render('error-input', validForm);
   } else {
-    res.send({ message: 'success' });
+    res.redirect('/results');
   }
 
   // const inputObject = await createInputObject(req.body);
@@ -81,7 +58,7 @@ app.post('/results', async (req, res) => {
   //   if (error) {
   //     console.log('There was an error writing the input file');
   //     console.log(error);
-  //     res.send({ message: 'Error: write file' });
+  //     res.render('error-write');
   //     return;
   //   }
   //   // code to run executable, then render 'results' page
@@ -89,14 +66,14 @@ app.post('/results', async (req, res) => {
   //     if (error) {
   //       console.log('There was an error running the executable');
   //       console.log(error);
-  //       res.send({ message: 'Error: executing program' });
+  //       res.render('error-exec');
   //       return;
   //     }
   //     fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
   //       // console.log('JSON data results object: ', JSON.parse(data));
   //       if (error) console.log(error);
   //     });
-  //     res.send({ message: 'Success' });
+  //     res.render('results'); // maybe send data with it instead of sessions storage?
   //   });
   // });
 

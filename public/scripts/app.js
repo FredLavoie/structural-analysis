@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-
   const inputNumMembers = document.querySelector('#input-numMembers');
   inputNumMembers.addEventListener('change', () => {
     document.querySelectorAll('#members-container-1>.members-container-2').forEach((n) => n.remove());

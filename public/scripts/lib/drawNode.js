@@ -1,7 +1,7 @@
-export function drawNode(jointNum, point) {
+export function drawNode(jointNum, point, window) {
   if (isNaN(point[0]) || isNaN(point[1])) return;
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const node = document.createElementNS(ns, 'circle');
   node.setAttributeNS(null, 'id','joint');
   node.setAttributeNS(null, 'r', '4');

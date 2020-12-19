@@ -111,9 +111,9 @@ function redrawAllData() {
 
 function generateJoints(arr) {
   let jointNum = 0;
-  for (let i = 0; i < arr.length; i+=2) {
+  for (let i = 0; i < arr.length; i += 2) {
     jointNum += 1;
-    drawNode(jointNum, arr[i+1]);
+    drawNode(jointNum, arr[i+1], '#structure-window');
     globalNodeObject[jointNum] = [arr[i], arr[i+1]];
   }
 }

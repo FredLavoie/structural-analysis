@@ -37,6 +37,19 @@ app.get('/documentation', (req, res) => {
   res.render('documentation');
 });
 
+app.get('/results-json', (req, res) => {
+  fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
+    if (error) {
+      console.log(error);
+      console.log('There was an error reading the output JSON file');
+      res.render('error-exec');
+      return;
+    }
+    const parsedData = JSON.parse(data);
+    res.send(parsedData);
+  });
+});
+
 /************************************************* POST REQUEST ******************************************************/
 /*********************************************************************************************************************/
 
@@ -67,19 +80,10 @@ app.post('/results', async (req, res) => {
         res.render('error-exec');
         return;
       }
-      fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
-        // console.log('JSON data results object: ', JSON.parse(data));
-        if (error) {
-          console.log(error);
-          console.log('There was an error reading the output JSON file');
-          res.render('error-exec');
-          return;
-        }
-        res.render('results', data); // send data with it instead of sessions storage?
-      });
+      console.log('rendering results.ejs');
+      res.render('results');
     });
   });
-
 });
 
 

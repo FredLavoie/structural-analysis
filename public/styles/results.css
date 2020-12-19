@@ -16,7 +16,11 @@ p {
   margin-bottom: 0.5em;
 }
 h1 { font-size: 2em; }
-h2 { font-size: 1.5em; }
+h2 { 
+  font-size: 1.5em;
+  padding-top: 25px;
+  margin-left: 5%;
+}
 h3 {
   font-size: 1.2em;
   padding-left: 32px;
@@ -39,7 +43,8 @@ label {
 #main-container {
   display: flex;
   flex-direction: column;
-  margin: 2.0em 1.5em;
+  margin: 2.0em auto;
+  max-width: 80em;
 }
 
 #input-diagram,

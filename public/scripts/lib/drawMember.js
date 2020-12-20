@@ -1,9 +1,9 @@
-export function drawMember(num, start, end, nodes) {
+export function drawMember(num, start, end, nodes, window) {
   if (!(start in nodes) || !(end in nodes)) return;
 
   if (start !== 0 && end !== 0) {
     const ns = 'http://www.w3.org/2000/svg';
-    const box = document.querySelector('#structure-window');
+    const box = document.querySelector(window);
     const member = document.createElementNS(ns, 'line');
     member.setAttributeNS(null, 'id','member');
     member.setAttributeNS(null, 'x1', `${nodes[start][1][0]}`);

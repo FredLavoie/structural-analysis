@@ -125,7 +125,7 @@ function generateMembers(arr) {
     memberNumber += 1;
     if (!arr[i] || !arr[i+1]) return;
 
-    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject);
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#structure-window');
 
     const start = globalNodeObject[arr[i]][1];
     const end = globalNodeObject[arr[i+1]][1];

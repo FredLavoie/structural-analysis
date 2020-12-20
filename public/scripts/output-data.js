@@ -1,7 +1,7 @@
 import { calculateJointCoordinates } from './lib/calculateJointCoordinates.js';
-// import { calculateForceAngle } from './lib/calculateForceAngle.js';
+import { calculateForceAngle } from './lib/calculateForceAngle.js';
 import { drawNode } from './lib/drawNode.js';
-// import { drawMember } from './lib/drawMember.js';
+import { drawMember } from './lib/drawMember.js';
 // import { drawXYRSupport } from './lib/drawXYRSupport.js';
 // import { drawXYSupport } from './lib/drawXYSupport.js';
 // import { drawXRSupport } from './lib/drawXRSupport.js';
@@ -26,20 +26,17 @@ console.log('globalMemberObject: ', globalMemberObject);
 //************************************************ DOCUMENT READY ****************************************************/
 //********************************************************************************************************************/
 
-// document.addEventListener('DOMContentLoaded', () => {
 window.addEventListener('load', async () => {
   await fetchResultsJSON()
     .catch((err) => {
       console.log('fetch error: ', err);
     });
 
-  redrawAllFrames();
+  redrawAllSVGElements();
 });
 
-
-
 window.addEventListener('resize', () => {
-  redrawAllFrames();
+  redrawAllSVGElements();
 });
 
 //************************************************** FUNCTIONS *******************************************************/
@@ -52,7 +49,7 @@ async function fetchResultsJSON() {
   console.log('globalResultsObject: ', globalResultsObject);
 }
 
-function redrawAllFrames() {
+function redrawAllSVGElements() {
   // clear all svg nodes before redrawing
   document.querySelectorAll('svg>#joint').forEach((n) => n.remove());
   document.querySelectorAll('svg>#joint-tag').forEach((n) => n.remove());
@@ -70,9 +67,17 @@ function redrawAllFrames() {
     jointArray.push(globalNodeObject[node][0][0]);
     jointArray.push(globalNodeObject[node][0][1]);
   }
+
+  const memberArray = [];
+  for (const node in globalMemberObject) {
+    memberArray.push(globalMemberObject[node].joints[0]);
+    memberArray.push(globalMemberObject[node].joints[1]);
+  }
+
   const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
 
   generateJoints(jointCoordinates);
+  generateMembers(memberArray);
 }
 
 function generateJoints(arr) {
@@ -85,5 +90,31 @@ function generateJoints(arr) {
     drawNode(jointNum, arr[i+1], '#displacements-diagram');
     drawNode(jointNum, arr[i+1], '#reactions-diagram');
     globalNodeObject[jointNum] = [arr[i], arr[i+1]];
+  }
+}
+
+function generateMembers(arr) {
+  let memberNumber = 0;
+
+  for (let i = 0; i < arr.length; i += 2) {
+    memberNumber += 1;
+
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#input-diagram');
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#shear-forces-diagram');
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#moment-forces-diagram');
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#displacements-diagram');
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#reactions-diagram');
+
+    const start = globalNodeObject[arr[i]][1];
+    const end = globalNodeObject[arr[i+1]][1];
+
+    if (start && end) {
+      globalMemberObject[memberNumber] = {
+        joints: [arr[i], arr[i+1]],
+        start: start,
+        end: end,
+        forceAngle: calculateForceAngle(start, end),
+      };
+    }
   }
 }

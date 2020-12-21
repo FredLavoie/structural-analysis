@@ -1,4 +1,4 @@
-export function drawYSupport(jointNum, nodes) { // Y - roller support
+export function drawYSupport(jointNum, nodes, window) { // Y - roller support
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const xCoord = nodes[jointNum][1][0];
@@ -9,7 +9,7 @@ export function drawYSupport(jointNum, nodes) { // Y - roller support
   const lineEndY = yCoord + 15;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const circle = document.createElementNS(ns, 'circle');
   circle.setAttributeNS(null, 'id','support');
   circle.setAttributeNS(null, 'stroke', 'green');

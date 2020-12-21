@@ -2,13 +2,13 @@ import { calculateJointCoordinates } from './lib/calculateJointCoordinates.js';
 import { calculateForceAngle } from './lib/calculateForceAngle.js';
 import { drawNode } from './lib/drawNode.js';
 import { drawMember } from './lib/drawMember.js';
-// import { drawXYRSupport } from './lib/drawXYRSupport.js';
-// import { drawXYSupport } from './lib/drawXYSupport.js';
-// import { drawXRSupport } from './lib/drawXRSupport.js';
-// import { drawYRSupport } from './lib/drawYRSupport.js';
-// import { drawXSupport } from './lib/drawXSupport.js';
-// import { drawYSupport } from './lib/drawYSupport.js';
-// import { drawRSupport } from './lib/drawRSupport.js';
+import { drawXYRSupport } from './lib/drawXYRSupport.js';
+import { drawXYSupport } from './lib/drawXYSupport.js';
+import { drawXRSupport } from './lib/drawXRSupport.js';
+import { drawYRSupport } from './lib/drawYRSupport.js';
+import { drawXSupport } from './lib/drawXSupport.js';
+import { drawYSupport } from './lib/drawYSupport.js';
+import { drawRSupport } from './lib/drawRSupport.js';
 // import { drawXJointLoad } from './lib/drawXJointLoad.js';
 // import { drawYJointLoad } from './lib/drawYJointLoad.js';
 // import { drawMJointLoad } from './lib/drawMJointLoad.js';
@@ -67,6 +67,7 @@ function redrawAllSVGElements() {
     jointArray.push(globalNodeObject[node][0][0]);
     jointArray.push(globalNodeObject[node][0][1]);
   }
+  const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
 
   const memberArray = [];
   for (const node in globalMemberObject) {
@@ -74,10 +75,17 @@ function redrawAllSVGElements() {
     memberArray.push(globalMemberObject[node].joints[1]);
   }
 
-  const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
+  const supportsArray = [];
+  for (const node in globalNodeObject) {
+    supportsArray.push(globalNodeObject[node][2][0]);
+    supportsArray.push(globalNodeObject[node][2][1]);
+    supportsArray.push(globalNodeObject[node][2][2]);
+  }
+  console.log('supportsArray: ', supportsArray);
 
   generateJoints(jointCoordinates);
   generateMembers(memberArray);
+  generateSupports(supportsArray);
 }
 
 function generateJoints(arr) {
@@ -116,5 +124,27 @@ function generateMembers(arr) {
         forceAngle: calculateForceAngle(start, end),
       };
     }
+  }
+}
+
+function generateSupports(arr) {
+  let jointNum = 1;
+  for (let i = 0; i < arr.length; i += 3) {
+    if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) {
+      drawXYRSupport(jointNum, globalNodeObject, globalMemberObject, '#input-diagram'); // fixed support
+    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) {
+      drawXYSupport(jointNum, globalNodeObject, '#input-diagram');                      // pin support
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) {
+      drawXRSupport(jointNum, globalNodeObject, '#input-diagram');                      // x-rest rot-rest
+    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) {
+      drawXSupport(jointNum, globalNodeObject, '#input-diagram');                      // x-rest > roller support
+    } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) {
+      drawRSupport(jointNum, globalNodeObject, '#input-diagram');                      // rot-rest
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) {
+      drawYSupport(jointNum, globalNodeObject, '#input-diagram');                      // y-rest > roller support
+    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) {
+      drawYRSupport(jointNum, globalNodeObject, '#input-diagram');                     // y-rest rot-rest
+    }
+    jointNum += 1;
   }
 }

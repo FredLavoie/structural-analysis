@@ -1,4 +1,4 @@
-export function drawXYSupport(jointNum, nodes) { // pin support
+export function drawXYSupport(jointNum, nodes, window) { // pin support
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const xCoord = nodes[jointNum][1][0];
@@ -12,7 +12,7 @@ export function drawXYSupport(jointNum, nodes) { // pin support
   const lineEndY = yCoord + 14;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const triangle = document.createElementNS(ns, 'polygon');
   triangle.setAttributeNS(null, 'id','support');
   triangle.setAttributeNS(null, 'stroke', 'green');

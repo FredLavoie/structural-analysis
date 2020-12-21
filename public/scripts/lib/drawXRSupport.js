@@ -1,11 +1,11 @@
-export function drawXRSupport(jointNum, nodes) {
+export function drawXRSupport(jointNum, nodes, window) {
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const xCoord = nodes[jointNum][1][0];
   const yCoord = nodes[jointNum][1][1];
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const support = document.createElementNS(ns, 'rect');
   support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');

@@ -1,8 +1,8 @@
-export function drawYRSupport(jointNum, nodes) {
+export function drawYRSupport(jointNum, nodes, window) {
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const support = document.createElementNS(ns, 'rect');
   support.setAttributeNS(null, 'id','support');
   support.setAttributeNS(null, 'stroke', 'green');

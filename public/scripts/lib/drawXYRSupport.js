@@ -1,4 +1,4 @@
-export function drawXYRSupport(jointNum, nodes, members) { // fixed support
+export function drawXYRSupport(jointNum, nodes, members, window) { // fixed support
   const currentJoint = nodes[jointNum];
 
   if (!currentJoint[1][0] || !currentJoint[1][1] || currentJoint[1][0] === 0 || currentJoint[1][1] === 0) return;
@@ -41,7 +41,7 @@ export function drawXYRSupport(jointNum, nodes, members) { // fixed support
   const lineEndY = yCoord + 12;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','support');
   line.setAttributeNS(null, 'stroke', 'green');

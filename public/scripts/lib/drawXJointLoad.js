@@ -1,4 +1,4 @@
-export function drawXJointLoad(jointNum, load, nodes) {
+export function drawXJointLoad(jointNum, load, nodes, window) {
   if (!nodes[jointNum]) return;
 
   const headX = nodes[jointNum][1][0];
@@ -12,7 +12,7 @@ export function drawXJointLoad(jointNum, load, nodes) {
   const offset = load > 0 ? -5 : 5;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const arrow = document.createElementNS(ns, 'polygon');
   arrow.setAttributeNS(null, 'id','joint-load');
   arrow.setAttributeNS(null, 'stroke', 'red');

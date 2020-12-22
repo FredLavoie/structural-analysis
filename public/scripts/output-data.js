@@ -9,15 +9,16 @@ import { drawYRSupport } from './lib/drawYRSupport.js';
 import { drawXSupport } from './lib/drawXSupport.js';
 import { drawYSupport } from './lib/drawYSupport.js';
 import { drawRSupport } from './lib/drawRSupport.js';
-// import { drawXJointLoad } from './lib/drawXJointLoad.js';
-// import { drawYJointLoad } from './lib/drawYJointLoad.js';
-// import { drawMJointLoad } from './lib/drawMJointLoad.js';
-// import { drawMemberPointLoad } from './lib/drawMemberPointLoad.js';
-// import { drawMemberUDLLoad } from './lib/drawMemberUDLLoad.js';
+import { drawXJointLoad } from './lib/drawXJointLoad.js';
+import { drawYJointLoad } from './lib/drawYJointLoad.js';
+import { drawMJointLoad } from './lib/drawMJointLoad.js';
+import { drawMemberPointLoad } from './lib/drawMemberPointLoad.js';
+import { drawMemberUDLLoad } from './lib/drawMemberUDLLoad.js';
 
 // get global objects from sessions storage
 const globalNodeObject = JSON.parse(sessionStorage.getItem('globalNodeObject'));
 const globalMemberObject = JSON.parse(sessionStorage.getItem('globalMemberObject'));
+const globalLoadObject = JSON.parse(sessionStorage.getItem('globalLoadObject'));
 let globalResultsObject = {};
 
 console.log('globalNodeObject: ', globalNodeObject);
@@ -83,9 +84,17 @@ function redrawAllSVGElements() {
   }
   console.log('supportsArray: ', supportsArray);
 
+
+  const jointLoadArray = globalLoadObject.nodeLoads;
+  const memberLoadArray = globalLoadObject.memberLoads;
+
+  console.log('jointLoadArray: ', jointLoadArray);
+  console.log('memberLoadArray: ', memberLoadArray);
   generateJoints(jointCoordinates);
   generateMembers(memberArray);
   generateSupports(supportsArray);
+  generateJointLoads(jointLoadArray);
+  generateMemberLoads(memberLoadArray);
 }
 
 function generateJoints(arr) {
@@ -106,6 +115,7 @@ function generateMembers(arr) {
 
   for (let i = 0; i < arr.length; i += 2) {
     memberNumber += 1;
+    if (!arr[i] || !arr[i+1]) return;
 
     drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#input-diagram');
     drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#shear-forces-diagram');
@@ -146,5 +156,25 @@ function generateSupports(arr) {
       drawYRSupport(jointNum, globalNodeObject, '#input-diagram');                     // y-rest rot-rest
     }
     jointNum += 1;
+  }
+}
+
+function generateJointLoads(arr) {
+  for (let i = 0; i < arr.length; i += 4) {
+    if (arr[i] && arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1], globalNodeObject, '#input-diagram');
+    if (arr[i] && arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2], globalNodeObject, '#input-diagram');
+    if (arr[i] && arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3], globalNodeObject, '#input-diagram');
+  }
+}
+
+function generateMemberLoads(arr) {
+  for (let i = 0; i < arr.length; i += 4) {
+    if (!arr[i] || arr[i] === 0) return;
+    if (arr[i] && arr[i+1] !== 0 && arr[i+2] !== 0) {
+      drawMemberPointLoad(arr[i], arr[i+1], arr[i+2], globalNodeObject, globalMemberObject, '#input-diagram');
+    }
+    if (arr[i] && arr[i+3] !== 0) {
+      drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject, '#input-diagram');
+    }
   }
 }

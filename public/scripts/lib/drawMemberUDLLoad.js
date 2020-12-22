@@ -1,4 +1,4 @@
-export function drawMemberUDLLoad(memberNum, udl, nodes, members) {
+export function drawMemberUDLLoad(memberNum, udl, nodes, members, window) {
   const startJoint = members[memberNum].joints[0];
   const endJoint = members[memberNum].joints[1];
   const xDist = nodes[endJoint][0][0] - nodes[startJoint][0][0];
@@ -9,7 +9,7 @@ export function drawMemberUDLLoad(memberNum, udl, nodes, members) {
   const rotateAngle = udl < 0 ? members[memberNum].forceAngle * -1 : 360 - members[memberNum].forceAngle;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
 
   for (let i = 0; i < 8; i++) {
     const offset = (memberLength / 7) * i;

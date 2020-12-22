@@ -1,4 +1,4 @@
-export function drawMJointLoad(jointNum, moment, nodes) {
+export function drawMJointLoad(jointNum, moment, nodes, window) {
   if (!nodes[jointNum]) return;
 
   const cx = nodes[jointNum][1][0] - 15;
@@ -17,7 +17,7 @@ export function drawMJointLoad(jointNum, moment, nodes) {
   }
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const arrow = document.createElementNS(ns, 'polygon');
   arrow.setAttributeNS(null, 'id','joint-load');
   arrow.setAttributeNS(null, 'stroke', 'red');

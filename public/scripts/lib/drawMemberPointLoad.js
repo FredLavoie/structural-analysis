@@ -1,4 +1,4 @@
-export function drawMemberPointLoad(memberNum, offset, load, nodes, members) {
+export function drawMemberPointLoad(memberNum, offset, load, nodes, members, window) {
   const startJoint = members[memberNum].joints[0];
   const endJoint = members[memberNum].joints[1];
   const xDist = nodes[endJoint][0][0] - nodes[startJoint][0][0];
@@ -18,7 +18,7 @@ export function drawMemberPointLoad(memberNum, offset, load, nodes, members) {
   const rotateAngle = load < 0 ? members[memberNum].forceAngle * -1 : 360 - members[memberNum].forceAngle;
 
   const ns = 'http://www.w3.org/2000/svg';
-  const box = document.querySelector('#structure-window');
+  const box = document.querySelector(window);
   const arrow = document.createElementNS(ns, 'polygon');
   arrow.setAttributeNS(null, 'id','member-load');
   arrow.setAttributeNS(null, 'stroke', '#0000ff');

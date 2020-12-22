@@ -21,6 +21,7 @@ import { validateForm } from './lib/validateFormClient.js';
 
 const globalNodeObject = {};
 const globalMemberObject = {};
+const globalLoadObject = { nodeLoads: [], memberLoads: [] };
 
 window.addEventListener('resize', () => {
   redrawAllData();
@@ -72,9 +73,12 @@ submitForm.addEventListener('submit', async (event) => {
     return;
   }
 
+  populateGlobalLoadsObjects();
+
   // add global objects to sessions storage
   sessionStorage.setItem('globalNodeObject', JSON.stringify(globalNodeObject));
   sessionStorage.setItem('globalMemberObject', JSON.stringify(globalMemberObject));
+  sessionStorage.setItem('globalLoadObject', JSON.stringify(globalLoadObject));
 
   // submit form
   submitForm.submit();
@@ -168,9 +172,9 @@ function generateSupports(arr) {
 function generateJointLoads(arr) {
   for (let i = 0; i < arr.length; i += 4) {
     if (!arr[i] || arr[i] === 0) return;
-    if (arr[i] && arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1], globalNodeObject);
-    if (arr[i] && arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2], globalNodeObject);
-    if (arr[i] && arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3], globalNodeObject);
+    if (arr[i] && arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3], globalNodeObject, '#structure-window');
   }
 }
 
@@ -178,10 +182,22 @@ function generateMemberLoads(arr) {
   for (let i = 0; i < arr.length; i += 4) {
     if (!arr[i] || arr[i] === 0) return;
     if (arr[i] && arr[i+1] !== 0 && arr[i+2] !== 0) {
-      drawMemberPointLoad(arr[i], arr[i+1], arr[i+2], globalNodeObject, globalMemberObject);
+      drawMemberPointLoad(arr[i], arr[i+1], arr[i+2], globalNodeObject, globalMemberObject, '#structure-window');
     }
     if (arr[i] && arr[i+3] !== 0) {
-      drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject);
+      drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject, '#structure-window');
     }
+  }
+}
+
+function populateGlobalLoadsObjects() {
+  const jointLoadArray = [...document.querySelectorAll('.joint-loads')].map((e) => Number(e.value));
+  const memberLoadArray = [...document.querySelectorAll('.member-loads')].map((e) => Number(e.value));
+
+  for (let i = 0; i < jointLoadArray.length; i += 4) {
+    globalLoadObject.nodeLoads.push(jointLoadArray[i], jointLoadArray[i+1], jointLoadArray[i+2], jointLoadArray[i+3]);
+  }
+  for (let i = 0; i < memberLoadArray.length; i += 4) {
+    globalLoadObject.memberLoads.push(memberLoadArray[i], memberLoadArray[i+1], memberLoadArray[i+2], memberLoadArray[i+3]);
   }
 }

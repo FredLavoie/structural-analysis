@@ -17,13 +17,15 @@ export function drawMember(num, start, end, nodes, window) {
     const midX = (nodes[start][1][0] + nodes[end][1][0]) / 2;
     const midY = (nodes[start][1][1] + nodes[end][1][1]) / 2;
 
-    const text = document.createElementNS(ns, 'text');
-    text.setAttributeNS(null, 'id','member-tag');
-    text.setAttribute('x', `${midX - 15}`);
-    text.setAttribute('y', `${midY - 15}`);
-    text.setAttribute('height', '5');
-    text.setAttribute('width', '5');
-    text.textContent = `${num}`;
-    box.append(text);
+    if (window !== '#internal-forces-diagram') {
+      const text = document.createElementNS(ns, 'text');
+      text.setAttributeNS(null, 'id','member-tag');
+      text.setAttribute('x', `${midX - 15}`);
+      text.setAttribute('y', `${midY - 15}`);
+      text.setAttribute('height', '5');
+      text.setAttribute('width', '5');
+      text.textContent = `${num}`;
+      box.append(text);
+    }
   }
 }

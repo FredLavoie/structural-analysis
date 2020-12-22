@@ -9,12 +9,14 @@ export function drawNode(jointNum, point, window) {
   node.setAttributeNS(null, 'cy',`${point[1]}`);
   box.append(node);
 
-  const text = document.createElementNS(ns, 'text');
-  text.setAttributeNS(null, 'id','joint-tag');
-  text.setAttribute('x', `${point[0] - 15}`);
-  text.setAttribute('y', `${point[1] - 15}`);
-  text.setAttribute('height', '5');
-  text.setAttribute('width', '5');
-  text.textContent = `${jointNum}`;
-  box.append(text);
+  if (window !== '#internal-forces-diagram') {
+    const text = document.createElementNS(ns, 'text');
+    text.setAttributeNS(null, 'id','joint-tag');
+    text.setAttribute('x', `${point[0] - 15}`);
+    text.setAttribute('y', `${point[1] - 15}`);
+    text.setAttribute('height', '5');
+    text.setAttribute('width', '5');
+    text.textContent = `${jointNum}`;
+    box.append(text);
+  }
 }

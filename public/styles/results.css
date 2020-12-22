@@ -48,8 +48,7 @@ label {
 }
 
 #input-diagram,
-#shear-forces-diagram,
-#moment-forces-diagram,
+#internal-forces-diagram,
 #displacements-diagram,
 #reactions-diagram {
   display: inline-block;

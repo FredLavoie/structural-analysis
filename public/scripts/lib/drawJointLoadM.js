@@ -1,4 +1,4 @@
-export function drawMJointLoad(jointNum, moment, nodes, window) {
+export function drawJointLoadM(jointNum, moment, nodes, window) {
   if (!nodes[jointNum]) return;
 
   const cx = nodes[jointNum][1][0] - 15;

@@ -1,4 +1,4 @@
-export function drawNode(jointNum, point, window) {
+export function drawJoint(jointNum, point, window) {
   if (isNaN(point[0]) || isNaN(point[1])) return;
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector(window);

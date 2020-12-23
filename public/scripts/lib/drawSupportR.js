@@ -1,4 +1,4 @@
-export function drawRSupport(jointNum, nodes, window) {
+export function drawSupportR(jointNum, nodes, window) {
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const ns = 'http://www.w3.org/2000/svg';

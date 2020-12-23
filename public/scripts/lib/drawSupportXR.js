@@ -1,5 +1,8 @@
-export function drawYRSupport(jointNum, nodes, window) {
+export function drawSupportXR(jointNum, nodes, window) {
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
+
+  const xCoord = nodes[jointNum][1][0];
+  const yCoord = nodes[jointNum][1][1];
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector(window);
@@ -12,6 +15,7 @@ export function drawYRSupport(jointNum, nodes, window) {
   support.setAttributeNS(null, 'width', '14');
   support.setAttributeNS(null, 'x', `${nodes[jointNum][1][0] - 7}`);
   support.setAttributeNS(null, 'y',`${nodes[jointNum][1][1] + 5}`);
+  support.setAttributeNS(null, 'transform', `rotate(90 ${xCoord} ${yCoord})`);
   box.append(support);
 
   const circle = document.createElementNS(ns, 'circle');
@@ -22,15 +26,17 @@ export function drawYRSupport(jointNum, nodes, window) {
   circle.setAttributeNS(null, 'r', '6');
   circle.setAttributeNS(null, 'cx', `${nodes[jointNum][1][0]}`);
   circle.setAttributeNS(null, 'cy',`${nodes[jointNum][1][1] + 12}`);
+  circle.setAttributeNS(null, 'transform', `rotate(90 ${xCoord} ${yCoord})`);
   box.append(circle);
 
-  const yLine = document.createElementNS(ns, 'line');
-  yLine.setAttributeNS(null, 'id','support');
-  yLine.setAttributeNS(null, 'stroke', 'green');
-  yLine.setAttributeNS(null, 'stroke-width', '1');
-  yLine.setAttributeNS(null, 'x1', `${nodes[jointNum][1][0]}`);
-  yLine.setAttributeNS(null, 'y1',`${nodes[jointNum][1][1] + 5}`);
-  yLine.setAttributeNS(null, 'x2', `${nodes[jointNum][1][0]}`);
-  yLine.setAttributeNS(null, 'y2',`${nodes[jointNum][1][1] + 18}`);
-  box.append(yLine);
+  const xLine = document.createElementNS(ns, 'line');
+  xLine.setAttributeNS(null, 'id','support');
+  xLine.setAttributeNS(null, 'stroke', 'green');
+  xLine.setAttributeNS(null, 'stroke-width', '1');
+  xLine.setAttributeNS(null, 'x1', `${nodes[jointNum][1][0]}`);
+  xLine.setAttributeNS(null, 'y1',`${nodes[jointNum][1][1] + 5}`);
+  xLine.setAttributeNS(null, 'x2', `${nodes[jointNum][1][0]}`);
+  xLine.setAttributeNS(null, 'y2',`${nodes[jointNum][1][1] + 18}`);
+  xLine.setAttributeNS(null, 'transform', `rotate(90 ${xCoord} ${yCoord})`);
+  box.append(xLine);
 }

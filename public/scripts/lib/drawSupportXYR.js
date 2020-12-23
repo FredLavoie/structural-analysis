@@ -1,4 +1,4 @@
-export function drawXYRSupport(jointNum, nodes, members, window) { // fixed support
+export function drawSupportXYR(jointNum, nodes, members, window) { // fixed support
   const currentJoint = nodes[jointNum];
 
   if (!currentJoint[1][0] || !currentJoint[1][1] || currentJoint[1][0] === 0 || currentJoint[1][1] === 0) return;

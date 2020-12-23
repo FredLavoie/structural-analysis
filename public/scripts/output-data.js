@@ -1,19 +1,22 @@
 import { calculateJointCoordinates } from './lib/calculateJointCoordinates.js';
 import { calculateForceAngle } from './lib/calculateForceAngle.js';
-import { drawNode } from './lib/drawNode.js';
+import { drawJoint } from './lib/drawJoint.js';
 import { drawMember } from './lib/drawMember.js';
-import { drawXYRSupport } from './lib/drawXYRSupport.js';
-import { drawXYSupport } from './lib/drawXYSupport.js';
-import { drawXRSupport } from './lib/drawXRSupport.js';
-import { drawYRSupport } from './lib/drawYRSupport.js';
-import { drawXSupport } from './lib/drawXSupport.js';
-import { drawYSupport } from './lib/drawYSupport.js';
-import { drawRSupport } from './lib/drawRSupport.js';
-import { drawXJointLoad } from './lib/drawXJointLoad.js';
-import { drawYJointLoad } from './lib/drawYJointLoad.js';
-import { drawMJointLoad } from './lib/drawMJointLoad.js';
+import { drawSupportXYR } from './lib/drawSupportXYR.js';
+import { drawSupportXY } from './lib/drawSupportXY.js';
+import { drawSupportXR } from './lib/drawSupportXR.js';
+import { drawSupportYR } from './lib/drawSupportYR.js';
+import { drawSupportX } from './lib/drawSupportX.js';
+import { drawSupportY } from './lib/drawSupportY.js';
+import { drawSupportR } from './lib/drawSupportR.js';
+import { drawJointLoadX } from './lib/drawJointLoadX.js';
+import { drawJointLoadY } from './lib/drawJointLoadY.js';
+import { drawJointLoadM } from './lib/drawJointLoadM.js';
 import { drawMemberPointLoad } from './lib/drawMemberPointLoad.js';
 import { drawMemberUDLLoad } from './lib/drawMemberUDLLoad.js';
+import { drawReactionX } from './lib/drawReactionX.js';
+import { drawReactionY } from './lib/drawReactionY.js';
+import { drawReactionM } from './lib/drawReactionM.js';
 
 // get global objects from sessions storage
 const globalNodeObject = JSON.parse(sessionStorage.getItem('globalNodeObject'));
@@ -82,30 +85,40 @@ function redrawAllSVGElements() {
     supportsArray.push(globalNodeObject[node][2][1]);
     supportsArray.push(globalNodeObject[node][2][2]);
   }
-  console.log('supportsArray: ', supportsArray);
-
 
   const jointLoadArray = globalLoadObject.nodeLoads;
   const memberLoadArray = globalLoadObject.memberLoads;
 
-  console.log('jointLoadArray: ', jointLoadArray);
-  console.log('memberLoadArray: ', memberLoadArray);
+  const memberForces = {};
+  for (let i = 1; i <= (memberArray.length / 2); i++) {
+    memberForces[i] = globalResultsObject.secondaryUnknowns[0][i-1];
+  }
+  console.log('memberForces:', memberForces);
+
+  const reactions = {};
+  for (let i = (memberArray.length / 2); i < globalResultsObject.secondaryUnknowns[0].length; i++) {
+    const nodeNumber = globalResultsObject.secondaryUnknowns[0][i][0];
+    const secondaryUnknows = globalResultsObject.secondaryUnknowns[0];
+    reactions[nodeNumber] = [secondaryUnknows[i][1], secondaryUnknows[i][2], secondaryUnknows[i][3]];
+  }
+  console.log('reactions:', reactions);
+
   generateJoints(jointCoordinates);
   generateMembers(memberArray);
   generateSupports(supportsArray);
   generateJointLoads(jointLoadArray);
   generateMemberLoads(memberLoadArray);
+  generateReactions(reactions);
 }
 
 function generateJoints(arr) {
   let jointNum = 0;
   for (let i = 0; i < arr.length; i += 2) {
     jointNum += 1;
-    drawNode(jointNum, arr[i+1], '#input-diagram');
-    drawNode(jointNum, arr[i+1], '#shear-forces-diagram');
-    drawNode(jointNum, arr[i+1], '#moment-forces-diagram');
-    drawNode(jointNum, arr[i+1], '#displacements-diagram');
-    drawNode(jointNum, arr[i+1], '#reactions-diagram');
+    drawJoint(jointNum, arr[i+1], '#input-diagram');
+    drawJoint(jointNum, arr[i+1], '#internal-forces-diagram');
+    drawJoint(jointNum, arr[i+1], '#displacements-diagram');
+    drawJoint(jointNum, arr[i+1], '#reactions-diagram');
     globalNodeObject[jointNum] = [arr[i], arr[i+1]];
   }
 }
@@ -118,8 +131,7 @@ function generateMembers(arr) {
     if (!arr[i] || !arr[i+1]) return;
 
     drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#input-diagram');
-    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#shear-forces-diagram');
-    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#moment-forces-diagram');
+    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#internal-forces-diagram');
     drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#displacements-diagram');
     drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#reactions-diagram');
 
@@ -141,19 +153,40 @@ function generateSupports(arr) {
   let jointNum = 1;
   for (let i = 0; i < arr.length; i += 3) {
     if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) {
-      drawXYRSupport(jointNum, globalNodeObject, globalMemberObject, '#input-diagram'); // fixed support
+      drawSupportXYR(jointNum, globalNodeObject, globalMemberObject, '#input-diagram');
+      drawSupportXYR(jointNum, globalNodeObject, globalMemberObject, '#internal-forces-diagram');
+      drawSupportXYR(jointNum, globalNodeObject, globalMemberObject, '#displacements-diagram');
+      drawSupportXYR(jointNum, globalNodeObject, globalMemberObject, '#reactions-diagram');
     } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) {
-      drawXYSupport(jointNum, globalNodeObject, '#input-diagram');                      // pin support
+      drawSupportXY(jointNum, globalNodeObject, '#input-diagram');
+      drawSupportXY(jointNum, globalNodeObject, '#internal-forces-diagram');
+      drawSupportXY(jointNum, globalNodeObject, '#displacements-diagram');
+      drawSupportXY(jointNum, globalNodeObject, '#reactions-diagram');
     } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) {
-      drawXRSupport(jointNum, globalNodeObject, '#input-diagram');                      // x-rest rot-rest
+      drawSupportXR(jointNum, globalNodeObject, '#input-diagram');
+      drawSupportXR(jointNum, globalNodeObject, '#internal-forces-diagram');
+      drawSupportXR(jointNum, globalNodeObject, '#displacements-diagram');
+      drawSupportXR(jointNum, globalNodeObject, '#reactions-diagram');
     } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) {
-      drawXSupport(jointNum, globalNodeObject, '#input-diagram');                      // x-rest > roller support
+      drawSupportX(jointNum, globalNodeObject, '#input-diagram');
+      drawSupportX(jointNum, globalNodeObject, '#internal-forces-diagram');
+      drawSupportX(jointNum, globalNodeObject, '#displacements-diagram');
+      drawSupportX(jointNum, globalNodeObject, '#reactions-diagram');
     } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) {
-      drawRSupport(jointNum, globalNodeObject, '#input-diagram');                      // rot-rest
+      drawSupportR(jointNum, globalNodeObject, '#input-diagram');
+      drawSupportR(jointNum, globalNodeObject, '#internal-forces-diagram');
+      drawSupportR(jointNum, globalNodeObject, '#displacements-diagram');
+      drawSupportR(jointNum, globalNodeObject, '#reactions-diagram');
     } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) {
-      drawYSupport(jointNum, globalNodeObject, '#input-diagram');                      // y-rest > roller support
+      drawSupportY(jointNum, globalNodeObject, '#input-diagram');
+      drawSupportY(jointNum, globalNodeObject, '#internal-forces-diagram');
+      drawSupportY(jointNum, globalNodeObject, '#displacements-diagram');
+      drawSupportY(jointNum, globalNodeObject, '#reactions-diagram');
     } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) {
-      drawYRSupport(jointNum, globalNodeObject, '#input-diagram');                     // y-rest rot-rest
+      drawSupportYR(jointNum, globalNodeObject, '#input-diagram');
+      drawSupportYR(jointNum, globalNodeObject, '#internal-forces-diagram');
+      drawSupportYR(jointNum, globalNodeObject, '#displacements-diagram');
+      drawSupportYR(jointNum, globalNodeObject, '#reactions-diagram');
     }
     jointNum += 1;
   }
@@ -161,9 +194,9 @@ function generateSupports(arr) {
 
 function generateJointLoads(arr) {
   for (let i = 0; i < arr.length; i += 4) {
-    if (arr[i] && arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1], globalNodeObject, '#input-diagram');
-    if (arr[i] && arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2], globalNodeObject, '#input-diagram');
-    if (arr[i] && arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3], globalNodeObject, '#input-diagram');
+    if (arr[i] && arr[i+1] !== 0) drawJointLoadX(arr[i], arr[i+1], globalNodeObject, '#input-diagram');
+    if (arr[i] && arr[i+2] !== 0) drawJointLoadY(arr[i], arr[i+2], globalNodeObject, '#input-diagram');
+    if (arr[i] && arr[i+3] !== 0) drawJointLoadM(arr[i], arr[i+3], globalNodeObject, '#input-diagram');
   }
 }
 
@@ -176,5 +209,13 @@ function generateMemberLoads(arr) {
     if (arr[i] && arr[i+3] !== 0) {
       drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject, '#input-diagram');
     }
+  }
+}
+
+function generateReactions(obj) {
+  for (const node in obj) {
+    drawReactionX(node, obj[node]);
+    drawReactionY(node, obj[node]);
+    drawReactionM(node, obj[node]);
   }
 }

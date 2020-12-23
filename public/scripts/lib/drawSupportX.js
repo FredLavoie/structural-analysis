@@ -1,4 +1,4 @@
-export function drawXSupport(jointNum, nodes, window) {  // X - roller support
+export function drawSupportX(jointNum, nodes, window) {  // X - roller support
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const xCoord = nodes[jointNum][1][0];

@@ -1,4 +1,4 @@
-export function drawYSupport(jointNum, nodes, window) { // Y - roller support
+export function drawSupportY(jointNum, nodes, window) { // Y - roller support
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const xCoord = nodes[jointNum][1][0];

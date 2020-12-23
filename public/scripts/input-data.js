@@ -1,17 +1,17 @@
 import { calculateJointCoordinates } from './lib/calculateJointCoordinates.js';
 import { calculateForceAngle } from './lib/calculateForceAngle.js';
-import { drawNode } from './lib/drawNode.js';
+import { drawJoint } from './lib/drawJoint.js';
 import { drawMember } from './lib/drawMember.js';
-import { drawXYRSupport } from './lib/drawXYRSupport.js';
-import { drawXYSupport } from './lib/drawXYSupport.js';
-import { drawXRSupport } from './lib/drawXRSupport.js';
-import { drawYRSupport } from './lib/drawYRSupport.js';
-import { drawXSupport } from './lib/drawXSupport.js';
-import { drawYSupport } from './lib/drawYSupport.js';
-import { drawRSupport } from './lib/drawRSupport.js';
-import { drawXJointLoad } from './lib/drawXJointLoad.js';
-import { drawYJointLoad } from './lib/drawYJointLoad.js';
-import { drawMJointLoad } from './lib/drawMJointLoad.js';
+import { drawSupportXYR } from './lib/drawSupportXYR.js';
+import { drawSupportXY } from './lib/drawSupportXY.js';
+import { drawSupportXR } from './lib/drawSupportXR.js';
+import { drawSupportYR } from './lib/drawSupportYR.js';
+import { drawSupportX } from './lib/drawSupportX.js';
+import { drawSupportY } from './lib/drawSupportY.js';
+import { drawSupportR } from './lib/drawSupportR.js';
+import { drawJointLoadX } from './lib/drawJointLoadX.js';
+import { drawJointLoadY } from './lib/drawJointLoadY.js';
+import { drawJointLoadM } from './lib/drawJointLoadM.js';
 import { drawMemberPointLoad } from './lib/drawMemberPointLoad.js';
 import { drawMemberUDLLoad } from './lib/drawMemberUDLLoad.js';
 import { validateForm } from './lib/validateFormClient.js';
@@ -117,7 +117,7 @@ function generateJoints(arr) {
   let jointNum = 0;
   for (let i = 0; i < arr.length; i += 2) {
     jointNum += 1;
-    drawNode(jointNum, arr[i+1], '#structure-window');
+    drawJoint(jointNum, arr[i+1], '#structure-window');
     globalNodeObject[jointNum] = [arr[i], arr[i+1]];
   }
 }
@@ -151,19 +151,19 @@ function generateSupports(arr) {
     globalNodeObject[jointNum].push([arr[i], arr[i+1] ,arr[i+2]]);
 
     if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) {
-      drawXYRSupport(jointNum, globalNodeObject, globalMemberObject, '#structure-window'); // fixed support
+      drawSupportXYR(jointNum, globalNodeObject, globalMemberObject, '#structure-window'); // fixed support
     } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) {
-      drawXYSupport(jointNum, globalNodeObject, '#structure-window');                      // pin support
+      drawSupportXY(jointNum, globalNodeObject, '#structure-window');                      // pin support
     } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) {
-      drawXRSupport(jointNum, globalNodeObject, '#structure-window');                      // x-rest rot-rest
+      drawSupportXR(jointNum, globalNodeObject, '#structure-window');                      // x-rest rot-rest
     } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) {
-      drawXSupport(jointNum, globalNodeObject, '#structure-window');                      // x-rest > roller support
+      drawSupportX(jointNum, globalNodeObject, '#structure-window');                      // x-rest > roller support
     } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) {
-      drawRSupport(jointNum, globalNodeObject, '#structure-window');                      // rot-rest
+      drawSupportR(jointNum, globalNodeObject, '#structure-window');                      // rot-rest
     } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) {
-      drawYSupport(jointNum, globalNodeObject, '#structure-window');                      // y-rest > roller support
+      drawSupportY(jointNum, globalNodeObject, '#structure-window');                      // y-rest > roller support
     } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) {
-      drawYRSupport(jointNum, globalNodeObject, '#structure-window');                     // y-rest rot-rest
+      drawSupportYR(jointNum, globalNodeObject, '#structure-window');                     // y-rest rot-rest
     }
     jointNum += 1;
   }
@@ -172,9 +172,9 @@ function generateSupports(arr) {
 function generateJointLoads(arr) {
   for (let i = 0; i < arr.length; i += 4) {
     if (!arr[i] || arr[i] === 0) return;
-    if (arr[i] && arr[i+1] !== 0) drawXJointLoad(arr[i], arr[i+1], globalNodeObject, '#structure-window');
-    if (arr[i] && arr[i+2] !== 0) drawYJointLoad(arr[i], arr[i+2], globalNodeObject, '#structure-window');
-    if (arr[i] && arr[i+3] !== 0) drawMJointLoad(arr[i], arr[i+3], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i+1] !== 0) drawJointLoadX(arr[i], arr[i+1], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i+2] !== 0) drawJointLoadY(arr[i], arr[i+2], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i+3] !== 0) drawJointLoadM(arr[i], arr[i+3], globalNodeObject, '#structure-window');
   }
 }
 

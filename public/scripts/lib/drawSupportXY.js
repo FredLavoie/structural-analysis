@@ -1,4 +1,4 @@
-export function drawXYSupport(jointNum, nodes, window) { // pin support
+export function drawSupportXY(jointNum, nodes, window) { // pin support
   if (!nodes[jointNum][1][0] || !nodes[jointNum][1][1]) return;
 
   const xCoord = nodes[jointNum][1][0];

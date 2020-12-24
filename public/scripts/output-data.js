@@ -91,14 +91,14 @@ function redrawAllSVGElements() {
 
   const memberForces = {};
   for (let i = 1; i <= (memberArray.length / 2); i++) {
-    memberForces[i] = globalResultsObject.secondaryUnknowns[0][i-1];
+    memberForces[i] = globalResultsObject.secondaryUnknowns[i-1];
   }
   console.log('memberForces:', memberForces);
 
   const reactions = {};
-  for (let i = (memberArray.length / 2); i < globalResultsObject.secondaryUnknowns[0].length; i++) {
-    const nodeNumber = globalResultsObject.secondaryUnknowns[0][i][0];
-    const secondaryUnknows = globalResultsObject.secondaryUnknowns[0];
+  for (let i = (memberArray.length / 2); i < globalResultsObject.secondaryUnknowns.length; i++) {
+    const nodeNumber = globalResultsObject.secondaryUnknowns[i][0];
+    const secondaryUnknows = globalResultsObject.secondaryUnknowns;
     reactions[nodeNumber] = [secondaryUnknows[i][1], secondaryUnknows[i][2], secondaryUnknows[i][3]];
   }
   console.log('reactions:', reactions);
@@ -214,8 +214,14 @@ function generateMemberLoads(arr) {
 
 function generateReactions(obj) {
   for (const node in obj) {
-    drawReactionX(node, obj[node]);
-    drawReactionY(node, obj[node]);
-    drawReactionM(node, obj[node]);
+    if (obj[node][0] > 1 || obj[node][0] < -1) {
+      drawReactionX(node, obj[node][0], globalNodeObject);
+    }
+    if (obj[node][1] > 1 || obj[node][1] < -1) {
+      drawReactionY(node, obj[node][1], globalNodeObject);
+    }
+    if (obj[node][2] > 1 || obj[node][2] < -1) {
+      drawReactionM(node, obj[node][2], globalNodeObject);
+    }
   }
 }

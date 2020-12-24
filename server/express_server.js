@@ -38,7 +38,7 @@ app.get('/documentation', (req, res) => {
 });
 
 app.get('/results-json', (req, res) => {
-  fs.readFile('program/data_string.json', 'utf-8', (error, data) => {
+  fs.readFile('program/data_out.json', 'utf-8', (error, data) => {
     if (error) {
       console.log(error);
       console.log('There was an error reading the output JSON file');

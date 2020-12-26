@@ -17,6 +17,7 @@ import { drawMemberUDLLoad } from './lib/drawMemberUDLLoad.js';
 import { drawReactionX } from './lib/drawReactionX.js';
 import { drawReactionY } from './lib/drawReactionY.js';
 import { drawReactionM } from './lib/drawReactionM.js';
+import { drawJointDisplacement } from './lib/drawJointDisplacement.js';
 
 // get global objects from sessions storage
 const globalNodeObject = JSON.parse(sessionStorage.getItem('globalNodeObject'));
@@ -32,11 +33,10 @@ console.log('globalMemberObject: ', globalMemberObject);
 
 window.addEventListener('load', async () => {
   await fetchResultsJSON()
-    .catch((err) => {
-      console.log('fetch error: ', err);
-    });
-
-  redrawAllSVGElements();
+    .catch(() => {
+      window.location.href = '/error-exec';
+    })
+    .then(redrawAllSVGElements());
 });
 
 window.addEventListener('resize', () => {
@@ -48,9 +48,14 @@ window.addEventListener('resize', () => {
 
 async function fetchResultsJSON() {
   const res = await fetch('/results-json');
-  const obj = await res.json();
-  globalResultsObject = obj;
-  console.log('globalResultsObject: ', globalResultsObject);
+  if (res.status <= 200 || res.status > 300) {
+    var error = new Error(res.statusText);
+    throw error;
+  } else {
+    const obj = await res.json();
+    globalResultsObject = obj;
+    console.log('globalResultsObject: ', globalResultsObject);
+  }
 }
 
 function redrawAllSVGElements() {
@@ -62,6 +67,7 @@ function redrawAllSVGElements() {
   document.querySelectorAll('svg>#support').forEach((n) => n.remove());
   document.querySelectorAll('svg>#joint-load').forEach((n) => n.remove());
   document.querySelectorAll('svg>#member-load').forEach((n) => n.remove());
+  document.querySelectorAll('svg>#displaced-joint').forEach((n) => n.remove());
 
   const windowWidth = document.querySelector('#input-diagram').clientWidth;
   const windowHeight = document.querySelector('#input-diagram').clientHeight;
@@ -71,6 +77,7 @@ function redrawAllSVGElements() {
     jointArray.push(globalNodeObject[node][0][0]);
     jointArray.push(globalNodeObject[node][0][1]);
   }
+  console.log('jointArray: ', jointArray);
   const jointCoordinates = calculateJointCoordinates(jointArray, windowWidth, windowHeight);
 
   const memberArray = [];
@@ -103,12 +110,20 @@ function redrawAllSVGElements() {
   }
   console.log('reactions:', reactions);
 
+  const displacedJoints = [];
+  for (let i = 0; i < (jointArray.length / 2); i++) {
+    displacedJoints.push((globalNodeObject[i+1][0][0] + globalResultsObject.primaryUnknowns[i][0]) * 5);
+    displacedJoints.push((globalNodeObject[i+1][0][1] + globalResultsObject.primaryUnknowns[i][1]) * 5);
+  }
+  const displacedJointCoordinates = calculateJointCoordinates(displacedJoints, windowWidth, windowHeight);
+
   generateJoints(jointCoordinates);
   generateMembers(memberArray);
   generateSupports(supportsArray);
   generateJointLoads(jointLoadArray);
   generateMemberLoads(memberLoadArray);
   generateReactions(reactions);
+  generateDisplacements(displacedJointCoordinates);
 }
 
 function generateJoints(arr) {
@@ -223,5 +238,13 @@ function generateReactions(obj) {
     if (obj[node][2] > 1 || obj[node][2] < -1) {
       drawReactionM(node, obj[node][2], globalNodeObject);
     }
+  }
+}
+
+function generateDisplacements(displacements) {
+  console.log('displacements: ', displacements);
+  for (let i = 0; i < (displacements / 2); i += 2) {
+    const jointNum = i + 1;
+    drawJointDisplacement(jointNum, displacements);
   }
 }

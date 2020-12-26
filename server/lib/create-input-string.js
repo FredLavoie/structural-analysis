@@ -1,7 +1,7 @@
 // Takes the object provided by the server and creates the string that
 // the Fortran program expect
 
-module.exports = async function (obj) {
+module.exports = function (obj) {
 
   let dataString = '';
 

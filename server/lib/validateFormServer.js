@@ -1,4 +1,4 @@
-module.exports = async function (obj) {
+module.exports = function (obj) {
 
   if (!obj.numJoints) return { valid: false, messageList: ['Missing data: numJoints']};
   if (!obj.numMembers) return { valid: false, messageList: ['Missing data: numMembers']};

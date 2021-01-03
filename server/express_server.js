@@ -1,7 +1,6 @@
 /******************************************** REQUIRED PACKAGES / PORT ***********************************************/
 /*********************************************************************************************************************/
 const express	            = require('express');
-const bodyParser          = require('body-parser');
 const app                 = express();
 const fs                  = require('fs');
 const { execFile }        = require('child_process');
@@ -16,7 +15,8 @@ const createInputString   = require('./lib/createInputString');
 app.set('view engine', 'ejs');
 app.set('views','public/views');
 
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({extended: true }));
 app.use(express.static('public'));
 app.use(express.static('program'));
 
@@ -38,7 +38,7 @@ app.get('/documentation', (req, res) => {
 });
 
 app.get('/error-exec', (req, res) => {
-  console.log('There was an error reading the output JSON file');
+  console.log('There was an error parsing the data in the output JSON file');
   res.render('error-exec');
 });
 

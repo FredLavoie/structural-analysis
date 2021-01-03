@@ -35,8 +35,8 @@ window.addEventListener('load', async () => {
   await fetchResultsJSON()
     .catch(() => {
       window.location.href = '/error-exec';
-    })
-    .then(redrawAllSVGElements());
+    });
+  redrawAllSVGElements();
 });
 
 window.addEventListener('resize', () => {
@@ -48,12 +48,11 @@ window.addEventListener('resize', () => {
 
 async function fetchResultsJSON() {
   const res = await fetch('/results-json');
-  if (res.status <= 200 || res.status > 300) {
+  if (res.status < 200 || res.status > 300) {
     var error = new Error(res.statusText);
     throw error;
   } else {
-    const obj = await res.json();
-    globalResultsObject = obj;
+    globalResultsObject = await res.json();
     console.log('globalResultsObject: ', globalResultsObject);
   }
 }

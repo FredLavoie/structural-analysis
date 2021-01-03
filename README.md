@@ -33,5 +33,4 @@ Using [fs](https://nodejs.org/api/fs.html) and [child_process](https://nodejs.or
 ## Dependencies
 
 - [express](https://www.npmjs.com/package/express)
-- [body-parser](https://www.npmjs.com/package/body-parser)
 - [ejs](https://www.npmjs.com/package/ejs)

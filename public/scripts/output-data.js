@@ -43,9 +43,6 @@ window.addEventListener('resize', () => {
   redrawAllSVGElements();
 });
 
-//************************************************** FUNCTIONS *******************************************************/
-//********************************************************************************************************************/
-
 async function fetchResultsJSON() {
   const res = await fetch('/results-json');
   if (res.status < 200 || res.status > 300) {
@@ -56,6 +53,9 @@ async function fetchResultsJSON() {
     console.log('globalResultsObject: ', globalResultsObject);
   }
 }
+
+//*********************************************** REDRAW FUNCTIONS ***************************************************/
+//********************************************************************************************************************/
 
 function redrawAllSVGElements() {
   // clear all svg nodes before redrawing
@@ -124,6 +124,9 @@ function redrawAllSVGElements() {
   generateReactions(reactions);
   generateDisplacements(displacedJointCoordinates);
 }
+
+//********************************************** GENERATE FUNCTIONS **************************************************/
+//********************************************************************************************************************/
 
 function generateJoints(arr) {
   let jointNum = 0;

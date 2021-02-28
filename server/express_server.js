@@ -5,9 +5,9 @@ const app                 = express();
 const fs                  = require('fs');
 const { execFile }        = require('child_process');
 const PORT                = process.env.PORT || 8080; // default port 8080
-const validateForm        = require('./lib/validateformServer');
-const createInputObject   = require('./lib/createInputObject');
-const createInputString   = require('./lib/createInputString');
+const validateForm        = require('./lib/validate-form-server');
+const createInputObject   = require('./lib/create-input-object');
+const createInputString   = require('./lib/create-input-string');
 
 /*********************************************** SET / USE / LISTEN **************************************************/
 /*********************************************************************************************************************/

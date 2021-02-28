@@ -10,6 +10,7 @@ export function drawJointLoadY(jointNum, load, nodes, window) {
   const base2 = load < 0 ? `${headX + 3.5} ${headY - 10}` : `${headX + 3.5} ${headY + 10}`;
   const point = `${headX} ${headY}`;
   const offset = load > 0 ? 5 : -5;
+  const textOffset = load > 0 ? +25 : -10;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector(window);
@@ -31,4 +32,13 @@ export function drawJointLoadY(jointNum, load, nodes, window) {
   line.setAttributeNS(null, 'y2',`${tailY}`);
   line.setAttributeNS(null, 'transform', `translate(0 ${offset})`);
   box.append(line);
+
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','joint-load');
+  text.setAttribute('x', `${tailX - 30}`);
+  text.setAttribute('y', `${tailY + textOffset}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.textContent = `${load}`;
+  box.append(text);
 }

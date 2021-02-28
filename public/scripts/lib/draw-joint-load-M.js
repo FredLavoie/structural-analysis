@@ -32,4 +32,13 @@ export function drawJointLoadM(jointNum, moment, nodes, window) {
   arc.setAttributeNS(null, 'stroke-width', '2');
   arc.setAttributeNS(null, 'd', path);
   box.append(arc);
+
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','joint-load');
+  text.setAttribute('x', `${cx - 25}`);
+  text.setAttribute('y', `${cy + 25}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.textContent = `${moment}`;
+  box.append(text);
 }

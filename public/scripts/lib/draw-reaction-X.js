@@ -32,7 +32,7 @@ export function drawReactionX(jointNum, load, nodes) {
   box.append(line);
 
   const text = document.createElementNS(ns, 'text');
-  text.setAttributeNS(null, 'id','joint-reaction-tag');
+  text.setAttributeNS(null, 'id','reaction-joint');
   text.setAttribute('x', `${tailX + textOffset}`);
   text.setAttribute('y', `${tailY - 8}`);
   text.setAttribute('height', '5');

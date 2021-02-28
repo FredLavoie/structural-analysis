@@ -67,6 +67,7 @@ function redrawAllSVGElements() {
   document.querySelectorAll('svg>#joint-load').forEach((n) => n.remove());
   document.querySelectorAll('svg>#member-load').forEach((n) => n.remove());
   document.querySelectorAll('svg>#displaced-joint').forEach((n) => n.remove());
+  document.querySelectorAll('svg>#reaction-joint').forEach((n) => n.remove());
 
   const windowWidth = document.querySelector('#input-diagram').clientWidth;
   const windowHeight = document.querySelector('#input-diagram').clientHeight;
@@ -105,7 +106,11 @@ function redrawAllSVGElements() {
   for (let i = (memberArray.length / 2); i < globalResultsObject.secondaryUnknowns.length; i++) {
     const nodeNumber = globalResultsObject.secondaryUnknowns[i][0];
     const secondaryUnknows = globalResultsObject.secondaryUnknowns;
-    reactions[nodeNumber] = [secondaryUnknows[i][1], secondaryUnknows[i][2], secondaryUnknows[i][3]];
+    reactions[nodeNumber] = [
+      secondaryUnknows[i][1].toPrecision(3),
+      secondaryUnknows[i][2].toPrecision(3),
+      secondaryUnknows[i][3].toPrecision(3)
+    ];
   }
   console.log('reactions:', reactions);
 
@@ -231,13 +236,13 @@ function generateMemberLoads(arr) {
 
 function generateReactions(obj) {
   for (const node in obj) {
-    if (obj[node][0] > 1 || obj[node][0] < -1) {
+    if (obj[node][0] > 0.01 || obj[node][0] < -0.01) {
       drawReactionX(node, obj[node][0], globalNodeObject);
     }
-    if (obj[node][1] > 1 || obj[node][1] < -1) {
+    if (obj[node][1] > 0.01 || obj[node][1] < -0.01) {
       drawReactionY(node, obj[node][1], globalNodeObject);
     }
-    if (obj[node][2] > 1 || obj[node][2] < -1) {
+    if (obj[node][2] > 0.01 || obj[node][2] < -0.01) {
       drawReactionM(node, obj[node][2], globalNodeObject);
     }
   }

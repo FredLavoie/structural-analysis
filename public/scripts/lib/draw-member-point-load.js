@@ -31,6 +31,7 @@ export function drawMemberPointLoad(memberNum, offset, load, nodes, members, win
   const headY = arrowPointY;
   const tailX = headX;
   const tailY = load < 0 ? headY - 50 : headY + 50;
+  const textOffset = load > 0 ? +2 : -1;
 
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','member-load');
@@ -42,4 +43,14 @@ export function drawMemberPointLoad(memberNum, offset, load, nodes, members, win
   line.setAttributeNS(null, 'y2',`${tailY}`);
   line.setAttributeNS(null, 'transform', `rotate(${rotateAngle} ${arrowPointX} ${arrowPointY})`);
   box.append(line);
+
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','member-load');
+  text.setAttribute('x', `${tailX - 10}`);
+  text.setAttribute('y', `${tailY + (10 * textOffset)}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.setAttributeNS(null, 'transform', `rotate(${rotateAngle} ${arrowPointX} ${arrowPointY})`);
+  text.textContent = `${load}`;
+  box.append(text);
 }

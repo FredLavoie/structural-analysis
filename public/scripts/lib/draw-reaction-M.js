@@ -30,4 +30,13 @@ export function drawReactionM(jointNum, moment, nodes) {
   arc.setAttributeNS(null, 'stroke-width', '2');
   arc.setAttributeNS(null, 'd', path);
   box.append(arc);
+
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','joint-reaction-tag');
+  text.setAttribute('x', `${cx - 50}`);
+  text.setAttribute('y', `${cy + 10}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.textContent = `${moment}`;
+  box.append(text);
 }

@@ -8,6 +8,7 @@ export function drawReactionX(jointNum, load, nodes) {
   const base2 = load > 0 ? `${headX - 7} ${headY + 3.5}` : `${headX + 7} ${headY + 3.5}`;
   const point = `${headX} ${headY}`;
   const offset = load > 0 ? -5 : 5;
+  const textOffset = load > 0 ? -30 : 8;
 
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#reactions-diagram');
@@ -29,4 +30,13 @@ export function drawReactionX(jointNum, load, nodes) {
   line.setAttributeNS(null, 'y2',`${tailY}`);
   line.setAttributeNS(null, 'transform', `translate(${offset} 0)`);
   box.append(line);
+
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','joint-reaction-tag');
+  text.setAttribute('x', `${tailX + textOffset}`);
+  text.setAttribute('y', `${tailY - 8}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.textContent = `${load}`;
+  box.append(text);
 }

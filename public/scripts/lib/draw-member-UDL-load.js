@@ -55,6 +55,9 @@ export function drawMemberUDLLoad(memberNum, udl, nodes, members, window) {
   const crossLineStartY = udl < 0 ? nodes[startJoint][1][1] - adj : nodes[startJoint][1][1] + adj;
   const crossLineEndX = udl < 0 ? nodes[endJoint][1][0] - opp : nodes[endJoint][1][0] + opp;
   const crossLineEndY = udl < 0 ? nodes[endJoint][1][1] - adj : nodes[endJoint][1][1] + adj;
+  const crossLineCenterX = (crossLineEndX + crossLineStartX) / 2;
+  const crossLineCenterY = (crossLineEndY + crossLineStartY) / 2;
+  const textOffset = udl > 0 ? +2 : -1;
 
   const line = document.createElementNS(ns, 'line');
   line.setAttributeNS(null, 'id','member-load');
@@ -65,4 +68,14 @@ export function drawMemberUDLLoad(memberNum, udl, nodes, members, window) {
   line.setAttributeNS(null, 'x2', `${crossLineEndX}`);
   line.setAttributeNS(null, 'y2',`${crossLineEndY}`);
   box.append(line);
+
+  const text = document.createElementNS(ns, 'text');
+  text.setAttributeNS(null, 'id','member-load');
+  text.setAttribute('x', `${crossLineCenterX - 10}`);
+  text.setAttribute('y', `${crossLineCenterY + (10 * textOffset)}`);
+  text.setAttribute('height', '5');
+  text.setAttribute('width', '5');
+  text.setAttributeNS(null, 'transform', `rotate(${rotateAngle} ${crossLineCenterX} ${crossLineCenterY})`);
+  text.textContent = `${udl}`;
+  box.append(text);
 }

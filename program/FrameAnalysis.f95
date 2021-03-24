@@ -298,7 +298,7 @@ call mforce(x,y,em,xsp,mcp,idf,nj,nm,neq,nmp,npc,acs,fj,nxsp,im,nip,Aml)
 527 format(2x,i3,8x,f10.2,4x,es10.2,5x,es10.2)
 528 format(2x,'MEMBER',21x,'MEMBER LOADS')
 529 format(2x,'NUMBER',10x,'X-DIST.',10x,'PL',10x,'UDL')
-600 format(A,F8.5,A,F8.5,A,F8.5,A)
+600 format(A,F25.4,A,F25.4,A,F25.4,A)
 
 write(9,*)'}'
 !**************************************************************************************************

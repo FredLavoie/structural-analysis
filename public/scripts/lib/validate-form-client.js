@@ -110,7 +110,7 @@ export async function validateForm() {
 
   /************** MEMBERS INPUT ****************/
   allMembersClasses.forEach((ea) => {
-    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+    if (Number(ea.value) <= 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
       ea.className = 'input-style form-control member error';
       errorBool = false;
     } else if (ea.classList.contains('error')) {
@@ -119,7 +119,7 @@ export async function validateForm() {
   });
 
   allNumPropClasses.forEach((ea) => {
-    if (Number(ea.value) < 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
+    if (Number(ea.value) <= 0 || ea.value === '' || ea.value.includes('e') || !Number.isInteger(Number(ea.value))) {
       ea.className = 'input-style form-control num-prop error';
       errorBool = false;
     } else if (ea.classList.contains('error')) {

@@ -1,22 +1,22 @@
 /******************************************** REQUIRED PACKAGES / PORT ***********************************************/
 /*********************************************************************************************************************/
-const express	            = require('express');
-const app                 = express();
-const fs                  = require('fs');
-const { execFile }        = require('child_process');
-const PORT                = process.env.PORT || 8080; // default port 8080
-const validateForm        = require('./lib/validate-form-server');
-const createInputObject   = require('./lib/create-input-object');
-const createInputString   = require('./lib/create-input-string');
+const express = require('express');
+const app = express();
+const fs = require('fs');
+const { execFile } = require('child_process');
+const PORT = process.env.PORT || 8080; // default port 8080
+const validateForm = require('./lib/validate-form-server');
+const createInputObject = require('./lib/create-input-object');
+const createInputString = require('./lib/create-input-string');
 
 /*********************************************** SET / USE / LISTEN **************************************************/
 /*********************************************************************************************************************/
 
 app.set('view engine', 'ejs');
-app.set('views','public/views');
+app.set('views', 'public/views');
 
 app.use(express.json());
-app.use(express.urlencoded({extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(express.static('program'));
 
@@ -82,7 +82,7 @@ app.post('/results', (req, res) => {
       return;
     }
     // code to run executable, then render 'results' page
-    execFile('program/sa-mac-exec', (error) => {
+    execFile('program/sa-linux-exec', (error) => {
       if (error) {
         console.log('There was an error running the executable');
         console.log(error);

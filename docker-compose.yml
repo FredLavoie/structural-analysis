@@ -1,0 +1,8 @@
+services:
+  node:
+    build: .
+    command: bash -c "gfortran -o program/sa-linux-exec program/FrameAnalysis.f95 && npm start"
+    volumes:
+      - .:/src
+    ports:
+      - 8080:8080

@@ -1,4 +1,4 @@
-module.exports = function (obj) {
+export function createInputObject(obj) {
 
   const inputObject = {};
   inputObject.numJoints = Number(obj.numJoints);
@@ -15,7 +15,7 @@ module.exports = function (obj) {
   inputObject.loads = extractLoads(obj.loads, obj.numJointLoads, obj.numMemLoads);
 
   return inputObject;
-};
+}
 
 /****************************************** FUNCTIONS ******************************************************/
 /***********************************************************************************************************/
@@ -27,7 +27,7 @@ function extractJointsAndMembers(data) {
     const arr = [];
     const section = i * 5;
     for (let i = 0; i < 5; i++) {
-      arr.push(Number(data[ section + i ]));
+      arr.push(Number(data[section + i]));
     }
     resultArr.push(arr);
   }
@@ -35,7 +35,7 @@ function extractJointsAndMembers(data) {
 }
 
 function extractProperties(data) {
-  if (typeof data === 'string') data = [ data ];
+  if (typeof data === 'string') data = [data];
   const resultArr = data.map((e) => Number(e));
   return resultArr;
 }
@@ -47,7 +47,7 @@ function extractLoads(data, njl, nml) {
     const arr = [];
     const section = i * 4;
     for (let i = 0; i < 4; i++) {
-      arr.push(Number(data[ section + i ]));
+      arr.push(Number(data[section + i]));
     }
     resultArr.push(arr);
   }

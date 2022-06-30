@@ -22,7 +22,7 @@ module.exports = {
     "indent": ["error", 2],
     "no-trailing-spaces": ["error", { "ignoreComments": true }],
     "space-before-blocks": ["error", "always"],
-    "keyword-spacing": ["error", {"before": true, "after": true}],
+    "keyword-spacing": ["error", { "before": true, "after": true }],
     "prefer-const": "error",
     "prefer-arrow-callback": "error",
     "arrow-parens": ["error", "always"]

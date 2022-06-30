@@ -7,9 +7,9 @@ export function drawMember(num, start, end, nodes, window) {
     const member = document.createElementNS(ns, 'line');
     member.setAttributeNS(null, 'id','member');
     member.setAttributeNS(null, 'x1', `${nodes[start][1][0]}`);
-    member.setAttributeNS(null, 'y1',`${nodes[start][1][1]}`);
+    member.setAttributeNS(null, 'y1', `${nodes[start][1][1]}`);
     member.setAttributeNS(null, 'x2', `${nodes[end][1][0]}`);
-    member.setAttributeNS(null, 'y2',`${nodes[end][1][1]}`);
+    member.setAttributeNS(null, 'y2', `${nodes[end][1][1]}`);
     member.setAttribute('stroke', 'black');
     member.setAttribute('stroke-width', '3');
     box.append(member);

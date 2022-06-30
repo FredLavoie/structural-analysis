@@ -1,7 +1,6 @@
 .DS_store
 node_modules
 .env
-.eslintrc.js
 program/data_in.txt
 program/data_out.txt
 program/data_out.json

@@ -25,6 +25,7 @@ module.exports = {
     "keyword-spacing": ["error", { "before": true, "after": true }],
     "prefer-const": "error",
     "prefer-arrow-callback": "error",
-    "arrow-parens": ["error", "always"]
+    "arrow-parens": ["error", "always"],
+    "quotes": [2, "single", "avoid-escape"],
   }
 };

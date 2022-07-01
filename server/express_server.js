@@ -1,42 +1,24 @@
 /******************************************** REQUIRED PACKAGES / PORT ***********************************************/
 /*********************************************************************************************************************/
-<<<<<<< Updated upstream
-const express = require('express');
-const app = express();
-const fs = require('fs');
-const { execFile } = require('child_process');
-const PORT = process.env.PORT || 8080; // default port 8080
-const validateForm = require('./lib/validate-form-server');
-const createInputObject = require('./lib/create-input-object');
-const createInputString = require('./lib/create-input-string');
-=======
 import express, { json, urlencoded, static as staticMiddleware } from 'express';
 const app = express();
 import { readFile, writeFile } from 'fs';
 import { execFile } from 'child_process';
 const PORT = process.env.PORT || 8080; // default port 8080
-import { validateForm } from './lib/validate-form-server';
-import { createInputObject } from './lib/create-input-object';
-import { createInputString } from './lib/create-input-string';
->>>>>>> Stashed changes
+import { validateForm } from './lib/validate-form-server.js';
+import { createInputObject } from './lib/create-input-object.js';
+import { createInputString } from './lib/create-input-string.js';
 
 /*********************************************** SET / USE / LISTEN **************************************************/
 /*********************************************************************************************************************/
 
 app.set('view engine', 'ejs');
-app.set('views', 'public/views');
+app.set('views', 'src/public/views');
 
-<<<<<<< Updated upstream
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use(express.static('program'));
-=======
 app.use(json());
 app.use(urlencoded({ extended: true }));
 app.use(staticMiddleware('public'));
 app.use(staticMiddleware('program'));
->>>>>>> Stashed changes
 
 app.listen(PORT, () => {
   console.log(`structural_analysis app listening on port ${PORT}`);

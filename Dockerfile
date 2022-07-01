@@ -3,8 +3,8 @@ RUN mkdir -p /src
 WORKDIR /src
 
 COPY package.json /src
-COPY package-lock.json /src
-RUN npm install
+COPY yarn.lock /src
+RUN yarn install
 COPY . /src
 
 RUN apt-get update

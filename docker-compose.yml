@@ -1,7 +1,7 @@
 services:
   node:
     build: .
-    command: bash -c "gfortran -o program/sa-linux-exec program/FrameAnalysis.f95 && npm start"
+    command: bash -c "gfortran -o program/sa-linux-exec program/FrameAnalysis.f95 && yarn start"
     volumes:
       - .:/src
     ports:

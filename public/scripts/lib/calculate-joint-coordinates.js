@@ -1,4 +1,8 @@
+// This module converts the user inputted coordinate values into coordinates
+// that are scaled for the size of the box that they are appended to
+
 export function calculateJointCoordinates(arr, width, height) {
+  console.log('arr in calculateJointCoordinates: ', arr);
   const jointCoordinates = [];
   const xCoords = [];
   const yCoords = [];

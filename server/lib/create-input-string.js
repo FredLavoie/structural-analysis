@@ -1,7 +1,7 @@
 // Takes the object provided by the server and creates the string that
 // the Fortran program expect
 
-module.exports = function (obj) {
+export function createInputString(obj) {
 
   let dataString = '';
 
@@ -75,4 +75,4 @@ module.exports = function (obj) {
   }
 
   return dataString;
-};
+}

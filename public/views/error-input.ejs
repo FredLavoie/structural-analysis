@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,15 @@
   <!-- URL TITLE -->
   <title>2D Structural Analysis</title>
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="../styles/reset.css">
   <link rel="stylesheet" href="../styles/main.css">
 </head>
 
 <body>
   <header>
-    <% include ./partials/_navbar %>
+    <%- include('partials/_navbar') %>
   </header>
 
   <main>
@@ -23,8 +25,12 @@
       <br>
       <ul>
         <% messageList.forEach(function(item) { %>
-          <li class="error-message"><h3><%= item %></h3></li>
-        <% }); %>
+          <li class="error-message">
+            <h3>
+              <%= item %>
+            </h3>
+          </li>
+          <% }); %>
       </ul>
       <br>
       <h3>Press the back button to continue entering information or to edit input information.</h3>
@@ -35,4 +41,5 @@
 
 
 </body>
+
 </html>

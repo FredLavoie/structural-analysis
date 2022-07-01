@@ -1,24 +1,24 @@
 /******************************************** REQUIRED PACKAGES / PORT ***********************************************/
 /*********************************************************************************************************************/
-const express = require('express');
+import express, { json, urlencoded, static as staticMiddleware } from 'express';
 const app = express();
-const fs = require('fs');
-const { execFile } = require('child_process');
+import { readFile, writeFile } from 'fs';
+import { execFile } from 'child_process';
 const PORT = process.env.PORT || 8080; // default port 8080
-const validateForm = require('./lib/validate-form-server');
-const createInputObject = require('./lib/create-input-object');
-const createInputString = require('./lib/create-input-string');
+import { validateForm } from './lib/validate-form-server.js';
+import { createInputObject } from './lib/create-input-object.js';
+import { createInputString } from './lib/create-input-string.js';
 
 /*********************************************** SET / USE / LISTEN **************************************************/
 /*********************************************************************************************************************/
 
 app.set('view engine', 'ejs');
-app.set('views', 'public/views');
+app.set('views', 'src/public/views');
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static('public'));
-app.use(express.static('program'));
+app.use(json());
+app.use(urlencoded({ extended: true }));
+app.use(staticMiddleware('public'));
+app.use(staticMiddleware('program'));
 
 app.listen(PORT, () => {
   console.log(`structural_analysis app listening on port ${PORT}`);
@@ -43,7 +43,7 @@ app.get('/error-exec', (req, res) => {
 });
 
 app.get('/results-json', (req, res) => {
-  fs.readFile('program/data_out.json', 'utf-8', (error, data) => {
+  readFile('program/data_out.json', 'utf-8', (error, data) => {
     if (error) {
       console.log(error);
       console.log('There was an error reading the output JSON file');
@@ -74,7 +74,7 @@ app.post('/results', (req, res) => {
   const dataString = createInputString(inputObject);
 
   // code to write to the input file
-  fs.writeFile('program/data_in.txt', dataString, (error) => {
+  writeFile('program/data_in.txt', dataString, (error) => {
     if (error) {
       console.log('There was an error writing the input file');
       console.log(error);

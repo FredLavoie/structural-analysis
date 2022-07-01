@@ -3,28 +3,26 @@
   "version": "1.0.0",
   "description": "2D Structural analysis software",
   "main": "express_server.js",
+  "author": "Fred Lavoie",
+  "type": "module",
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=16.0.0"
   },
   "scripts": {
     "start": "node server/express_server.js",
-    "lint": "eslint ./"
+    "lint": "eslint ./",
+    "ejslint": "ejslint ./public/views/"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/FredLavoie/structural-analysis.git"
   },
-  "author": "Fred Lavoie",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/FredLavoie/structural-analysis/issues"
-  },
-  "homepage": "https://github.com/FredLavoie/structural-analysis#readme",
   "dependencies": {
     "ejs": "^3.1.7",
     "express": "^4.17.1"
   },
   "devDependencies": {
+    "ejs-lint": "^1.2.2",
     "eslint": "^6.5.1"
   }
 }

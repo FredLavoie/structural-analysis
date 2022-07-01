@@ -73,6 +73,7 @@ submitForm.addEventListener('submit', async (event) => {
     return;
   }
 
+  // add all load input to global load object
   populateGlobalLoadsObjects();
 
   // add global objects to sessions storage
@@ -117,8 +118,8 @@ function generateJoints(arr) {
   let jointNum = 0;
   for (let i = 0; i < arr.length; i += 2) {
     jointNum += 1;
-    drawJoint(jointNum, arr[i+1], '#structure-window');
-    globalNodeObject[jointNum] = [arr[i], arr[i+1]];
+    drawJoint(jointNum, arr[i + 1], '#structure-window');
+    globalNodeObject[jointNum] = [arr[i], arr[i + 1]];
   }
 }
 
@@ -127,16 +128,16 @@ function generateMembers(arr) {
 
   for (let i = 0; i < arr.length; i += 2) {
     memberNumber += 1;
-    if (!arr[i] || !arr[i+1]) return;
+    if (!arr[i] || !arr[i + 1]) return;
 
-    drawMember(memberNumber, arr[i], arr[i+1], globalNodeObject, '#structure-window');
+    drawMember(memberNumber, arr[i], arr[i + 1], globalNodeObject, '#structure-window');
 
     const start = globalNodeObject[arr[i]][1];
-    const end = globalNodeObject[arr[i+1]][1];
+    const end = globalNodeObject[arr[i + 1]][1];
 
     if (start && end) {
       globalMemberObject[memberNumber] = {
-        joints: [arr[i], arr[i+1]],
+        joints: [arr[i], arr[i + 1]],
         start: start,
         end: end,
         forceAngle: calculateForceAngle(start, end),
@@ -148,21 +149,21 @@ function generateMembers(arr) {
 function generateSupports(arr) {
   let jointNum = 1;
   for (let i = 0; i < arr.length; i += 3) {
-    globalNodeObject[jointNum].push([arr[i], arr[i+1] ,arr[i+2]]);
+    globalNodeObject[jointNum].push([arr[i], arr[i + 1], arr[i + 2]]);
 
-    if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 1) {
+    if (arr[i] === 1 && arr[i + 1] === 1 && arr[i + 2] === 1) {
       drawSupportXYR(jointNum, globalNodeObject, globalMemberObject, '#structure-window'); // fixed support
-    } else if (arr[i] === 1 && arr[i+1] === 1 && arr[i+2] === 0) {
+    } else if (arr[i] === 1 && arr[i + 1] === 1 && arr[i + 2] === 0) {
       drawSupportXY(jointNum, globalNodeObject, '#structure-window');                      // pin support
-    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 1) {
+    } else if (arr[i] === 1 && arr[i + 1] === 0 && arr[i + 2] === 1) {
       drawSupportXR(jointNum, globalNodeObject, '#structure-window');                      // x-rest rot-rest
-    } else if (arr[i] === 1 && arr[i+1] === 0 && arr[i+2] === 0) {
+    } else if (arr[i] === 1 && arr[i + 1] === 0 && arr[i + 2] === 0) {
       drawSupportX(jointNum, globalNodeObject, '#structure-window');                      // x-rest > roller support
-    } else if (arr[i] === 0 && arr[i+1] === 0 && arr[i+2] === 1) {
+    } else if (arr[i] === 0 && arr[i + 1] === 0 && arr[i + 2] === 1) {
       drawSupportR(jointNum, globalNodeObject, '#structure-window');                      // rot-rest
-    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 0) {
+    } else if (arr[i] === 0 && arr[i + 1] === 1 && arr[i + 2] === 0) {
       drawSupportY(jointNum, globalNodeObject, '#structure-window');                      // y-rest > roller support
-    } else if (arr[i] === 0 && arr[i+1] === 1 && arr[i+2] === 1) {
+    } else if (arr[i] === 0 && arr[i + 1] === 1 && arr[i + 2] === 1) {
       drawSupportYR(jointNum, globalNodeObject, '#structure-window');                     // y-rest rot-rest
     }
     jointNum += 1;
@@ -172,20 +173,20 @@ function generateSupports(arr) {
 function generateJointLoads(arr) {
   for (let i = 0; i < arr.length; i += 4) {
     if (!arr[i] || arr[i] === 0) return;
-    if (arr[i] && arr[i+1] !== 0) drawJointLoadX(arr[i], arr[i+1], globalNodeObject, '#structure-window');
-    if (arr[i] && arr[i+2] !== 0) drawJointLoadY(arr[i], arr[i+2], globalNodeObject, '#structure-window');
-    if (arr[i] && arr[i+3] !== 0) drawJointLoadM(arr[i], arr[i+3], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i + 1] !== 0) drawJointLoadX(arr[i], arr[i + 1], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i + 2] !== 0) drawJointLoadY(arr[i], arr[i + 2], globalNodeObject, '#structure-window');
+    if (arr[i] && arr[i + 3] !== 0) drawJointLoadM(arr[i], arr[i + 3], globalNodeObject, '#structure-window');
   }
 }
 
 function generateMemberLoads(arr) {
   for (let i = 0; i < arr.length; i += 4) {
     if (!arr[i] || arr[i] === 0) return;
-    if (arr[i] && arr[i+1] !== 0 && arr[i+2] !== 0) {
-      drawMemberPointLoad(arr[i], arr[i+1], arr[i+2], globalNodeObject, globalMemberObject, '#structure-window');
+    if (arr[i] && arr[i + 1] !== 0 && arr[i + 2] !== 0) {
+      drawMemberPointLoad(arr[i], arr[i + 1], arr[i + 2], globalNodeObject, globalMemberObject, '#structure-window');
     }
-    if (arr[i] && arr[i+3] !== 0) {
-      drawMemberUDLLoad(arr[i], arr[i+3], globalNodeObject, globalMemberObject, '#structure-window');
+    if (arr[i] && arr[i + 3] !== 0) {
+      drawMemberUDLLoad(arr[i], arr[i + 3], globalNodeObject, globalMemberObject, '#structure-window');
     }
   }
 }
@@ -195,9 +196,9 @@ function populateGlobalLoadsObjects() {
   const memberLoadArray = [...document.querySelectorAll('.member-loads')].map((e) => Number(e.value));
 
   for (let i = 0; i < jointLoadArray.length; i += 4) {
-    globalLoadObject.nodeLoads.push(jointLoadArray[i], jointLoadArray[i+1], jointLoadArray[i+2], jointLoadArray[i+3]);
+    globalLoadObject.nodeLoads.push(jointLoadArray[i], jointLoadArray[i + 1], jointLoadArray[i + 2], jointLoadArray[i + 3]);
   }
   for (let i = 0; i < memberLoadArray.length; i += 4) {
-    globalLoadObject.memberLoads.push(memberLoadArray[i], memberLoadArray[i+1], memberLoadArray[i+2], memberLoadArray[i+3]);
+    globalLoadObject.memberLoads.push(memberLoadArray[i], memberLoadArray[i + 1], memberLoadArray[i + 2], memberLoadArray[i + 3]);
   }
 }

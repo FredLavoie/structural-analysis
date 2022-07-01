@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,8 @@
   <!-- URL TITLE -->
   <title>2D Structural Analysis</title>
   <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <link rel="stylesheet" href="../styles/reset.css">
   <link rel="stylesheet" href="../styles/main.css">
   <!-- Script JS -->
@@ -17,7 +19,7 @@
 
 <body>
   <header>
-    <% include ./partials/_navbar %>
+    <%- include('partials/_navbar') %>
   </header>
 
   <main id="main-container">
@@ -83,9 +85,9 @@
             <input class="input-style form-control supports" type="number" name="joints" placeholder="x-rest.">
             <input class="input-style form-control supports" type="number" name="joints" placeholder="y-rest.">
             <input class="input-style form-control supports" type="number" name="joints" placeholder="rot. rest.">
-            </div>
           </div>
         </div>
+      </div>
       </div>
       <h3 class="section-header">Member Input</h3>
       <div id="members-container-1">
@@ -96,8 +98,8 @@
           <input class="input-style form-control num-prop" type="number" name="members" placeholder="EM No.">
           <input class="input-style form-control num-prop" type="number" name="members" placeholder="Area No.">
           <input class="input-style form-control num-prop" type="number" name="members" placeholder="MoI No.">
-          </div>
         </div>
+      </div>
       </div>
       <h3 class="section-header">Load Input</h3>
       <div class="container-1">
@@ -118,4 +120,5 @@
   </main>
 
 </body>
+
 </html>

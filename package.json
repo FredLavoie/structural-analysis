@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "description": "2D Structural analysis software",
   "main": "express_server.js",
+  "author": "Fred Lavoie",
+  "type": "module",
   "engines": {
     "node": ">=16.0.0"
   },
-  "type": "module",
   "scripts": {
     "start": "node server/express_server.js",
     "lint": "eslint ./",
@@ -16,7 +17,6 @@
     "type": "git",
     "url": "git+https://github.com/FredLavoie/structural-analysis.git"
   },
-  "author": "Fred Lavoie",
   "dependencies": {
     "ejs": "^3.1.7",
     "express": "^4.17.1"

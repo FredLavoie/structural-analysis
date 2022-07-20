@@ -16,9 +16,8 @@ RUN apt-get -y install gfortran
 # copy project
 COPY . /src
 
-RUN ls -l
-
 # build the fortran executable
 RUN gfortran -o /src/program/sa-linux-exec /src/program/FrameAnalysis.f95
 
+# start the node server
 CMD yarn start

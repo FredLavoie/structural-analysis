@@ -19,14 +19,19 @@ import { validateForm } from './lib/validate-form-client.js';
 //************************************************ DOCUMENT READY ****************************************************/
 //********************************************************************************************************************/
 
+// instantiate the globabl objects that hold the structure and loads data
 const globalNodeObject = {};
 const globalMemberObject = {};
 const globalLoadObject = { nodeLoads: [], memberLoads: [] };
 
+// add event listener to the resizing of the window to redraw
+// the entire structure if the window is resized
 window.addEventListener('resize', () => {
   redrawAllData();
 });
 
+// add event listeners for any form data changes and redraw the entire
+// structure if changes are detected
 document.addEventListener('change', () => {
   const allJointsClasses = document.querySelectorAll('.joint');
   allJointsClasses.forEach((ea) => {
@@ -66,12 +71,11 @@ document.addEventListener('change', () => {
 
 const submitForm = document.querySelector('#input-form');
 submitForm.addEventListener('submit', async (event) => {
+  // pause form submission
   event.preventDefault();
 
   const validForm = await validateForm();
-  if (validForm === false) {
-    return;
-  }
+  if (!validForm) return;
 
   // add all load input to global load object
   populateGlobalLoadsObjects();

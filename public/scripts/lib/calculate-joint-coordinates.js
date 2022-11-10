@@ -1,6 +1,12 @@
-// This module converts the user inputted coordinate values into coordinates
-// that are scaled for the size of the box that they are appended to
-
+/**
+ * This module converts the user inputted coordinate values into coordinates
+ * that are scaled for the size of the SVG box that they are appended to.
+ * 
+ * @param {number[]} arr user inputted joint coordinates (unitless)
+ * @param {number} width of the window in pixels
+ * @param {number} height of the window in pixels
+ * @returns {number[]} joint coordinates scaled to the SVG boxa
+ */
 export function calculateJointCoordinates(arr, width, height) {
   console.log('arr in calculateJointCoordinates: ', arr);
   const jointCoordinates = [];
@@ -47,14 +53,14 @@ export function calculateJointCoordinates(arr, width, height) {
     for (let i = 0; i < arr.length; i += 2) {
       const x = (arr[i] * multiplier) + (width * 0.1);
       const y = -((arr[i + 1] - yMidRange) * multiplier) + (height / 2);
-      jointCoordinates.push([arr[i], arr[i+1]],[Math.floor(x), Math.floor(y)]);
+      jointCoordinates.push([arr[i], arr[i + 1]], [Math.floor(x), Math.floor(y)]);
     }
   } else {
     const multiplier = (height * 0.8) / yRange;
     for (let i = 0; i < arr.length; i += 2) {
       const x = ((arr[i] - xMidRange) * multiplier) + (width / 2);
-      const y = (height * 0.9) - (arr[i+1] * multiplier);
-      jointCoordinates.push([arr[i], arr[i+1]],[Math.floor(x), Math.floor(y)]);
+      const y = (height * 0.9) - (arr[i + 1] * multiplier);
+      jointCoordinates.push([arr[i], arr[i + 1]], [Math.floor(x), Math.floor(y)]);
     }
   }
   return jointCoordinates;

@@ -71,35 +71,35 @@ document.addEventListener('DOMContentLoaded', () => {
 // Generate number of input boxes based on numJoints
 function generateJointInput(i) {
   const $jointDiv = document.createElement('div');
-  $jointDiv.setAttribute('class','joints-container-2');
+  $jointDiv.setAttribute('class', 'joints-container-2');
 
   const $jointNum = document.createElement('label');
   $jointNum.innerHTML = `Joint #${i}`;
 
   const $coordInputX = document.createElement('input');
-  $coordInputX.setAttribute('class','input-style form-control joint');
+  $coordInputX.setAttribute('class', 'input-style form-control joint');
   $coordInputX.setAttribute('name', 'joints');
   $coordInputX.setAttribute('placeholder', 'X-coord.');
 
-  const $coordInputY  = document.createElement('input');
-  $coordInputY.setAttribute('class','input-style form-control joint');
+  const $coordInputY = document.createElement('input');
+  $coordInputY.setAttribute('class', 'input-style form-control joint');
   $coordInputY.setAttribute('name', 'joints');
   $coordInputY.setAttribute('placeholder', 'Y-coord.');
 
   const $xRest = document.createElement('input');
-  $xRest.setAttribute('class','input-style form-control supports');
+  $xRest.setAttribute('class', 'input-style form-control supports');
   $xRest.setAttribute('name', 'joints');
   $xRest.setAttribute('type', 'number');
   $xRest.setAttribute('placeholder', 'x-rest.');
 
   const $yRest = document.createElement('input');
-  $yRest.setAttribute('class','input-style form-control supports');
+  $yRest.setAttribute('class', 'input-style form-control supports');
   $yRest.setAttribute('name', 'joints');
   $yRest.setAttribute('type', 'number');
   $yRest.setAttribute('placeholder', 'y-rest.');
 
   const $rotRest = document.createElement('input');
-  $rotRest.setAttribute('class','input-style form-control supports');
+  $rotRest.setAttribute('class', 'input-style form-control supports');
   $rotRest.setAttribute('name', 'joints');
   $rotRest.setAttribute('type', 'number');
   $rotRest.setAttribute('placeholder', 'rot. rest.');
@@ -117,37 +117,37 @@ function generateJointInput(i) {
 // Generate number of input boxes based on numMembers
 function generateMemberInput(i) {
   const $memberDiv = document.createElement('div');
-  $memberDiv.setAttribute('class','container-2 members-container-2');
+  $memberDiv.setAttribute('class', 'container-2 members-container-2');
 
   const $memberNum = document.createElement('label');
   $memberNum.innerHTML = `Member #${i}`;
 
   const $jointStart = document.createElement('input');
-  $jointStart.setAttribute('class','input-style form-control member');
+  $jointStart.setAttribute('class', 'input-style form-control member');
   $jointStart.setAttribute('name', 'members');
   $jointStart.setAttribute('type', 'number');
   $jointStart.setAttribute('placeholder', 'Joint start');
 
   const $jointEnd = document.createElement('input');
-  $jointEnd.setAttribute('class','input-style form-control member');
+  $jointEnd.setAttribute('class', 'input-style form-control member');
   $jointEnd.setAttribute('name', 'members');
   $jointEnd.setAttribute('type', 'number');
   $jointEnd.setAttribute('placeholder', 'Joint end');
 
   const $emNo = document.createElement('input');
-  $emNo.setAttribute('class','input-style form-control num-prop');
+  $emNo.setAttribute('class', 'input-style form-control num-prop');
   $emNo.setAttribute('name', 'members');
   $emNo.setAttribute('type', 'number');
   $emNo.setAttribute('placeholder', 'EM No.');
 
   const $areaNo = document.createElement('input');
-  $areaNo.setAttribute('class','input-style form-control num-prop');
+  $areaNo.setAttribute('class', 'input-style form-control num-prop');
   $areaNo.setAttribute('name', 'members');
   $areaNo.setAttribute('type', 'number');
   $areaNo.setAttribute('placeholder', 'Area No.');
 
   const $moiNo = document.createElement('input');
-  $moiNo.setAttribute('class','input-style form-control num-prop');
+  $moiNo.setAttribute('class', 'input-style form-control num-prop');
   $moiNo.setAttribute('name', 'members');
   $moiNo.setAttribute('type', 'number');
   $moiNo.setAttribute('placeholder', 'MoI No.');
@@ -167,7 +167,7 @@ function generateEMInput(i) {
   const $label = document.createElement('label');
   $label.innerHTML = `Elastic Modulus # ${i}`;
   const $input = document.createElement('input');
-  $input.setAttribute('class','input-style form-control input-EM');
+  $input.setAttribute('class', 'input-style form-control input-EM');
   $input.setAttribute('name', 'ElasticMods');
 
   const $container = document.querySelector('#em-container');
@@ -180,7 +180,7 @@ function generateAreaInput(i) {
   const $label = document.createElement('label');
   $label.innerHTML = `Area # ${i}`;
   const $input = document.createElement('input');
-  $input.setAttribute('class','input-style form-control input-Area');
+  $input.setAttribute('class', 'input-style form-control input-Area');
   $input.setAttribute('name', 'Areas');
 
   const $container = document.querySelector('#area-container');
@@ -193,7 +193,7 @@ function generateMOIInput(i) {
   const $label = document.createElement('label');
   $label.innerHTML = `Moment of Inertia # ${i}`;
   const $input = document.createElement('input');
-  $input.setAttribute('class','input-style form-control input-MoI');
+  $input.setAttribute('class', 'input-style form-control input-MoI');
   $input.setAttribute('name', 'MoI');
 
   const $container = document.querySelector('#moi-container');
@@ -204,29 +204,29 @@ function generateMOIInput(i) {
 // Generate joint load input boxes
 function generateJointLoadsInput(i) {
   const $jointLoadDiv = document.createElement('div');
-  $jointLoadDiv.setAttribute('class','container-2 joint-load-container');
+  $jointLoadDiv.setAttribute('class', 'container-2 joint-load-container');
 
   const $jointLoadNum = document.createElement('label');
   $jointLoadNum.innerHTML = `Joint Load #${i}`;
 
   const $jointNum = document.createElement('input');
-  $jointNum.setAttribute('class','input-style form-control joint-loads jl-j');
+  $jointNum.setAttribute('class', 'input-style form-control joint-loads jl-j');
   $jointNum.setAttribute('name', 'loads');
   $jointNum.setAttribute('type', 'number');
   $jointNum.setAttribute('placeholder', 'Joint No.');
 
   const $xValue = document.createElement('input');
-  $xValue.setAttribute('class','input-style form-control joint-loads jl-x');
+  $xValue.setAttribute('class', 'input-style form-control joint-loads jl-x');
   $xValue.setAttribute('name', 'loads');
   $xValue.setAttribute('placeholder', 'X value');
 
   const $yValue = document.createElement('input');
-  $yValue.setAttribute('class','input-style form-control joint-loads jl-y');
+  $yValue.setAttribute('class', 'input-style form-control joint-loads jl-y');
   $yValue.setAttribute('name', 'loads');
   $yValue.setAttribute('placeholder', 'Y value');
 
   const $moment = document.createElement('input');
-  $moment.setAttribute('class','input-style form-control joint-loads jl-m');
+  $moment.setAttribute('class', 'input-style form-control joint-loads jl-m');
   $moment.setAttribute('name', 'loads');
   $moment.setAttribute('placeholder', 'Moment');
 
@@ -242,29 +242,29 @@ function generateJointLoadsInput(i) {
 // Generate member load input boxes
 function generateMemberLoadsInput(i) {
   const $memberLoadDiv = document.createElement('div');
-  $memberLoadDiv.setAttribute('class','container-2 member-load-container');
+  $memberLoadDiv.setAttribute('class', 'container-2 member-load-container');
 
   const $memberLoadNum = document.createElement('label');
   $memberLoadNum.innerHTML = `Member Load #${i}`;
 
   const $memberNum = document.createElement('input');
-  $memberNum.setAttribute('class','input-style form-control member-loads ml-m');
+  $memberNum.setAttribute('class', 'input-style form-control member-loads ml-m');
   $memberNum.setAttribute('name', 'loads');
   $memberNum.setAttribute('type', 'number');
   $memberNum.setAttribute('placeholder', 'Member No.');
 
   const $xDist = document.createElement('input');
-  $xDist.setAttribute('class','input-style form-control member-loads ml-xd');
+  $xDist.setAttribute('class', 'input-style form-control member-loads ml-xd');
   $xDist.setAttribute('name', 'loads');
   $xDist.setAttribute('placeholder', 'X-distance');
 
   const $pl = document.createElement('input');
-  $pl.setAttribute('class','input-style form-control member-loads ml-pl');
+  $pl.setAttribute('class', 'input-style form-control member-loads ml-pl');
   $pl.setAttribute('name', 'loads');
   $pl.setAttribute('placeholder', 'Point Load');
 
   const $udl = document.createElement('input');
-  $udl.setAttribute('class','input-style form-control member-loads ml-udl');
+  $udl.setAttribute('class', 'input-style form-control member-loads ml-udl');
   $udl.setAttribute('name', 'loads');
   $udl.setAttribute('placeholder', 'UDL');
 

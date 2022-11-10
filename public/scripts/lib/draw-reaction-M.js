@@ -17,14 +17,14 @@ export function drawReactionM(jointNum, moment, nodes) {
   const ns = 'http://www.w3.org/2000/svg';
   const box = document.querySelector('#reactions-diagram');
   const arrow = document.createElementNS(ns, 'polygon');
-  arrow.setAttributeNS(null, 'id','joint-load');
+  arrow.setAttributeNS(null, 'id', 'joint-load');
   arrow.setAttributeNS(null, 'stroke', 'red');
   arrow.setAttributeNS(null, 'fill', 'red');
   arrow.setAttributeNS(null, 'points', `${base1}, ${point}, ${base2}`);
   box.append(arrow);
 
   const arc = document.createElementNS(ns, 'path');
-  arc.setAttributeNS(null,'id', 'joint-load');
+  arc.setAttributeNS(null, 'id', 'joint-load');
   arc.setAttributeNS(null, 'stroke', 'red');
   arc.setAttributeNS(null, 'fill', 'none');
   arc.setAttributeNS(null, 'stroke-width', '2');
@@ -32,7 +32,7 @@ export function drawReactionM(jointNum, moment, nodes) {
   box.append(arc);
 
   const text = document.createElementNS(ns, 'text');
-  text.setAttributeNS(null, 'id','reaction-joint');
+  text.setAttributeNS(null, 'id', 'reaction-joint');
   text.setAttribute('x', `${cx - 25}`);
   text.setAttribute('y', `${cy + 25}`);
   text.setAttribute('height', '5');

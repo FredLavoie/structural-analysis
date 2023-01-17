@@ -1,124 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="shortcut icon" href="#" />
+        <!-- URL TITLE -->
+        <title>2D Structural Analysis</title>
+        <!-- Stylesheets -->
+        <link
+            rel="stylesheet"
+            href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+            integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+            crossorigin="anonymous"
+        />
+        <link rel="stylesheet" href="../styles/reset.css" />
+        <link rel="stylesheet" href="../styles/main.css" />
+        <!-- Script JS -->
+        <script type="text/javascript" src="../scripts/input-form.js"></script>
+        <script type="module" src="../scripts/input-data.js"></script>
+    </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="shortcut icon" href="#">
-  <!-- URL TITLE -->
-  <title>2D Structural Analysis</title>
-  <!-- Stylesheets -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-  <link rel="stylesheet" href="../styles/reset.css">
-  <link rel="stylesheet" href="../styles/main.css">
-  <!-- Script JS -->
-  <script type="text/javascript" src="../scripts/input-form.js"></script>
-  <script type="module" src="../scripts/input-data.js"></script>
-</head>
+    <body>
+        <header><%- include('partials/_navbar') %></header>
 
-<body>
-  <header>
-    <%- include('partials/_navbar') %>
-  </header>
+        <main id="main-container">
+            <svg xmlns="http://www.w3.org/2000/svg" id="structure-window">
+                <rect width="100%" height="100%" fill="#eee"></rect>
+            </svg>
 
-  <main id="main-container">
-    <svg xmlns="http://www.w3.org/2000/svg" id="structure-window">
-      <rect width="100%" height="100%" fill="#eee"></rect>
-    </svg>
+            <form id="input-form" action="/results" method="POST">
+                <h3 class="section-header">General Information</h3>
+                <div class="container-1">
+                    <div class="gen-info-container">
+                        <label>No. of joints</label>
+                        <input
+                            id="input-numJoints"
+                            class="input-style form-control"
+                            type="number"
+                            name="numJoints"
+                            value="2"
+                        />
+                    </div>
+                    <div class="gen-info-container">
+                        <label>No. of members</label>
+                        <input
+                            id="input-numMembers"
+                            class="input-style form-control"
+                            type="number"
+                            name="numMembers"
+                            value="1"
+                        />
+                    </div>
+                    <div class="gen-info-container">
+                        <label>No. of Eleastic modulus</label>
+                        <input
+                            id="input-numEMs"
+                            class="input-style form-control"
+                            type="number"
+                            name="numElasticModulus"
+                            value="1"
+                        />
+                    </div>
+                    <div class="gen-info-container">
+                        <label>No. of X-Sectional Areas</label>
+                        <input
+                            id="input-numAreas"
+                            class="input-style form-control"
+                            type="number"
+                            name="numAreas"
+                            value="1"
+                        />
+                    </div>
+                    <div class="gen-info-container">
+                        <label>No. of Moment of Inertia</label>
+                        <input
+                            id="input-numMOIs"
+                            class="input-style form-control"
+                            type="number"
+                            name="numMomentOfInertia"
+                            value="1"
+                        />
+                    </div>
+                </div>
 
-    <form id="input-form" action="/results" method="POST">
-      <h3 class="section-header">General Information</h3>
-      <div class="container-1">
-        <div class="gen-info-container">
-          <label>No. of joints</label>
-          <input id="input-numJoints" class="input-style form-control" type="number" name="numJoints" value="2">
-        </div>
-        <div class="gen-info-container">
-          <label>No. of members</label>
-          <input id="input-numMembers" class="input-style form-control" type="number" name="numMembers" value="1">
-        </div>
-        <div class="gen-info-container">
-          <label>No. of Eleastic modulus</label>
-          <input id="input-numEMs" class="input-style form-control" type="number" name="numElasticModulus" value="1">
-        </div>
-        <div class="gen-info-container">
-          <label>No. of X-Sectional Areas</label>
-          <input id="input-numAreas" class="input-style form-control" type="number" name="numAreas" value="1">
-        </div>
-        <div class="gen-info-container">
-          <label>No. of Moment of Inertia</label>
-          <input id="input-numMOIs" class="input-style form-control" type="number" name="numMomentOfInertia" value="1">
-        </div>
-      </div>
+                <h3 class="section-header">Properties Input</h3>
+                <div class="container-2">
+                    <div id="em-container">
+                        <label>Elastic Modulus #1</label>
+                        <input class="input-style form-control input-EM" name="ElasticMods" />
+                    </div>
+                    <div id="area-container">
+                        <label>Area # 1</label>
+                        <input class="input-style form-control input-Area" name="Areas" />
+                    </div>
+                    <div id="moi-container">
+                        <label>Moment of Inertia # 1</label>
+                        <input class="input-style form-control input-MoI" name="MoI" />
+                    </div>
+                </div>
+                <h3 class="section-header">Joint Input</h3>
+                <div class="container-2">
+                    <div id="joints-container-1">
+                        <div class="joints-container-2">
+                            <label>Joint #1</label>
+                            <input class="input-style form-control joint" name="joints" placeholder="X-coord." />
+                            <input class="input-style form-control joint" name="joints" placeholder="Y-coord." />
+                            <input
+                                class="input-style form-control supports"
+                                type="number"
+                                name="joints"
+                                placeholder="x-rest."
+                            />
+                            <input
+                                class="input-style form-control supports"
+                                type="number"
+                                name="joints"
+                                placeholder="y-rest."
+                            />
+                            <input
+                                class="input-style form-control supports"
+                                type="number"
+                                name="joints"
+                                placeholder="rot. rest."
+                            />
+                        </div>
+                        <div class="joints-container-2">
+                            <label>Joint #2</label>
+                            <input class="input-style form-control joint" name="joints" placeholder="X-coord." />
+                            <input class="input-style form-control joint" name="joints" placeholder="Y-coord." />
+                            <input
+                                class="input-style form-control supports"
+                                type="number"
+                                name="joints"
+                                placeholder="x-rest."
+                            />
+                            <input
+                                class="input-style form-control supports"
+                                type="number"
+                                name="joints"
+                                placeholder="y-rest."
+                            />
+                            <input
+                                class="input-style form-control supports"
+                                type="number"
+                                name="joints"
+                                placeholder="rot. rest."
+                            />
+                        </div>
+                    </div>
+                </div>
 
-      <h3 class="section-header">Properties Input</h3>
-      <div class="container-2">
-        <div id="em-container">
-          <label>Elastic Modulus #1</label>
-          <input class="input-style form-control input-EM" name="ElasticMods">
-        </div>
-        <div id="area-container">
-          <label>Area # 1</label>
-          <input class="input-style form-control input-Area" name="Areas">
-        </div>
-        <div id="moi-container">
-          <label>Moment of Inertia # 1</label>
-          <input class="input-style form-control input-MoI" name="MoI">
-        </div>
-      </div>
-      <h3 class="section-header">Joint Input</h3>
-      <div class="container-2">
-        <div id="joints-container-1">
-          <div class="joints-container-2">
-            <label>Joint #1</label>
-            <input class="input-style form-control joint" name="joints" placeholder="X-coord.">
-            <input class="input-style form-control joint" name="joints" placeholder="Y-coord.">
-            <input class="input-style form-control supports" type="number" name="joints" placeholder="x-rest.">
-            <input class="input-style form-control supports" type="number" name="joints" placeholder="y-rest.">
-            <input class="input-style form-control supports" type="number" name="joints" placeholder="rot. rest.">
-          </div>
-          <div class="joints-container-2">
-            <label>Joint #2</label>
-            <input class="input-style form-control joint" name="joints" placeholder="X-coord.">
-            <input class="input-style form-control joint" name="joints" placeholder="Y-coord.">
-            <input class="input-style form-control supports" type="number" name="joints" placeholder="x-rest.">
-            <input class="input-style form-control supports" type="number" name="joints" placeholder="y-rest.">
-            <input class="input-style form-control supports" type="number" name="joints" placeholder="rot. rest.">
-          </div>
-        </div>
-      </div>
-      </div>
-      <h3 class="section-header">Member Input</h3>
-      <div id="members-container-1">
-        <div class="container-2 members-container-2">
-          <label>Member #1</label>
-          <input class="input-style form-control member" type="number" name="members" placeholder="Joint start">
-          <input class="input-style form-control member" type="number" name="members" placeholder="Joint end">
-          <input class="input-style form-control num-prop" type="number" name="members" placeholder="EM No.">
-          <input class="input-style form-control num-prop" type="number" name="members" placeholder="Area No.">
-          <input class="input-style form-control num-prop" type="number" name="members" placeholder="MoI No.">
-        </div>
-      </div>
-      </div>
-      <h3 class="section-header">Load Input</h3>
-      <div class="container-1">
-        <div class="gen-info-container">
-          <label>No. Joint Loads</label>
-          <input id="input-numJointLoads" class="input-style form-control" type="number" name="numJointLoads" value="0">
-        </div>
-        <div class="gen-info-container">
-          <label>No. Member Loads</label>
-          <input id="input-numMemLoads" class="input-style form-control" type="number" name="numMemLoads" value="0">
-        </div>
-      </div>
-      <div id="pl-container"></div>
-      <div id="ml-container"></div>
+                <h3 class="section-header">Member Input</h3>
+                <div id="members-container-1">
+                    <div class="container-2 members-container-2">
+                        <label>Member #1</label>
+                        <input
+                            class="input-style form-control member"
+                            type="number"
+                            name="members"
+                            placeholder="Joint start"
+                        />
+                        <input
+                            class="input-style form-control member"
+                            type="number"
+                            name="members"
+                            placeholder="Joint end"
+                        />
+                        <input
+                            class="input-style form-control num-prop"
+                            type="number"
+                            name="members"
+                            placeholder="EM No."
+                        />
+                        <input
+                            class="input-style form-control num-prop"
+                            type="number"
+                            name="members"
+                            placeholder="Area No."
+                        />
+                        <input
+                            class="input-style form-control num-prop"
+                            type="number"
+                            name="members"
+                            placeholder="MoI No."
+                        />
+                    </div>
+                </div>
+                <h3 class="section-header">Load Input</h3>
+                <div class="container-1">
+                    <div class="gen-info-container">
+                        <label>No. Joint Loads</label>
+                        <input
+                            id="input-numJointLoads"
+                            class="input-style form-control"
+                            type="number"
+                            name="numJointLoads"
+                            value="0"
+                        />
+                    </div>
+                    <div class="gen-info-container">
+                        <label>No. Member Loads</label>
+                        <input
+                            id="input-numMemLoads"
+                            class="input-style form-control"
+                            type="number"
+                            name="numMemLoads"
+                            value="0"
+                        />
+                    </div>
+                </div>
+                <div id="pl-container"></div>
+                <div id="ml-container"></div>
 
-      <button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>
-    </form>
-  </main>
-
-</body>
-
+                <button id="analize" type="submit" class="btn btn-outline-primary">Analyze Structure</button>
+            </form>
+        </main>
+    </body>
 </html>

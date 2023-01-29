@@ -23,18 +23,18 @@ takes the information submitted by the front-end input form and writes the input
 program. The Fortran program then writes an output file which the server sends back to the front-end to be displayed to
 the client.
 
-### Features to add
-
--   A visual diagram of the structure with the loads shown
--   A visual diagram of the internal forces (moment, shear & axial)
--   A visual diagram of the support reactions (x-reaction, y-reaction & moment)
--   A link for the client to download the output file
-
 ## Screenshot
 
-### Home page
+### Structure input form
+
+The input form is where the user input the coordinates of the joints, the members, the supports and the loads that are
+applied to the structure.
 
 <img src="./docs/input_form.png" width="800">
+
+### Flow of Data
+
+<img src="./docs/data_flow.png" width="600">
 
 ## Getting started
 

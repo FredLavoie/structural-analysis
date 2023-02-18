@@ -2,6 +2,10 @@
 
 A 2-dimensional structural analysis program (frames and trusses) written in Fortran95.
 
+Note: This repo is essentially deprecated. The development of this project has been moved to a new repo
+([2D Frame](https://github.com/FredLavoie/2D-frame)) to take advantage of a modern front end library and to add a
+database.
+
 ### The story
 
 The Fortran program was built when I was in university. It required the user to write out the information in an input
